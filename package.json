@@ -1,0 +1,21 @@
+{
+  "name": "fakelook",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
+    "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\"",
+    "i": "concurrently \"npm i\" \"cd client && npm i\" \"cd server && npm i\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shai-Moran/FakeLook.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shai-Moran/FakeLook/issues"
+  },
+  "homepage": "https://github.com/Shai-Moran/FakeLook#readme",
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
