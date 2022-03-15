@@ -1,26 +1,25 @@
-import Btn from '../uiKit/Btn';
-import FacebookLogin from '../uiKit/FacebookLogin';
-import GoogleLogin from '../uiKit/GoogleLogin';
-import Input from '../uiKit/Input';
-import Link from '../uiKit/Link';
-import SearchBar from '../uiKit/SearchBar';
-import Title from '../uiKit/Title';
+import { Container, Hr, Btn, Input, Link, Title, IconBtn } from '../uiKit/UiKIt';
+import { BsFacebook, BsGoogle } from 'react-icons/bs';
+import LoginGoogle from './LoginGoogle';
 
 const Login = (props) => {
   return (
-    <section className="login_page">
-      <Title>Login</Title>
-      <Input type="text">Username...</Input>
-      <Input type="password">Password...</Input>
-      <Btn>Login</Btn>
-      <Link>forgot password?</Link>
-      <div>
-        Not yet a member?
-        <Link>Sign up</Link>
-      </div>
-      <GoogleLogin />
-      <FacebookLogin />
-      <SearchBar></SearchBar>
+    <section className="login__page">
+      <Container className="login__container">
+        <Title className="login__title">Sign In</Title>
+        <Input type="text">Username...</Input>
+        <Input type="password">Password...</Input>
+        <Btn>Login</Btn>
+        <div className="login__links">
+          <Link to="#">Forgot password?</Link>
+          <Link to="#">Create Account</Link>
+        </div>
+        <Hr />
+        {/* <IconBtn icon={BsFacebook} className="blue">
+          Login with Facebook
+        </IconBtn> */}
+        <LoginGoogle />
+      </Container>
     </section>
   );
 };

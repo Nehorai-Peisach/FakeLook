@@ -1,0 +1,40 @@
+input,
+input:hover,
+input:focus,
+input:active {
+  outline: none;
+}
+input:-webkit-autofill {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    transition-delay: 9999s;
+    transition-property: background-color, color;
+  }
+}
+
+.input {
+  &__wapper {
+    width: 100%;
+  }
+  &__text {
+  }
+  &__input {
+    width: calc(100% - 2rem - 2px);
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white;
+    &::placeholder {
+      color: white;
+      opacity: 0.5;
+    }
+    border: 1px solid rgba(0, 0, 0, 0);
+    &:focus {
+      border: 1px solid #ccc;
+    }
+  }
+}

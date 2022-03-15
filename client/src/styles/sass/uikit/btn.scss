@@ -1,0 +1,19 @@
+.btn {
+  width: calc(100% -1rem);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background-color: $btn;
+  color: black;
+  text-align: center;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}
