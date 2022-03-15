@@ -1,27 +1,21 @@
 # FakeLook
 ### This project is a Image based social network, created by Nehorai Peisach and Shai Moran for the Sela Learning Center.
 
-## How To Start:
-### Client:
+## Setup:
+first you need to install all npm packeges.
+run install.bat to install all packeges 
+### or:
+in terminal:
 ```
-$ cd ../clinet
+$ npm run i
 ```
+## Run:
+run run.bat to run client and servers at the same time.
+### or:
+in terminal:
 ```
-$ npm install
-```
-```
-$ npm start
+$ npm run start
 ```
 
-### Server:
-```
-$ cd ../server
-```
-```
-$ npm install
-```
-```
-$ npm start
-```
 
 # Have Fun!
