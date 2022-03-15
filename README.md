@@ -5,14 +5,14 @@
 First you need to install all npm packeges,   
   run `install.bat` to install all packeges 
 ### or:
-in terminal:
+In terminal:
 ```
 $ npm run i
 ```
 ## Run:
 Run `run.bat` to run client and servers at the same time.
 ### or:
-in terminal:
+In terminal:
 ```
 $ npm run start
 ```
