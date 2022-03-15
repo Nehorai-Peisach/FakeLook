@@ -4,7 +4,7 @@
   "scripts": {
     "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
     "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\"",
-    "i": "concurrently \"npm i\" \"cd client && npm i\" \"cd server && npm i\""
+    "i": "npm i concurrently && concurrently \"npm i\" \"cd client && npm i\" \"cd server && npm i\""
   },
   "repository": {
     "type": "git",

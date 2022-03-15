@@ -1,9 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const logger = require('../logger');
 const app = express();
 
-app.listen(4001, () => {
-  logger.silly(`Connected to ${4001}`);
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+  logger.http(`Connected to ${PORT}`);
 });
 
 app.get('/', (req, res) => {

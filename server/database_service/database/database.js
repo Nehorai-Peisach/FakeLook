@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
+const DB_URL = process.env.DB_URL;
+
 module.exports = class MongoDb {
   constructor() {
-    this.uri = 'mongodb+srv://admin:admin123@maincluster.rebcv.mongodb.net/FakeLookDb?retryWrites=true&w=majority';
+    this.uri = DB_URL;
   }
 
   connect() {
