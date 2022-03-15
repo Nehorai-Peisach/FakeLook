@@ -1,0 +1,14 @@
+.link {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}

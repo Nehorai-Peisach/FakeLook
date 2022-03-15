@@ -1,4 +1,54 @@
 .login {
-  font-family: 'Courier New', Courier, monospace;
-  color: blue;
+  &__page {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to bottom right, $bg_first, $bg_second);
+    color: white;
+  }
+
+  &__container {
+    margin-top: -10rem;
+    width: 25rem;
+    font-size: 1.8rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 3rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+  }
+
+  &__title {
+    margin-bottom: 3rem;
+    &:before,
+    &:after {
+      background-color: white;
+      content: '';
+      display: inline-block;
+      height: 1px;
+      position: relative;
+      vertical-align: middle;
+      width: 20%;
+      top: 0.2rem;
+    }
+
+    &:before {
+      right: 10%;
+      margin-left: -50%;
+    }
+
+    &:after {
+      left: 10%;
+      margin-right: -50%;
+    }
+  }
+  &__links {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+  }
 }
