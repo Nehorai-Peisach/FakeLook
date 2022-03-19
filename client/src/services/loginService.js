@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 // import logger from '../../logger';
 
 const DOMAIN_NAME = process.env.DOMAIN_NAME;
@@ -17,8 +18,9 @@ export default async function loginService(username, password) {
   if (user.data === '') {
     console.log(`user ${username} is not in the database`);
   } else {
+    const cookies = new Cookies();
+    cookies.set('token', user.data.accessToken);
     console.log(`user ${username} is connected!`);
-    console.log(user.data);
     return user.data;
   }
 }
