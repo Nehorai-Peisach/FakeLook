@@ -1,14 +1,22 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const Logger = require('../logger/index');
+const logger = require('../logger/index');
+const loginService = require('./services/loginService');
 
 const PORT = process.env.PORT;
 
-app.listen(PORT, () => {
-  Logger.silly(`Connected to ${PORT}`);
+app.use(express.json());
+
+app.post('/login', async (req, res) => {
+  try {
+    const result = await loginService(req.body);
+    res.send(result);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
-app.get('/', (req, res) => {
-  res.send('Connected!');
+app.listen(PORT, () => {
+  logger.silly(`Authentication_server is running on port:${PORT}`);
 });
