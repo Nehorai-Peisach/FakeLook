@@ -10,8 +10,9 @@ const PORT = process.env.GATEWAY_PORT;
 app.use(express.json());
 app.use(cors());
 
+//
 app.use('/api/authRoutes', authRouter);
 
 app.listen(PORT, () => {
-  logger.http(`Gateway_server is running on port:${PORT}`);
+  logger.http((path = `Gateway_server is running on port:${PORT}`));
 });

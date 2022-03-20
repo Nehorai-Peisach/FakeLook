@@ -7,7 +7,7 @@ const myFormat = printf(({ level, message, timestamp }) => {
 
 const developLogger = () => {
   return createLogger({
-    level: 'silly',
+    level: process.env.LOG_LEVEL || 'silly',
     format: combine(format.colorize(), timestamp({ format: 'HH:mm:ss' }), myFormat),
     transports: [new transports.Console()],
   });

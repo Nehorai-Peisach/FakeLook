@@ -2,7 +2,7 @@ import { Container, Hr, Btn, Input, Link, Title, IconBtn } from '../uiKit/UiKIt'
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useState } from 'react';
-import loginService from '../../services/loginService';
+import loginService from '../../services/signInUpService';
 
 const SignIn = (props) => {
   const [username, setUsername] = useState('');
