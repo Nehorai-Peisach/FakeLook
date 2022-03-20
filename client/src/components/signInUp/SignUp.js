@@ -1,18 +1,10 @@
-import {
-  Container,
-  Hr,
-  Btn,
-  Input,
-  Link,
-  Title,
-  IconBtn
-} from '../uiKit/UiKIt';
+import { Container, Hr, Btn, Input, Link, Title, IconBtn } from '../uiKit/UiKIt';
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useState } from 'react';
 import loginService from '../../services/loginService';
 
-const Login = (props) => {
+const SignUp = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,14 +15,30 @@ const Login = (props) => {
   return (
     <section className="login__page">
       <Container className="login__container">
-        <Title className="login__title">Sign In</Title>
+        <Title className="login__title">Sign Up</Title>
         <Input
-          type="text"
+          type="name"
           onChange={(e) => {
             setUsername(e.target.value);
           }}
         >
-          Username...
+          Full Name...
+        </Input>
+        <Input
+          type="email"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        >
+          Email...
+        </Input>
+        <Input
+          type="password"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        >
+          Password...
         </Input>
         <Input
           type="password"
@@ -38,21 +46,15 @@ const Login = (props) => {
             setPassword(e.target.value);
           }}
         >
-          Password...
+          Confirm Password...
         </Input>
-        <Btn onClick={onLoginHandler}>Login</Btn>
-        <div className="login__links">
-          <Link to="#">Forgot password?</Link>
-          <Link to="#">Create Account</Link>
-        </div>
+        <Btn onClick={onLoginHandler}>Sign up</Btn>
+        <Link to="/signin">Already have an account - sign in</Link>
         <Hr />
-        {/* <IconBtn icon={BsFacebook} className="blue">
-          Login with Facebook
-        </IconBtn> */}
         <LoginGoogle />
       </Container>
     </section>
   );
 };
 
-export default Login;
+export default SignUp;
