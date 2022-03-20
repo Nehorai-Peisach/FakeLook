@@ -4,7 +4,7 @@ const logger = require('../logger/index');
 const loginService = require('./services/loginService');
 const jwt = require('jsonwebtoken');
 
-const PORT = process.env.PORT;
+const PORT = process.env.AUTH_PORT;
 const app = express();
 
 app.use(express.json());

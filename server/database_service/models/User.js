@@ -8,15 +8,19 @@ const UserSchema = {
   },
   image_url: {
     type: String,
-    required: true
+    required: false
   },
   username: {
     type: String,
     required: true
   },
-  password: {
+  email: {
     type: String,
     required: true
+  },
+  password: {
+    type: String,
+    required: false
   },
   google_id: {
     type: String,

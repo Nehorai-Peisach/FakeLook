@@ -3,7 +3,7 @@ const express = require('express');
 const logger = require('../logger');
 const app = express();
 
-const PORT = process.env.PORT;
+const PORT = process.env.SOCIAL_PORT;
 
 app.listen(PORT, () => {
   logger.silly(`Connected to ${PORT}`);
