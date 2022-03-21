@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Input, Title, Btn } from 'components/uiKit/UiKIt';
 import { storage } from 'firebases';
 import { v4 as uuidv4 } from 'uuid';
-import newPostService from 'services/newPostService';
+import newPostService from 'services/postServices/newPostService';
 
 const NewPost = (props) => {
   const [image, setImage] = useState({});

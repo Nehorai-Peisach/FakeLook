@@ -2,14 +2,27 @@ import { Container, Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKi
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useState } from 'react';
-import loginService from 'services/signUpService';
+import loginService from 'services/authServices/signUpService';
 
 const SignUp = (props) => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [check, setCheck] = useState('');
+  let samePassword = false;
+  const checkPassword = (input) => {
+    if (input === password) {
+      samePassword = true;
+      setCheck('');
+    } else {
+      samePassword = false;
+      setCheck('input__error');
+    }
+  };
+
   const onLoginHandler = async () => {
-    loginService(username, password);
+    loginService(name, email, password);
   };
 
   return (
@@ -17,33 +30,39 @@ const SignUp = (props) => {
       <Container className="login__container">
         <Title className="login__title">Sign Up</Title>
         <Input
+          validation={true}
           type="name"
-          onChange={(e) => {
-            setUsername(e.target.value);
+          onChange={(value) => {
+            setName(value);
           }}
         >
           Full Name...
         </Input>
         <Input
+          validation={true}
           type="email"
-          onChange={(e) => {
-            setUsername(e.target.value);
+          onChange={(value) => {
+            setEmail(value);
           }}
         >
           Email...
         </Input>
         <Input
+          validation={true}
+          strength={true}
           type="password"
-          onChange={(e) => {
-            setUsername(e.target.value);
+          onChange={(value) => {
+            setPassword(value);
           }}
         >
           Password...
         </Input>
         <Input
+          validation={true}
+          className={check}
           type="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
+          onChange={(value) => {
+            checkPassword(value);
           }}
         >
           Confirm Password...
