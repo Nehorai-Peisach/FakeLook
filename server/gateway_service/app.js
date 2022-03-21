@@ -15,5 +15,5 @@ app.use('/api/auth', authRouter);
 app.use('/api/posts', posrtsRouter);
 
 app.listen(PORT, () => {
-  logger.http(`Gateway_server is running on port:${PORT}`);
+  logger.http((path = `Gateway_server is running on port:${PORT}`));
 });

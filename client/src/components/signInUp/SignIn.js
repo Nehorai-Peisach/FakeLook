@@ -1,18 +1,10 @@
-import {
-  Container,
-  Hr,
-  Btn,
-  Input,
-  Link,
-  Title,
-  IconBtn
-} from '../uiKit/UiKIt';
+import { Container, Hr, Btn, Input, Link, Title, IconBtn } from '../uiKit/UiKIt';
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useState } from 'react';
-import loginService from '../../services/loginService';
+import loginService from '../../services/signInUpService';
 
-const Login = (props) => {
+const SignIn = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,7 +17,7 @@ const Login = (props) => {
       <Container className="login__container">
         <Title className="login__title">Sign In</Title>
         <Input
-          type="text"
+          type="username"
           onChange={(e) => {
             setUsername(e.target.value);
           }}
@@ -40,10 +32,10 @@ const Login = (props) => {
         >
           Password...
         </Input>
-        <Btn onClick={onLoginHandler}>Login</Btn>
+        <Btn onClick={onLoginHandler}>Sign in</Btn>
         <div className="login__links">
-          <Link to="#">Forgot password?</Link>
-          <Link to="#">Create Account</Link>
+          <Link to="#">Forgot password</Link>
+          <Link to="/signup">Create Account</Link>
         </div>
         <Hr />
         {/* <IconBtn icon={BsFacebook} className="blue">
@@ -55,4 +47,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default SignIn;
