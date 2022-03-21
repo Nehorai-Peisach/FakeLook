@@ -6,7 +6,7 @@ const UserSchema = {
     type: String,
     required: true
   },
-  image_url: {
+  image_id: {
     type: String,
     required: false
   },
