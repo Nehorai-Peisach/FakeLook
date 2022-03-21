@@ -1,8 +1,8 @@
-import { Container, Hr, Btn, Input, Link, Title, IconBtn } from '../uiKit/UiKIt';
+import { Container, Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKit/UiKIt';
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useState } from 'react';
-import loginService from '../../services/signInUpService';
+import loginService from 'services/signUpService';
 
 const SignUp = (props) => {
   const [username, setUsername] = useState('');

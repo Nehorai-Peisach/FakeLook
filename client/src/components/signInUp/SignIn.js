@@ -1,15 +1,20 @@
-import { Container, Hr, Btn, Input, Link, Title, IconBtn } from '../uiKit/UiKIt';
+import { Container, Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKit/UiKIt';
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useState } from 'react';
-import loginService from '../../services/signInUpService';
+import signInService from 'services/signInService';
 
 const SignIn = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const onLoginHandler = async () => {
-    loginService(username, password);
+    const result = await signInService(username, password);
+    if (result) {
+      console.log('user connected:' + result.data.username);
+    } else {
+      console.log('user not found');
+    }
   };
 
   return (

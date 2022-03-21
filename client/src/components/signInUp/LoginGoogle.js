@@ -31,11 +31,6 @@ const LoginGoogle = (props) => {
       onFailure={responseGoogle}
       cookiePolicy={'single_host_origin'}
     />
-    // (
-    //   <IconBtn icon={BsGoogle} className="grey">
-    //     Login with Google
-    //   </IconBtn>
-    // )
   );
 };
 

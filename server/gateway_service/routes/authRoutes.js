@@ -11,7 +11,7 @@ router.route('/sign-in').post((req, res) => {
   axios
     .post(DOMAIN_NAME + AUTH_PORT + '/sign-in', req.body)
     .then((result) => {
-      logger.debug('sign-in - result: ' + result);
+      logger.debug('sign-in - result:' + JSON.stringify(result.data));
       res.send(result.data);
     })
     .catch((err) => {

@@ -13,7 +13,7 @@ router.route('/new-post').post((req, res) => {
       res.send(result.data);
     })
     .catch((err) => {
-      logger.error(err);
+      logger.error('posts:' + err );
     });
 });
 

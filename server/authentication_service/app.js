@@ -9,23 +9,23 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/login', async (req, res) => {
+app.post('/sign-in', async (req, res) => {
   try {
     const result = await loginService(req.body);
     const accessToken = generateAccessToken(result);
     res.send({ data: result, accessToken: accessToken });
   } catch (error) {
-    logger.error(error);
+    logger.error('auth.sign-in:' + error);
   }
 });
 
 function generateAccessToken(user) {
   const username = { name: user.username };
   return jwt.sign(username, user._id, {
-    expiresIn: '1800s'
+    expiresIn: '1800s',
   });
 }
 
 app.listen(PORT, () => {
-  logger.silly(`Authentication_server is running on port:${PORT}`);
+  logger.http(`Authentication_server is running on port:${PORT}`);
 });
