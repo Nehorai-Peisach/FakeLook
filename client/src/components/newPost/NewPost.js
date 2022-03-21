@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Container, Input, Title, Btn } from '../uiKit/UiKIt';
-import { storage } from '../../firebase';
+import { Container, Input, Title, Btn } from 'components/uiKit/UiKIt';
+import { storage } from 'firebases';
 import { v4 as uuidv4 } from 'uuid';
-import newPostService from '../../services/newPostService';
+import newPostService from 'services/newPostService';
 
 const NewPost = (props) => {
   const [image, setImage] = useState({});
-  const [imageUrl, setImageUrl] = useState(
-    'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'
-  );
+  const [imageUrl, setImageUrl] = useState('https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg');
   const [text, setText] = useState('');
   const [tags, setTags] = useState('');
   const [userTags, setUserTags] = useState('');
@@ -37,11 +35,10 @@ const NewPost = (props) => {
       user_id: { _id: 'demo' },
       text: text,
       tags: tagsArray,
-      userTags: userTagsArray
+      userTags: userTagsArray,
     };
     const result = await newPostService(newPost);
-    if (result.data.msg)
-      setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
+    if (result.data.msg) setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
     else setAfterPostContent(<h1>Post failed to upload!</h1>);
   };
 

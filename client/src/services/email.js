@@ -1,5 +1,3 @@
-const EmailValidation = (props) => {
-    
-};
+// const EmailValidation = (props) => {};
 
-export default EmailValidation;
+// export default EmailValidation;

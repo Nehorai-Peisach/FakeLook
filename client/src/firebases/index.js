@@ -8,7 +8,7 @@ const firebaseConfig = {
   storageBucket: 'fakelook-storage.appspot.com',
   messagingSenderId: '346898350323',
   appId: '1:346898350323:web:f81e8b23708224c1aa3786',
-  measurementId: 'G-HC6DWKMCT9'
+  measurementId: 'G-HC6DWKMCT9',
 };
 
 firebase.initializeApp(firebaseConfig);
