@@ -11,7 +11,7 @@ export default async function loginService(username, password) {
     password: password
   };
   const user = await axios.post(
-    'http://localhost:4000/api/authRoutes/login',
+    'http://localhost:4000/api/auth/login',
     newUser
   );
   // logger.http(`User ${res.data.username} as loged in`);
