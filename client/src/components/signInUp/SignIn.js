@@ -40,7 +40,7 @@ const SignIn = (props) => {
         <Btn onClick={onLoginHandler}>Sign in</Btn>
         <div className="login__links">
           <Link to="#">Forgot password</Link>
-          <Link to="/signup">Create Account</Link>
+          <Link to="/sign-up">Create Account</Link>
         </div>
         <Hr />
         {/* <IconBtn icon={BsFacebook} className="blue">

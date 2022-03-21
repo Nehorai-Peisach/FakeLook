@@ -49,7 +49,7 @@ const SignUp = (props) => {
           Confirm Password...
         </Input>
         <Btn onClick={onLoginHandler}>Sign up</Btn>
-        <Link to="/signin">Already have an account - sign in</Link>
+        <Link to="/sign-in">Already have an account - sign in</Link>
         <Hr />
         <LoginGoogle />
       </Container>

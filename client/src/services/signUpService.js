@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import logger from 'logger';
 
 export default async function signUpService(username, password) {
   const newUser = {
