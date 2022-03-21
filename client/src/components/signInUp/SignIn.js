@@ -2,13 +2,15 @@ import { Container, Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKi
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useState } from 'react';
-import signInService from 'services/signInService';
+import signInService from 'services/authServices/signInService';
+import { InputValitation } from 'services/Valitations';
 
 const SignIn = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const onLoginHandler = async () => {
+    InputValitation.check(username);
     const result = await signInService(username, password);
     if (result) {
       console.log('user connected:' + result.data.username);
@@ -22,17 +24,19 @@ const SignIn = (props) => {
       <Container className="login__container">
         <Title className="login__title">Sign In</Title>
         <Input
+          validation={true}
           type="username"
-          onChange={(e) => {
-            setUsername(e.target.value);
+          onChange={(value) => {
+            setUsername(value);
           }}
         >
           Username...
         </Input>
         <Input
+          validation={true}
           type="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
+          onChange={(value) => {
+            setPassword(value);
           }}
         >
           Password...

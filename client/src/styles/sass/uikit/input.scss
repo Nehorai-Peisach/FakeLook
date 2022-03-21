@@ -37,4 +37,12 @@ input:-webkit-autofill {
       border: 1px solid #ccc;
     }
   }
+  &__error {
+    > .input__input {
+      &:focus {
+        border: 1px solid red !important;
+      }
+    }
+    background-color: rgba(255, 0, 0, 0.1);
+  }
 }
