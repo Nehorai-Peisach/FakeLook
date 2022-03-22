@@ -56,7 +56,6 @@ const PasswordStrength = (element, password) => {
     if (password.length > 6) checks[4] = true;
     checks.forEach((x) => x && count++);
 
-    console.log(element);
     if (count > 4) {
       element.className = 'strength__strong';
       element.textContent = 'Strong';

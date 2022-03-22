@@ -7,11 +7,10 @@ export default async function signInService(username, password) {
     password: password,
   };
   const user = await axios.post('http://localhost:4000/api/auth/sign-in', newUser);
-  if (user.data === '') {
-    return null;
-  } else {
+  if (user) {
     const cookies = new Cookies();
     cookies.set('token', user.data.accessToken);
     return user.data;
   }
+  return null;
 }

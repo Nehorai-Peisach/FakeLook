@@ -9,6 +9,12 @@ body,
   width: 100vw;
   height: 100vh; }
 
+.disable {
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.8; }
+
 :root {
   font-size: 10px; }
 

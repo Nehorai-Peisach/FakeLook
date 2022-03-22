@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const logger = require('../logger/index');
 const loginService = require('./services/loginService');
+const registerService = require('./services/registerService');
 const jwt = require('jsonwebtoken');
 
 const PORT = process.env.AUTH_PORT;
@@ -15,7 +16,18 @@ app.post('/sign-in', async (req, res) => {
     const accessToken = generateAccessToken(result);
     res.send({ data: result, accessToken: accessToken });
   } catch (error) {
-    logger.error('auth.sign-in:' + error);
+    logger.error('auth.sign-in: ' + error);
+    res.send(null);
+  }
+});
+
+app.post('/sign-up', async (req, res) => {
+  try {
+    const result = await registerService(req.body);
+    res.send(result);
+  } catch (error) {
+    logger.error('auth.sign-up: ' + error);
+    res.send(null);
   }
 });
 
