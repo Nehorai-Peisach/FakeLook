@@ -18,6 +18,14 @@ body,
 :root {
   font-size: 10px; }
 
+.top_btn_color {
+  background-color: rgba(0, 0, 0, 0) !important;
+  color: white !important; }
+
+.active {
+  background-color: #cde9ff !important;
+  color: #333 !important; }
+
 .grey {
   background-color: #dddddd !important;
   color: #333 !important; }
@@ -45,6 +53,8 @@ body,
   padding: 3rem;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem; }
+  .login__container .btn {
+    width: calc(100% - 2rem); }
 
 .login__title {
   margin-bottom: 3rem; }
@@ -116,14 +126,14 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     border: 1px solid red !important; }
 
 .btn {
-  width: calc(100% -1rem);
   padding: 1rem;
   border-radius: 0.5rem;
   font-size: 1.5rem;
   font-weight: 600;
   background-color: #fcb13a;
   color: black;
-  text-align: center; }
+  text-align: center;
+  width: max-content; }
   .btn:hover {
     opacity: 0.8;
     cursor: pointer; }
@@ -156,3 +166,55 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   border-top: 1px solid white;
   width: 90%;
   margin: 0 5% 0 5%; }
+
+.main {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 5rem 1fr;
+  grid-template-columns: 1fr;
+  background-color: #eff8ff; }
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .profile .header {
+    padding: 2rem;
+    width: max-content;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center; }
+    .profile .header .img {
+      height: 10rem;
+      width: 10rem;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 1px 1px 3px grey; }
+    .profile .header .details {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-rows: 1fr 2fr 1fr;
+      align-items: center;
+      justify-items: center; }
+      .profile .header .details .add_friend {
+        grid-area: 1/3; }
+      .profile .header .details .bio {
+        grid-area: 2/2; }
+      .profile .header .details .friends {
+        grid-area: 3/1; }
+      .profile .header .details .likes {
+        grid-area: 3/2; }
+      .profile .header .details .posts {
+        grid-area: 3/3; }
+
+.top_bar {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0099ff; }
+  .top_bar .pages_btns {
+    display: flex; }

@@ -1,5 +1,10 @@
 $bg_first: #3b447f;
 $bg_second: #9366ab;
+
+$bg: #eff8ff;
+$bg_top: #0099ff;
+$top_btn_active: #cde9ff;
+
 $btn: #fcb13a;
 $DARK_BG: #36373c;
 
@@ -7,6 +12,16 @@ $white: #ffffff;
 $grey: #333;
 $grey_light: #dddddd;
 $blue: #4064ac;
+
+.top_btn_color {
+  background-color: rgba(0, 0, 0, 0) !important;
+  color: white !important;
+}
+
+.active {
+  background-color: $top_btn_active !important;
+  color: #333 !important;
+}
 
 .grey {
   background-color: $grey_light !important;

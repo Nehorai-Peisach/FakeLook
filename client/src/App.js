@@ -5,18 +5,20 @@ import NewPost from './components/newPost/NewPost';
 import Map from 'components/map/Map';
 import Feed from 'components/feed/Feed';
 import Profile from 'components/profile/Profile';
+import Main from 'components/app/Main';
 
 function App() {
   return (
     <div className="app">
       <BrowserRouter>
-        <Routes >
+        <Routes>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/new-post" element={<NewPost />} />
+          <Route path="/app" element={<Main />} />
+          {/* <Route path="/new-post" element={<NewPost />} />
           <Route path="/map" element={<Map />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} /> */}
         </Routes>
       </BrowserRouter>
     </div>
