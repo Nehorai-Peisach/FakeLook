@@ -1,0 +1,24 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  width: max-content;
+  .header {
+    .profile_img {
+    }
+    .username {
+    }
+  }
+  .img {
+  }
+  .bottom {
+    .like_btn {
+    }
+    .comment_container {
+      .comment_input {
+      }
+      .comment_btn {
+      }
+    }
+  }
+}

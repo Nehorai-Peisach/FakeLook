@@ -6,7 +6,9 @@ import newPostService from 'services/postServices/newPostService';
 
 const NewPost = (props) => {
   const [image, setImage] = useState({});
-  const [imageUrl, setImageUrl] = useState('https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg');
+  const [imageUrl, setImageUrl] = useState(
+    'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'
+  );
   const [text, setText] = useState('');
   const [tags, setTags] = useState('');
   const [userTags, setUserTags] = useState('');
@@ -32,13 +34,18 @@ const NewPost = (props) => {
       image_id: id,
       location: { location: 'demo' },
       date: Date.now(),
-      user_id: { _id: 'demo' },
+      user_id: { _id: props.user._id },
       text: text,
       tags: tagsArray,
-      userTags: userTagsArray,
+      userTags: userTagsArray
     };
     const result = await newPostService(newPost);
-    if (result.data.msg) setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
+
+    // for the real-time feed update
+    props.socket.emit('new_post');
+
+    if (result.data.msg)
+      setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
     else setAfterPostContent(<h1>Post failed to upload!</h1>);
   };
 
