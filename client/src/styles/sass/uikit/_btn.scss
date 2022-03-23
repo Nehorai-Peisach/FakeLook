@@ -1,5 +1,4 @@
 .btn {
-  width: calc(100% -1rem);
   padding: 1rem;
   border-radius: 0.5rem;
   font-size: 1.5rem;
@@ -7,6 +6,7 @@
   background-color: $btn;
   color: black;
   text-align: center;
+  width: max-content;
 
   &:hover {
     opacity: 0.8;

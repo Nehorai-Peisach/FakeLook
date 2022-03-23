@@ -1,28 +1,52 @@
 import { Container, Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKit/UiKIt';
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import loginService from 'services/authServices/signUpService';
+import { EmailValidation, PasswordValidation } from 'services/Valitations';
+import Alerter from 'services/alertService/Alerter';
 
 const SignUp = (props) => {
   const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+
+  const [btnClass, setBtnClass] = useState('');
+  useEffect(() => {
+    if (name.length > 0 && username.length > 0 && email.length > 0 && password.length > 0 && rePassword === password) setBtnClass('');
+    else setBtnClass('disable');
+  }, [name, username, email, password, rePassword]);
 
   const [check, setCheck] = useState('');
-  let samePassword = false;
-  const checkPassword = (input) => {
-    if (input === password) {
-      samePassword = true;
-      setCheck('');
-    } else {
-      samePassword = false;
-      setCheck('input__error');
-    }
-  };
+  useEffect(() => {
+    if (rePassword === password) setCheck('');
+    else setCheck('input__error');
+  }, [password, rePassword]);
 
   const onLoginHandler = async () => {
-    loginService(name, email, password);
+    if (PasswordValidation(password) && EmailValidation(email)) {
+      const result = await loginService(name, username, email, password);
+      console.log(result);
+      if (result) {
+        // const client = new SMTPClient({
+        //   user: 'nehoraiprojects@gmail.com',
+        //   password: 'lzyvkhfmeiqfmldw',
+        //   host: 'smtp.gmail.com',
+        //   ssl: true,
+        // });
+        // client.send({
+        //   from: 'nehoraiprojects@gmail.com',
+        //   to: result.email,
+        //   subject: 'Verify your email in FakeLook',
+        // });
+        window.location.href = '/sign-in';
+        Alerter('User Registerd, Go to your email and verify!');
+      } else {
+        Alerter('Email already in use, Use different Email!');
+      }
+    }
   };
 
   return (
@@ -37,6 +61,15 @@ const SignUp = (props) => {
           }}
         >
           Full Name...
+        </Input>
+        <Input
+          validation={true}
+          type="name"
+          onChange={(value) => {
+            setUsername(value);
+          }}
+        >
+          Username...
         </Input>
         <Input
           validation={true}
@@ -62,12 +95,14 @@ const SignUp = (props) => {
           className={check}
           type="password"
           onChange={(value) => {
-            checkPassword(value);
+            setRePassword(value);
           }}
         >
           Confirm Password...
         </Input>
-        <Btn onClick={onLoginHandler}>Sign up</Btn>
+        <Btn onClick={onLoginHandler} className={btnClass}>
+          Sign up
+        </Btn>
         <Link to="/sign-in">Already have an account - sign in</Link>
         <Hr />
         <LoginGoogle />
