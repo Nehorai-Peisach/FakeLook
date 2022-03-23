@@ -5,17 +5,26 @@ import NewPost from './components/newPost/NewPost';
 import Map from 'components/map/Map';
 import Feed from 'components/feed/Feed';
 import Profile from 'components/profile/Profile';
+import io from 'socket.io-client';
+import { useState } from 'react';
+
+const socket = io.connect('http://localhost:4005');
 
 function App() {
+  const [user, setUser] = useState({});
+
   return (
     <div className="app">
       <BrowserRouter>
         <Routes>
-          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-in" element={<SignIn setUser={setUser} />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/new-post" element={<NewPost />} />
+          <Route
+            path="/new-post"
+            element={<NewPost socket={socket} user={user} />}
+          />
           <Route path="/map" element={<Map />} />
-          <Route path="/feed" element={<Feed />} />
+          <Route path="/feed" element={<Feed socket={socket} />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>

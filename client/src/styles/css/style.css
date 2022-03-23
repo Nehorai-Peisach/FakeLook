@@ -20,6 +20,9 @@ body,
   background-color: #4064ac !important;
   color: #ffffff !important; }
 
+.transparent {
+  background-color: transparent !important; }
+
 .login__page {
   height: 100%;
   display: flex;
@@ -150,3 +153,9 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   border-top: 1px solid white;
   width: 90%;
   margin: 0 5% 0 5%; }
+
+.post {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  width: max-content; }
