@@ -123,11 +123,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   border-radius: 0.5rem;
   font-size: 1.5rem;
   background: rgba(255, 255, 255, 0.1) !important;
-  color: white;
   border: 1px solid rgba(0, 0, 0, 0); }
-  .input__input::placeholder {
-    color: white;
-    opacity: 0.5; }
   .input__input:focus {
     border: 1px solid #ccc; }
 
@@ -204,6 +200,43 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   flex-direction: column;
   height: max-content;
   width: max-content; }
+  .post .header {
+    padding: 1rem;
+    display: flex;
+    align-items: center; }
+    .post .header .profile_img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%; }
+    .post .header .username {
+      font-weight: 800;
+      font-size: 1.4rem;
+      padding-left: 1rem; }
+  .post .img {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+    object-position: 50% 30%; }
+  .post .bottom_header {
+    display: flex; }
+    .post .bottom_header .like_btn {
+      color: #555; }
+    .post .bottom_header .view_comments {
+      color: #333;
+      align-self: center; }
+  .post .comment_container {
+    display: flex;
+    box-shadow: 1px 1px 2px gray;
+    border-radius: 1rem; }
+    .post .comment_container .comment_input {
+      color: gray; }
+      .post .comment_container .comment_input::placeholder {
+        color: gray;
+        opacity: 0.5; }
+    .post .comment_container .comment_btn {
+      margin: 0;
+      padding: 0;
+      background-color: transparent; }
 
 .main {
   height: 100%;
@@ -259,3 +292,37 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   .top_bar .pages_btns {
     justify-self: flex-end;
     display: flex; }
+
+.new_post {
+  height: max-content;
+  width: max-content; }
+  .new_post .interface {
+    display: flex; }
+    .new_post .interface .img_container {
+      display: grid;
+      grid-template-rows: 1fr;
+      grid-template-columns: 1fr;
+      height: 500px;
+      width: 500px;
+      align-items: center;
+      justify-items: center; }
+      .new_post .interface .img_container .new_img {
+        height: 400px;
+        width: 400px;
+        grid-area: 1/1;
+        object-position: 50% 30%;
+        object-fit: cover; }
+      .new_post .interface .img_container .file_btn {
+        align-self: center;
+        justify-self: center;
+        overflow: hidden;
+        grid-area: 1/1;
+        background-color: lightblue;
+        border-radius: 1rem;
+        box-shadow: 1px 1px 10px grey; }
+        .new_post .interface .img_container .file_btn .img_input {
+          display: none; }
+    .new_post .interface .inputs_container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around; }

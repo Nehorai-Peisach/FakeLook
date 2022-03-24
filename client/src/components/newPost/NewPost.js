@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Container, Input, Title, Btn } from 'components/uiKit/UiKIt';
+import { Container, Input, Title, Btn, IconBtn } from 'components/uiKit/UiKIt';
 import { storage } from 'firebases';
 import { v4 as uuidv4 } from 'uuid';
 import newPostService from 'services/postServices/newPostService';
+import { FiDownload } from 'react-icons/fi';
 
 const NewPost = (props) => {
   const [image, setImage] = useState({});
-  const [imageUrl, setImageUrl] = useState(
-    'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'
-  );
+  const [imageUrl, setImageUrl] = useState();
   const [text, setText] = useState('');
   const [tags, setTags] = useState('');
   const [userTags, setUserTags] = useState('');
@@ -16,6 +15,7 @@ const NewPost = (props) => {
   const [afterPostContent, setAfterPostContent] = useState(<></>);
 
   const imageHandler = (e) => {
+    console.log(typeof e);
     const reader = new FileReader();
     setImage(e.target.files[0]);
     reader.readAsDataURL(e.target.files[0]);
@@ -70,42 +70,60 @@ const NewPost = (props) => {
   };
 
   return (
-    <section style={{ backgroundColor: 'green' }}>
-      <Container>
-        <Title>New Post</Title>
-        <img src={imageUrl} />
-        <Input type="file" onChange={imageHandler}>
-          upload Image
-        </Input>
-        <Input
-          type="text"
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        >
-          Description...
-        </Input>
-        <p>*enter your tags with a: ", " between them</p>
-        <Input
-          type="text"
-          onChange={(e) => {
-            setTags(e.target.value);
-          }}
-        >
-          Tags...
-        </Input>
-        <Input
-          type="text"
-          onChange={(e) => {
-            setUserTags(e.target.value);
-          }}
-        >
-          Friend tags...
-        </Input>
-        <Btn onClick={postHandler}>Post</Btn>
-        {afterPostContent}
-      </Container>
-    </section>
+    <div className="new_post">
+      <Title className="new_post_title">Create Post</Title>
+      <div className="interface">
+        <div className="img_container">
+          <label className="file_btn">
+            <img className="new_img" src={imageUrl} />
+            <IconBtn className="transparent" icon={FiDownload}>
+              Choose File...
+            </IconBtn>
+            <input
+              className="img_input"
+              type="file"
+              onChange={imageHandler}
+            ></input>
+          </label>
+        </div>
+        <div className="inputs_container">
+          <Input
+            className="caption_input"
+            type="text"
+            onChange={(value) => {
+              setText(value);
+            }}
+          >
+            Description...
+          </Input>
+          <p className="tags_help">
+            *enter your tags with a: ", " between them
+          </p>
+          <Input
+            className="tags_input"
+            type="text"
+            onChange={(value) => {
+              setTags(value);
+            }}
+          >
+            Tags...
+          </Input>
+          <Input
+            className="friends_input"
+            type="text"
+            onChange={(value) => {
+              setUserTags(value);
+            }}
+          >
+            Friend tags...
+          </Input>
+          <Btn className="post_btn grey" onClick={postHandler}>
+            Post
+          </Btn>
+          {afterPostContent}
+        </div>
+      </div>
+    </div>
   );
 };
 

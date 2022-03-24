@@ -4,13 +4,24 @@ import MapPage from '../map/Map';
 import NewPostPage from '../newPost/NewPost';
 import ProfilePage from '../profile/Profile';
 import TopBar from './TopBar';
+
+import io from 'socket.io-client';
+
+const socket = io.connect('http://localhost:4005');
+
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
+
 
 const Main = (props) => {
   const user = cookies.get('user');
   const [index, setIndex] = useState(0);
-  const pages = [<FeedPage />, <MapPage />, <NewPostPage />, <ProfilePage />];
+  const pages = [
+    <FeedPage socket={socket} user={props.user} />,
+    <MapPage />,
+    <NewPostPage user={props.user} />,
+    <ProfilePage />
+  ];
 
   return (
     <div className="main">
