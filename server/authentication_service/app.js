@@ -13,10 +13,10 @@ app.use(express.json());
 app.post('/sign-in', async (req, res) => {
   try {
     const result = await loginService(req.body);
-    const accessToken = generateAccessToken(result);
-    res.send({ data: result, accessToken: accessToken });
+    if (result) res.send({ data: result, accessToken: generateAccessToken(result) });
+    else res.send(null);
   } catch (error) {
-    logger.error('auth.sign-in: ' + error);
+    logger.error('An error occurred', error, 'auth/app/signin');
     res.send(null);
   }
 });
@@ -26,7 +26,7 @@ app.post('/sign-up', async (req, res) => {
     const result = await registerService(req.body);
     res.send(result);
   } catch (error) {
-    logger.error('auth.sign-up: ' + error);
+    logger.error('An error occurred', error, 'auth/app/signup');
     res.send(null);
   }
 });

@@ -1,11 +1,15 @@
 .top_bar {
   padding: 1rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  justify-content: space-between;
   background-color: $bg_top;
 
+  .searchbar {
+    justify-self: center;
+  }
   .pages_btns {
+    justify-self: flex-end;
     display: flex;
   }
 }

@@ -12,7 +12,7 @@ const TopBar = (props) => {
   };
   return (
     <div className="top_bar">
-      <IconBtn icon={IoNotificationsOutline} className="top_btn_color" click={alert} />
+      <IconBtn icon={IoNotificationsOutline} className="notification top_btn_color" click={alert} />
       <SearchBar />
       <div className="pages_btns">
         <IconBtn icon={IoImagesOutline} className={classes[0]} click={() => props.to(0)} />

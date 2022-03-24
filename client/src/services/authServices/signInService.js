@@ -10,6 +10,7 @@ export default async function signInService(username, password) {
   if (user) {
     const cookies = new Cookies();
     cookies.set('token', user.data.accessToken);
+    cookies.set('user', user.data);
     return user.data;
   }
   return null;

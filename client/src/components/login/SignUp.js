@@ -41,7 +41,8 @@ const SignUp = (props) => {
         //   to: result.email,
         //   subject: 'Verify your email in FakeLook',
         // });
-        window.location.href = '/sign-in';
+        // window.location.href = '/sign-in';
+        props.setIndex(0);
         Alerter('User Registerd, Go to your email and verify!');
       } else {
         Alerter('Email already in use, Use different Email!');
@@ -50,64 +51,62 @@ const SignUp = (props) => {
   };
 
   return (
-    <section className="login__page">
-      <Container className="login__container">
-        <Title className="login__title">Sign Up</Title>
-        <Input
-          validation={true}
-          type="name"
-          onChange={(value) => {
-            setName(value);
-          }}
-        >
-          Full Name...
-        </Input>
-        <Input
-          validation={true}
-          type="name"
-          onChange={(value) => {
-            setUsername(value);
-          }}
-        >
-          Username...
-        </Input>
-        <Input
-          validation={true}
-          type="email"
-          onChange={(value) => {
-            setEmail(value);
-          }}
-        >
-          Email...
-        </Input>
-        <Input
-          validation={true}
-          strength={true}
-          type="password"
-          onChange={(value) => {
-            setPassword(value);
-          }}
-        >
-          Password...
-        </Input>
-        <Input
-          validation={true}
-          className={check}
-          type="password"
-          onChange={(value) => {
-            setRePassword(value);
-          }}
-        >
-          Confirm Password...
-        </Input>
-        <Btn onClick={onLoginHandler} className={btnClass}>
-          Sign up
-        </Btn>
-        <Link to="/sign-in">Already have an account - sign in</Link>
-        <Hr />
-        <LoginGoogle />
-      </Container>
-    </section>
+    <Container className="login__container">
+      <Title className="login__title">Sign Up</Title>
+      <Input
+        validation={true}
+        type="name"
+        onChange={(value) => {
+          setName(value);
+        }}
+      >
+        Full Name...
+      </Input>
+      <Input
+        validation={true}
+        type="name"
+        onChange={(value) => {
+          setUsername(value);
+        }}
+      >
+        Username...
+      </Input>
+      <Input
+        validation={true}
+        type="email"
+        onChange={(value) => {
+          setEmail(value);
+        }}
+      >
+        Email...
+      </Input>
+      <Input
+        validation={true}
+        strength={true}
+        type="password"
+        onChange={(value) => {
+          setPassword(value);
+        }}
+      >
+        Password...
+      </Input>
+      <Input
+        validation={true}
+        className={check}
+        type="password"
+        onChange={(value) => {
+          setRePassword(value);
+        }}
+      >
+        Confirm Password...
+      </Input>
+      <Btn onClick={onLoginHandler} className={btnClass}>
+        Sign up
+      </Btn>
+      <Link click={() => props.setIndex(0)}>Already have an account - sign in</Link>
+      <Hr />
+      <LoginGoogle />
+    </Container>
   );
 };
 

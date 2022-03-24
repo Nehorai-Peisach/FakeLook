@@ -12,6 +12,8 @@ $white: #ffffff;
 $grey: #333;
 $grey_light: #dddddd;
 $blue: #4064ac;
+$red_light: rgb(255, 107, 107);
+$green_light: rgb(132, 255, 107);
 
 .top_btn_color {
   background-color: rgba(0, 0, 0, 0) !important;
@@ -34,5 +36,15 @@ $blue: #4064ac;
 }
 
 .transparent {
-    background-color: transparent !important;
+  background-color: transparent !important;
+}
+
+.green {
+  background-color: $green_light !important;
+  color: $grey !important;
+}
+
+.red {
+  background-color: $red_light !important;
+  color: $grey !important;
 }
