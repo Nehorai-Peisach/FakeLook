@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import FeedPage from '../feed/Feed';
-import MapPage from '../map/Map';
+import MapPage from '../map/MapPage';
 import NewPostPage from '../newPost/NewPost';
 import ProfilePage from '../profile/Profile';
 import TopBar from './TopBar';
@@ -19,7 +19,7 @@ const Main = (props) => {
   const pages = [
     <FeedPage socket={socket} user={props.user} />,
     <MapPage />,
-    <NewPostPage user={props.user} />,
+    <NewPostPage user={props.user} socket={socket} />,
     <ProfilePage />
   ];
 
