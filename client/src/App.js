@@ -2,7 +2,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import SignIn from 'components/signInUp/SignIn';
 import SignUp from './components/signInUp/SignUp';
 import NewPost from './components/newPost/NewPost';
-import Map from 'components/map/Map';
+import Map from 'components/map/MapPage';
 import Feed from 'components/feed/Feed';
 import Profile from 'components/profile/Profile';
 import Main from 'components/app/Main';

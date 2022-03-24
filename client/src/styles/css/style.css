@@ -294,3 +294,10 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       display: flex;
       flex-direction: column;
       justify-content: space-around; }
+
+.container {
+  height: 100%;
+  width: 100%; }
+  .container .map {
+    height: 100vh;
+    width: 100vw; }
