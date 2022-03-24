@@ -20,11 +20,7 @@ const TopBar = (props) => {
   };
   return (
     <div className="top_bar">
-      <IconBtn
-        icon={IoNotificationsOutline}
-        className="top_btn_color"
-        onClick={alert}
-      />
+      <IconBtn icon={IoNotificationsOutline} className="notification top_btn_color" click={alert} />
       <SearchBar />
       <div className="pages_btns">
         <IconBtn
