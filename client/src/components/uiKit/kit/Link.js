@@ -3,7 +3,7 @@ const Link = (props) => {
   if (props.className) className = props.className;
 
   const ClickHandler = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     if (props.click) props.click();
   };
 

@@ -1,30 +1,18 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import SignIn from 'components/signInUp/SignIn';
-import SignUp from './components/signInUp/SignUp';
-import NewPost from './components/newPost/NewPost';
-import Map from 'components/map/Map';
-import Feed from 'components/feed/Feed';
-import Profile from 'components/profile/Profile';
 import Main from 'components/app/Main';
 import io from 'socket.io-client';
 import { useState } from 'react';
+import Login from 'components/login/Login';
 
-const socket = io.connect('http://localhost:4005');
+// const socket = io.connect('http://localhost:4005');
 
 function App() {
-  const [user, setUser] = useState({});
-
   return (
     <div className="app">
       <BrowserRouter>
         <Routes>
-          <Route path="/sign-in" element={<SignIn setUser={setUser} />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/" element={<Login />} />
           <Route path="/app" element={<Main />} />
-          {/* <Route path="/new-post" element={<NewPost />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/feed" element={<Feed />} />
-          <Route path="/profile" element={<Profile />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

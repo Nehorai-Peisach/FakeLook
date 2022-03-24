@@ -7,10 +7,11 @@ router.route('/sign-in').post((req, res) => {
   const password = req.body.password;
   User.findOne({ username: username, password: password })
     .then((result) => {
+      logger.debug(result, 'db/auth/signin', 'user was found');
       res.send(result);
     })
     .catch((err) => {
-      logger.error(err);
+      logger.error(err,'db/auth/signin','error in finding user');
     });
 });
 
@@ -30,7 +31,7 @@ router.route('/sign-up').post((req, res) => {
     .then((userFound) => {
       if (userFound) {
         logger.info('Already registed to that Email');
-        if (userFound.password) {
+        if (!userFound.password) {
           User.deleteOne({ email: email }, (err) => {
             if (err) logger.error(err);
           });
