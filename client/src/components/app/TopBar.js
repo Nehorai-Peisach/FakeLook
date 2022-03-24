@@ -1,8 +1,11 @@
 import { IconBtn, SearchBar } from 'components/uiKit/UiKIt';
+import { useState } from 'react';
 import { IoPersonOutline, IoAddCircleOutline, IoImagesOutline, IoLocationOutline, IoNotificationsOutline } from 'react-icons/io5';
 import Alerter from 'services/alertService/Alerter';
+import searchServices from 'services/searchServices/searchServices';
 
 const TopBar = (props) => {
+  const [searchedUsers, setSearchedUsers] = useState([]);
   let classes = ['', '', '', ''];
   for (let i = 0; i < classes.length; i++) {
     props.current === i ? (classes[i] = 'top_btn_color active') : (classes[i] = 'top_btn_color');
@@ -10,10 +13,22 @@ const TopBar = (props) => {
   const alert = () => {
     Alerter('No New Messages!');
   };
+
+  const searchHandler = async (value) => {
+    if (!props.user) return;
+    
+    const res = await searchServices(value, props.user._id);
+    setSearchedUsers(res.data);
+  };
+
+  const userClicked = async (id) => {
+    console.log('User clicked: ' + id);
+  };
+
   return (
     <div className="top_bar">
       <IconBtn icon={IoNotificationsOutline} className="notification top_btn_color" click={alert} />
-      <SearchBar />
+      <SearchBar list={searchedUsers} search={searchHandler} onClick={userClicked} />
       <div className="pages_btns">
         <IconBtn icon={IoImagesOutline} className={classes[0]} click={() => props.to(0)} />
         <IconBtn icon={IoLocationOutline} className={classes[1]} click={() => props.to(1)} />
