@@ -1,18 +1,28 @@
 import { useState } from 'react';
 import FeedPage from '../feed/Feed';
-import MapPage from '../map/Map';
+import MapPage from '../map/MapPage';
 import NewPostPage from '../newPost/NewPost';
 import ProfilePage from '../profile/Profile';
 import TopBar from './TopBar';
 import UpdateNickname from './UpdateNickname';
 import nicknameService from 'services/authServices/nicknameService';
+
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:4005');
+
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
+
 
 const Main = (props) => {
   const [user, setUser] = useState(cookies.get('user').data);
   const [index, setIndex] = useState(0);
-  const pages = [<FeedPage />, <MapPage />, <NewPostPage />, <ProfilePage />];
+  const pages = [
+    <FeedPage socket={socket} user={props.user} />,
+    <MapPage />,
+    <NewPostPage user={props.user} socket={socket} />,
+    <ProfilePage />
+  ];
 
   const nicknameHandler = async (nickname) => {
     if (user) {

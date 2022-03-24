@@ -27,11 +27,11 @@ input:-webkit-autofill {
     border-radius: 0.5rem;
     font-size: 1.5rem;
     background: rgba(255, 255, 255, 0.1) !important;
-    color: white;
-    &::placeholder {
-      color: white;
-      opacity: 0.5;
-    }
+    // color: white;
+    // &::placeholder {
+    //    color: white;
+    //    opacity: 0.5;
+    // }
     border: 1px solid rgba(0, 0, 0, 0);
     &:focus {
       border: 1px solid #ccc;
