@@ -1,13 +1,13 @@
 require('dotenv').config();
 const express = require('express');
-const logger = require('../logger/index');
+const logger = require('../logger');
 const loginService = require('./services/loginService');
 const registerService = require('./services/registerService');
 const jwt = require('jsonwebtoken');
+const nicknameService = require('./services/nicknameService');
 
 const PORT = process.env.AUTH_PORT;
 const app = express();
-
 app.use(express.json());
 
 app.post('/sign-in', async (req, res) => {
@@ -27,6 +27,16 @@ app.post('/sign-up', async (req, res) => {
     res.send(result);
   } catch (error) {
     logger.error('An error occurred', error, 'auth/app/signup');
+    res.send(null);
+  }
+});
+
+app.post('/nickname', async (req, res) => {
+  try {
+    const result = await nicknameService(req.body);
+    res.send(result);
+  } catch (error) {
+    logger.error('An error occurred', error, 'auth/app/nickname');
     res.send(null);
   }
 });

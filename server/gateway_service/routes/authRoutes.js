@@ -13,7 +13,7 @@ router.route('/sign-in').post((req, res) => {
       res.send(result.data);
     })
     .catch((err) => {
-      logger.error(err);
+      logger.error(err, 'gw/auth/signin');
     });
 });
 
@@ -23,6 +23,19 @@ router.route('/sign-up').post((req, res) => {
     .post(DOMAIN_NAME + AUTH_PORT + '/sign-up', req.body)
     .then((result) => {
       logger.debug(JSON.stringify(result.data), 'gw/auth/signup', 'result.data');
+      res.send(result.data);
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
+});
+
+router.route('/nickname').post((req, res) => {
+  logger.info(JSON.stringify(req.body), 'gw/auth/nickname', 'Request from client');
+  axios
+    .post(DOMAIN_NAME + AUTH_PORT + '/nickname', req.body)
+    .then((result) => {
+      logger.debug(JSON.stringify(result.data), 'gw/auth/nickname', 'result.data');
       res.send(result.data);
     })
     .catch((err) => {

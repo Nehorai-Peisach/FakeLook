@@ -22,6 +22,10 @@ const UserSchema = {
     type: String,
     required: false,
   },
+  nickname: {
+    type: String,
+    required: false,
+  },
   email: {
     type: String,
     required: true,
