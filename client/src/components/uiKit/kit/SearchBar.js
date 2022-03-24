@@ -4,7 +4,7 @@ const SearchBar = (props) => {
   return (
     <label className={'searchbar ' + props.className}>
       <IoSearchOutline className="searchbar__icon" />
-      <input className="searchbar__input" placeholder={props.children}></input>
+      <input className="searchbar__input" placeholder="Search..."></input>
     </label>
   );
 };
