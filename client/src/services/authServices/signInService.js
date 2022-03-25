@@ -28,9 +28,9 @@ export async function facebookSignInService(facebook_id) {
 
 const signin = async (newUser) => {
   const user = await axios.post('http://localhost:4000/api/auth/sign-in', newUser);
+
   if (user) {
     const cookies = new Cookies();
-    cookies.set('token', user.data.accessToken);
     cookies.set('user', user.data);
     return user.data;
   }

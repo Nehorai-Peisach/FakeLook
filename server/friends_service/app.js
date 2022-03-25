@@ -1,36 +1,37 @@
 require('dotenv').config();
 const express = require('express');
 const logger = require('../logger');
-const profileService = require('./services/profileService');
+const addFriend = require('./services/addFriend');
+const editProfileService = require('./services/editProfileService');
+const getProfileService = require('./services/getProfileService');
+const removeFriend = require('./services/removeFriend');
 const searchService = require('./services/searchService');
 
 const PORT = process.env.FRIENDS_PORT;
 const app = express();
 app.use(express.json());
 
-app.post('/search', async (req, res) => {
-  try {
-    const result = await searchService(req.body);
-    logger.debug(result, 'fri/app/search', 'found in search');
-    if (result) res.send(result);
-    else res.send(null);
-  } catch (error) {
-    logger.error(error, 'fri/app/search', 'An error occurred');
-    res.send(null);
-  }
-});
+app.post('/search', async (req, res) => res.send(await doService(searchService, req.body, 'search')));
 
-app.post('/profile', async (req, res) => {
+app.post('/getprofile', async (req, res) => res.send(await doService(getProfileService, req.body, 'getprofile')));
+
+app.post('/editprofile', async (req, res) => res.send(await doService(editProfileService, req.body, 'editprofile')));
+
+app.post('/addfriend', async (req, res) => res.send(await doService(addFriend, req.body, 'addfriend')));
+
+app.post('/removefriend', async (req, res) => res.send(await doService(removeFriend, req.body, 'removefriend')));
+
+const doService = async (service, data, text) => {
   try {
-    const result = await profileService(req.body);
-    logger.debug(result, 'fri/app/profile', 'found profile');
-    if (result) res.send(result);
-    else res.send(null);
+    const result = await service(data);
+    logger.debug(result, 'fri/app/' + text, 'found');
+    if (result) return result;
+    else return null;
   } catch (error) {
-    logger.error(error, 'fri/app/profile', 'An error occurred');
-    res.send(null);
+    logger.error(error, 'fri/app/' + text, 'An error occurred');
+    return null;
   }
-});
+};
 
 app.listen(PORT, () => {
   logger.http(`friends_service is running on port:${PORT}`, 'connected');
