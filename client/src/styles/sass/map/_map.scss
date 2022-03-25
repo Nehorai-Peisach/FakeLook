@@ -1,8 +1,46 @@
-.map_container {
+.map {
   height: 100%;
   width: 100%;
-  .map {
+  display: flex;
+
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #cde9ff;
+    z-index: 2;
+    justify-content: space-around;
+    overflow-x: hidden;
+    transition: all 0.5s !important;
+
+    &__input {
+      display: flex;
+    }
+  }
+
+  &__container {
     height: calc(100vh - 6rem);
     width: 100%;
+    z-index: 1;
+    position: absolute;
+  }
+
+  &__btn__filters {
+    height: 40px;
+    width: 40px;
+    display: block;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    top: 80px;
+    left: 7px;
+    margin-bottom: 6px;
+    padding: 0;
+    transition: all 0.7s;
+
+    .icon {
+      height: 100%;
+      margin: 0;
+    }
   }
 }

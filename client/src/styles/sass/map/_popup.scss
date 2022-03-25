@@ -1,0 +1,28 @@
+.popup {
+  height: 150px;
+  width: 120px;
+  & :first-child {
+    padding: 0;
+    &:after {
+      background-color: red;
+    }
+  }
+  cursor: pointer;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    &__img {
+      height: 30px;
+      width: 30px;
+    }
+    &__name {
+      font-weight: 600;
+    }
+  }
+
+  &__img {
+    height: 80px;
+    width: 80px;
+  }
+}
