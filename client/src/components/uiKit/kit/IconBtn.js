@@ -6,7 +6,11 @@ const IconBtn = (props) => {
   if (props.icon) Icon = props.icon;
 
   return (
-    <div className={className + ' icon_btn btn'} onClick={props.onClick}>
+    <div
+      className={className + ' icon_btn btn'}
+      onClick={props.onClick}
+      style={props.style}
+    >
       <Icon className="icon" />
       <span className="text">{props.children}</span>
     </div>

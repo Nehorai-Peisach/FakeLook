@@ -25,28 +25,32 @@ const NewPost = (props) => {
     };
   };
 
-  const postHandler = async () => {
-    const id = uuidv4();
-    uploadImage(id);
-    const tagsArray = tags.split(', ');
-    const userTagsArray = userTags.split(', ');
-    const newPost = {
-      image_id: id,
-      location: { location: 'demo' },
-      date: Date.now(),
-      user_id: { _id: props.user._id },
-      text: text,
-      tags: tagsArray,
-      userTags: userTagsArray
-    };
-    const result = await newPostService(newPost);
+  const postHandler = () => {
+    navigator.geolocation.getCurrentPosition(async (currentLocation) => {
+      const { latitude, longitude } = currentLocation.coords;
+      console.log(latitude, longitude);
+      const id = uuidv4();
+      uploadImage(id);
+      const tagsArray = tags.split(', ');
+      const userTagsArray = userTags.split(', ');
+      const newPost = {
+        image_id: id,
+        location: { lan: latitude, lng: longitude },
+        date: Date.now(),
+        user_id: { _id: props.user._id },
+        text: text,
+        tags: tagsArray,
+        userTags: userTagsArray
+      };
+      const result = await newPostService(newPost);
 
-    // for the real-time feed update
-    props.socket.emit('new_post');
+      // for the real-time feed update
+      props.socket.emit('new_post');
 
-    if (result.data.msg)
-      setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
-    else setAfterPostContent(<h1>Post failed to upload!</h1>);
+      if (result.data.msg)
+        setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
+      else setAfterPostContent(<h1>Post failed to upload!</h1>);
+    });
   };
 
   const uploadImage = (id) => {
