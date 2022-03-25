@@ -51,7 +51,7 @@ const SignUp = (props) => {
   };
 
   return (
-    <div className="login__container">
+    <form className="login__container">
       <Title className="login__title">Sign Up</Title>
       <Input
         validation={true}
@@ -100,13 +100,13 @@ const SignUp = (props) => {
       >
         Confirm Password...
       </Input>
-      <Btn onClick={onLoginHandler} className={btnClass}>
+      <Btn type="submit" onClick={onLoginHandler} className={btnClass}>
         Sign up
       </Btn>
       <Link click={() => props.setIndex(0)}>Already have an account - sign in</Link>
       <Hr />
       <LoginGoogle />
-    </div>
+    </form>
   );
 };
 

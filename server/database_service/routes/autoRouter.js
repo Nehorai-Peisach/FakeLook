@@ -12,7 +12,7 @@ router.route('/sign-in').post((req, res) => {
     .then((result) => {
       if (result) {
         logger.debug(result, 'db/auth/signin', 'user was found');
-        const retUser = { _id: result._id, nickname: result.nickname, image_id: result.image_id, friends_id: result.friends_id };
+        const retUser = { _id: result._id, nickname: result.nickname, image_url: result.image_url, friends_id: result.friends_id };
         res.send(retUser);
       } else res.send(false);
     })
@@ -24,7 +24,8 @@ router.route('/sign-in').post((req, res) => {
 router.route('/sign-up').post((req, res) => {
   const newUser = new User({
     name: req.body.name,
-    image_id: '2F467c912f-4ce6-47c7-a51d-245c1b3fa9c5.png',
+    image_url:
+      'https://firebasestorage.googleapis.com/v0/b/fakelook-storage.appspot.com/o/images%2F467c912f-4ce6-47c7-a51d-245c1b3fa9c5.png?alt=media&token=8e282a32-3bf7-4fab-922d-0699da427ed4',
     username: req.body.username || null,
     email: req.body.email,
     password: req.body.password || null,
@@ -86,7 +87,7 @@ router.route('/nickname').post((req, res) => {
             logger.debug(result, 'db/auth/nickname', 'user was found');
             result.nickname = nickname;
             await User.findByIdAndUpdate(userId, { nickname: nickname });
-            const retUser = { _id: result._id, nickname: result.nickname, image_id: result.image_id };
+            const retUser = { _id: result._id, nickname: result.nickname, image_url: result.image_url };
             res.send(retUser);
           })
           .catch((err) => {

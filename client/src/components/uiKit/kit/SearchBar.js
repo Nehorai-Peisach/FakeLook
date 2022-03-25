@@ -18,10 +18,7 @@ const SearchBar = (props) => {
       setList(() => {
         const tmpList = props.list.map((user, index) => (
           <div className="searchbar__input__item" key={'searchItem' + index} onMouseDown={() => userClicked(user._id)}>
-            <img
-              className="searchbar__input__item__img"
-              src="https://firebasestorage.googleapis.com/v0/b/fakelook-storage.appspot.com/o/images%2F467c912f-4ce6-47c7-a51d-245c1b3fa9c5.png?alt=media&token=8e282a32-3bf7-4fab-922d-0699da427ed4"
-            />
+            <img className="searchbar__input__item__img" src={user.image_url} />
             {user.nickname}
           </div>
         ));

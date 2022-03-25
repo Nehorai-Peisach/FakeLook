@@ -14,7 +14,7 @@ const UserSchema = {
     type: String,
     required: true,
   },
-  image_id: {
+  image_url: {
     type: String,
     required: false,
   },
@@ -61,7 +61,7 @@ const UserSchema = {
   bio: {
     type: String,
     required: false,
-  }
+  },
 };
 
 const User = mongoose.model('User', UserSchema);

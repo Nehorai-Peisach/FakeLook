@@ -28,7 +28,7 @@ const TopBar = (props) => {
 
   const userClicked = async (id) => {
     const profile = await getProfileService(id);
-    props.setCurrentPage(<ProfilePage input={profile.data} user={props.user} />);
+    props.setCurrentPage(<ProfilePage input={profile.data} user={props.user} setUser={props.setUser} />);
   };
 
   return (
