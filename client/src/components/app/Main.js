@@ -1,34 +1,25 @@
 import { useState } from 'react';
-import FeedPage from '../feed/Feed';
-import MapPage from '../map/MapPage';
-import NewPostPage from '../newPost/NewPost';
-import ProfilePage from '../profile/Profile';
+import FeedPage from './feed/Feed';
 import TopBar from './TopBar';
 import UpdateNickname from './UpdateNickname';
 import nicknameService from 'services/authServices/nicknameService';
-
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:4005');
-
 import Cookies from 'universal-cookie';
+import Alerter from 'services/alertService/Alerter';
+const socket = io.connect('http://localhost:4005');
 const cookies = new Cookies();
-
 
 const Main = (props) => {
   const [user, setUser] = useState(cookies.get('user').data);
-  const [index, setIndex] = useState(0);
-  const pages = [
-    <FeedPage socket={socket} user={props.user} />,
-    <MapPage />,
-    <NewPostPage user={props.user} socket={socket} />,
-    <ProfilePage />
-  ];
+  const [currentPage, setCurrentPage] = useState(<FeedPage socket={socket} user={props.user} />);
 
   const nicknameHandler = async (nickname) => {
     if (user) {
       const newUser = await nicknameService(user._id, nickname);
-      cookies.set('user', newUser);
-      setUser(newUser);
+      if (newUser) {
+        cookies.set('user', newUser);
+        setUser(newUser);
+      } else Alerter('This nickname already been taken, use different one!');
     }
   };
   return (
@@ -36,8 +27,8 @@ const Main = (props) => {
       {user ? (
         user.nickname ? (
           <div>
-            <TopBar user={user} current={index} to={setIndex} />
-            {pages[index]}
+            <TopBar user={user} setCurrentPage={setCurrentPage} socket={socket} />
+            {currentPage}
           </div>
         ) : (
           <UpdateNickname enterNickname={nicknameHandler} />

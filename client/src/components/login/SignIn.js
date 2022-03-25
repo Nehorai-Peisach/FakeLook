@@ -1,4 +1,4 @@
-import { Container, Hr, Btn, Input, Link, Title } from 'components/uiKit/UiKIt';
+import { Hr, Btn, Input, Link, Title } from 'components/uiKit/UiKIt';
 import LoginGoogle from './LoginGoogle';
 import { useEffect, useState } from 'react';
 import signInService from 'services/authServices/signInService';
@@ -19,12 +19,12 @@ const SignIn = (props) => {
       console.log('user connected:' + result.data.username + 'id: ' + result.data._id);
       window.location.href = '/app';
     } else {
-      Alerter('user not found');
+      Alerter('Username or Password is incorrect!');
     }
   };
 
   return (
-    <Container className="login__container">
+    <form className="login__container">
       <Title className="login__title">Sign In</Title>
       <Input
         validation={true}
@@ -44,7 +44,7 @@ const SignIn = (props) => {
       >
         Password...
       </Input>
-      <Btn onClick={onLoginHandler} className={btnClass}>
+      <Btn type="submit" onClick={onLoginHandler} className={btnClass}>
         Sign in
       </Btn>
       <div className="login__links">
@@ -56,7 +56,7 @@ const SignIn = (props) => {
           Login with Facebook
         </IconBtn> */}
       <LoginGoogle />
-    </Container>
+    </form>
   );
 };
 

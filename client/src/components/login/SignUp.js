@@ -1,4 +1,4 @@
-import { Container, Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKit/UiKIt';
+import { Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKit/UiKIt';
 import { BsFacebook, BsGoogle } from 'react-icons/bs';
 import LoginGoogle from './LoginGoogle';
 import { useEffect, useState } from 'react';
@@ -51,7 +51,7 @@ const SignUp = (props) => {
   };
 
   return (
-    <Container className="login__container">
+    <div className="login__container">
       <Title className="login__title">Sign Up</Title>
       <Input
         validation={true}
@@ -106,7 +106,7 @@ const SignUp = (props) => {
       <Link click={() => props.setIndex(0)}>Already have an account - sign in</Link>
       <Hr />
       <LoginGoogle />
-    </Container>
+    </div>
   );
 };
 

@@ -23,7 +23,15 @@
     border-radius: 0.5rem;
 
     .btn {
-      width: calc(100% - 2rem);
+      width: 100%;
+      font-weight: 100;
+    }
+    .input__input {
+      color: white;
+      &::placeholder {
+        color: white;
+        opacity: 0.5;
+      }
     }
   }
 
