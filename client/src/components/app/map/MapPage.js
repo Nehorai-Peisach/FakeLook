@@ -16,12 +16,12 @@ const MapPage = (props) => {
       (err) => {
         console.log(err);
       },
-      { enableHighAccuracy: true, timeout: 10000 }
+      { enableHighAccuracy: true, timeout: 10000 } 
     );
   };
 
   return (
-    <div className="container">
+    <div className="map_container">
       <MapContainer className="map" center={[51.505, -0.09]} zoom={13}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

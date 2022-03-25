@@ -14,15 +14,15 @@ const SearchBar = (props) => {
       //   const x = props.list[i];
       //   urls.push(await storage.ref('images/' + x.image_id).getDownloadURL());
       // }
-      console.log(storage.ref.downloadUrl());
+      // console.log(storage.ref.downloadUrl());
       setList(() => {
         const tmpList = props.list.map((user, index) => (
           <div className="searchbar__input__item" key={'searchItem' + index} onMouseDown={() => userClicked(user._id)}>
-            {/* <img
+            <img
               className="searchbar__input__item__img"
-              src="https://firebasestorage.googleapis.com/v0/b/fakelook-storage.appspot.com/o/images%2F467c912f-4ce6-47c7-a51d-245c1b3fa9c5?alt=media&token=14728236-4b13-4977-9f54-e71cd277f8d1"
-            /> */}
-            {user.username}
+              src="https://firebasestorage.googleapis.com/v0/b/fakelook-storage.appspot.com/o/images%2F467c912f-4ce6-47c7-a51d-245c1b3fa9c5.png?alt=media&token=8e282a32-3bf7-4fab-922d-0699da427ed4"
+            />
+            {user.nickname}
           </div>
         ));
         return [<Hr key={'searchItemLine'} />, ...tmpList];

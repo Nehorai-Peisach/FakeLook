@@ -76,7 +76,13 @@ body,
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem; }
   .login__container .btn {
-    width: calc(100% - 2rem); }
+    width: 100%;
+    font-weight: 100; }
+  .login__container .input__input {
+    color: white; }
+    .login__container .input__input::placeholder {
+      color: white;
+      opacity: 0.5; }
 
 .login__title {
   margin-bottom: 3rem; }
@@ -151,6 +157,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     border: 1px solid red !important; }
 
 .btn {
+  border: none;
   padding: 1rem;
   border-radius: 0.5rem;
   font-size: 1.5rem;
@@ -163,7 +170,10 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     opacity: 0.8;
     cursor: pointer; }
   .btn:active {
-    opacity: 0.6; }
+    opacity: 0.6;
+    border: none; }
+  .btn:focus {
+    outline: 1px solid white; }
 
 .icon_btn {
   display: flex;
@@ -373,9 +383,9 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       flex-direction: column;
       justify-content: space-around; }
 
-.container {
+.map_container {
   height: 100%;
   width: 100%; }
-  .container .map {
-    height: 100vh;
-    width: 100vw; }
+  .map_container .map {
+    height: calc(100vh - 6rem);
+    width: 100%; }

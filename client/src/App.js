@@ -2,7 +2,6 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Main from 'components/app/Main';
 import Login from 'components/login/Login';
 
-
 function App() {
   return (
     <div className="app">

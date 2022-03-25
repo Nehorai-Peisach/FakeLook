@@ -58,6 +58,10 @@ const UserSchema = {
     type: Array,
     required: false,
   },
+  bio: {
+    type: String,
+    required: false,
+  }
 };
 
 const User = mongoose.model('User', UserSchema);
