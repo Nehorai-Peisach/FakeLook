@@ -2,6 +2,8 @@
   height: 100%;
   width: 100%;
   display: flex;
+  margin: 0;
+  padding: 0;
 
   &__filters {
     display: flex;
@@ -9,12 +11,12 @@
     height: 100vh;
     background-color: #cde9ff;
     z-index: 2;
-    justify-content: space-around;
     overflow-x: hidden;
     transition: all 0.5s !important;
 
-    &__input {
+    &__container {
       display: flex;
+      flex-direction: column;
     }
   }
 

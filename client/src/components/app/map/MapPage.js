@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, Circle } from 'react-leaflet';
+import { MapContainer, TileLayer, Circle } from 'react-leaflet';
 import { Map, Icon } from 'leaflet';
 import { Btn, IconBtn, Input } from 'components/uiKit/UiKIt';
-import { AiOutlineHome } from 'react-icons/ai';
+import { AiOutlineHome, AiOutlineSearch } from 'react-icons/ai';
 import { BiMapPin } from 'react-icons/bi';
+import mapFiltersService from 'services/mapServices/mapFiltersServices';
+import MapMarker from './MapMarker';
 
 const MapPage = (props) => {
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState({
+    latitude: 32.109333,
+    longitude: 34.855499
+  });
   const [map, setMap] = useState();
+  const [posts, setPosts] = useState([]);
 
   const [filterStyle, setFilterStyle] = useState({
     width: '0px'
   });
   const [btnFilterStyle, setBtnFilterStyle] = useState({});
   const [flag, setFlag] = useState(false);
+
+  const [dateFrom, setDateFrom] = useState();
+  const [dateTo, setDateTo] = useState();
+  const [radius, setRadius] = useState(0);
+  const [tags, setTags] = useState('');
+  const [friendGroup, setFriendGroup] = useState('');
 
   useEffect(() => {
     goHome();
@@ -28,7 +40,6 @@ const MapPage = (props) => {
     navigator.geolocation.getCurrentPosition(
       (data) => {
         const { latitude, longitude } = data.coords;
-        console.log(data.coords);
 
         setPosition({ latitude, longitude });
       },
@@ -37,6 +48,22 @@ const MapPage = (props) => {
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
+  };
+
+  const setFilters = async () => {
+    const filters = {
+      user_id: props.user._id,
+      position: position,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      radius: radius,
+      tags: tags,
+      friendGroup: friendGroup
+    };
+
+    const result = await mapFiltersService(filters);
+    console.log(result);
+    setPosts(result);
   };
 
   const filtersMenu = () => {
@@ -61,14 +88,30 @@ const MapPage = (props) => {
   return (
     <div className="map">
       <div className="map__filters" style={filterStyle}>
-        <div>
-          <input type="date" />
+        <div className="map__filters__container">
+          <input type="date" onChange={(e) => setDateFrom(e.target.value)} />
+          <input type="date" onChange={(e) => setDateTo(e.target.value)} />
+          <input
+            type="number"
+            placeholder="radius"
+            onChange={(e) => setRadius(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="tags"
+            onChange={(e) => setTags(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="friend Group"
+            onChange={(e) => setFriendGroup(e.target.value)}
+          />
+          <IconBtn
+            icon={AiOutlineSearch}
+            className="map__filters__container__btn transparent"
+            onClick={setFilters}
+          />
         </div>
-        <input type="date" className="map__filters_input" />
-        <input type="number" placeholder="radius" />
-        <input type="text" placeholder="friend" />
-        <input type="text" placeholder="tags" />
-        <input type="text" placeholder="friend Group" />
       </div>
       <div>
         <IconBtn
@@ -93,25 +136,13 @@ const MapPage = (props) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Circle center={[51.505, -0.09]} radius={200} />
-        <Marker position={[51.505, -0.09]}>
-          test
-          <Popup className="popup">
-            <label onClick={() => console.log('go to post')}>
-              <div className="popup__header">
-                <img
-                  className="popup__header__img"
-                  src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=20&m=1223671392&s=612x612&w=0&h=lGpj2vWAI3WUT1JeJWm1PRoHT3V15_1pdcTn2szdwQ0="
-                />
-                <p className="popup__header__name">demo</p>
-              </div>
-              <img
-                className="popup__img"
-                src="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg"
-              />
-            </label>
-          </Popup>
-        </Marker>
+        {posts.map((post) => {
+          return <MapMarker post={post} />;
+        })}
+        <Circle
+          center={[position.latitude, position.longitude]}
+          radius={radius}
+        />
       </MapContainer>
     </div>
   );

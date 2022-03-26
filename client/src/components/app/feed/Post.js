@@ -1,21 +1,20 @@
 import { IconBtn, Input, Link } from 'components/uiKit/UiKIt';
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import { RiSendPlaneFill } from 'react-icons/ri';
 
 const Post = (props) => {
-  const user_id = props.user_id;
-  const [post, setPost] = useState({});
+  const [user, setUser] = useCookies(['user']);
   const [like, setLike] = useState(false);
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    if (props.post) {
-      setPost(props.post);
-      let isLiked = props.post.users_like.find(user_id);
-      if (isLiked) setLike(true);
-      else setLike(false);
-    }
+    // if (props.post) {
+    //   //let isLiked = props.post.users_like.find(user.data._id);
+    //   if (isLiked) setLike(true);
+    //   else setLike(false);
+    // }
   }, [props.post]);
 
   const likeHandler = () => {
@@ -26,8 +25,8 @@ const Post = (props) => {
   const commentHandler = () => {
     const newComment = {
       text: comment,
-      user_id: user_id,
-      post_id: post._id
+      user_id: user.data._id,
+      post_id: props.post._id
     };
     props.commentHandler(newComment);
   };

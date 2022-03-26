@@ -386,18 +386,20 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .map {
   height: 100%;
   width: 100%;
-  display: flex; }
+  display: flex;
+  margin: 0;
+  padding: 0; }
   .map__filters {
     display: flex;
     flex-direction: column;
     height: 100vh;
     background-color: #cde9ff;
     z-index: 2;
-    justify-content: space-around;
     overflow-x: hidden;
     transition: all 0.5s !important; }
-    .map__filters__input {
-      display: flex; }
+    .map__filters__container {
+      display: flex;
+      flex-direction: column; }
   .map__container {
     height: calc(100vh - 6rem);
     width: 100%;
