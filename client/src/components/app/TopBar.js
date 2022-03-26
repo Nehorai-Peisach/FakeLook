@@ -1,6 +1,12 @@
 import { IconBtn, SearchBar } from 'components/uiKit/UiKIt';
 import { useState } from 'react';
-import { IoPersonOutline, IoAddCircleOutline, IoImagesOutline, IoLocationOutline, IoNotificationsOutline } from 'react-icons/io5';
+import {
+  IoPersonOutline,
+  IoAddCircleOutline,
+  IoImagesOutline,
+  IoLocationOutline,
+  IoNotificationsOutline
+} from 'react-icons/io5';
 import Alerter from 'services/alertService/Alerter';
 import getProfileService from 'services/profileServices/getProfileService';
 import searchServices from 'services/searchServices/searchServices';
@@ -13,7 +19,9 @@ const TopBar = (props) => {
   const [index, setIndex] = useState(0);
   let classes = ['', '', '', ''];
   for (let i = 0; i < classes.length; i++) {
-    index === i ? (classes[i] = 'top_btn_color active') : (classes[i] = 'top_btn_color');
+    index === i
+      ? (classes[i] = 'top_btn_color active')
+      : (classes[i] = 'top_btn_color');
   }
   const alert = () => {
     Alerter('No New Messages!');
@@ -28,20 +36,36 @@ const TopBar = (props) => {
 
   const userClicked = async (id) => {
     const profile = await getProfileService(id);
-    props.setCurrentPage(<ProfilePage input={profile.data} user={props.user} setUser={props.setUser} />);
+    props.setCurrentPage(
+      <ProfilePage
+        input={profile.data}
+        user={props.user}
+        setUser={props.setUser}
+      />
+    );
   };
 
   return (
     <div className="top_bar">
-      <IconBtn icon={IoNotificationsOutline} className="notification top_btn_color" onClick={alert} />
-      <SearchBar list={searchedUsers} search={searchHandler} onClick={userClicked} />
+      <IconBtn
+        icon={IoNotificationsOutline}
+        className="notification top_btn_color"
+        onClick={alert}
+      />
+      <SearchBar
+        list={searchedUsers}
+        search={searchHandler}
+        onClick={userClicked}
+      />
       <div className="pages_btns">
         <IconBtn
           icon={IoImagesOutline}
           className={classes[0]}
           onClick={() => {
             setIndex(0);
-            props.setCurrentPage(<FeedPage socket={props.socket} user={props.user} />);
+            props.setCurrentPage(
+              <FeedPage socket={props.socket} user={props.user} />
+            );
           }}
         />
         <IconBtn
@@ -49,7 +73,7 @@ const TopBar = (props) => {
           className={classes[1]}
           onClick={() => {
             setIndex(1);
-            props.setCurrentPage(<MapPage />);
+            props.setCurrentPage(<MapPage user={props.user} />);
           }}
         />
         <IconBtn
@@ -57,7 +81,9 @@ const TopBar = (props) => {
           className={classes[2]}
           onClick={() => {
             setIndex(2);
-            props.setCurrentPage(<NewPostPage user={props.user} socket={props.socket} />);
+            props.setCurrentPage(
+              <NewPostPage user={props.user} socket={props.socket} />
+            );
           }}
         />
         <IconBtn

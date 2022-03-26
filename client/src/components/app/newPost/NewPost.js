@@ -28,16 +28,15 @@ const NewPost = (props) => {
   const postHandler = () => {
     navigator.geolocation.getCurrentPosition(async (currentLocation) => {
       const { latitude, longitude } = currentLocation.coords;
-      console.log(latitude, longitude);
       const id = uuidv4();
       uploadImage(id);
       const tagsArray = tags.split(', ');
       const userTagsArray = userTags.split(', ');
       const newPost = {
         image_id: id,
-        location: { lan: latitude, lng: longitude },
+        location: { lat: latitude, lng: longitude },
         date: Date.now(),
-        user_id: { _id: props.user._id },
+        user_id: props.user._id,
         text: text,
         tags: tagsArray,
         userTags: userTagsArray

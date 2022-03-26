@@ -4,6 +4,7 @@ const cors = require('cors');
 const logger = require('../logger');
 const newPostService = require('./services/newPostService');
 const getFriendsPosts = require('./services/getFriendsPosts');
+const mapFiltersService = require('./services/mapFiltersService');
 const app = express();
 
 const PORT = process.env.POSTS_PORT;
@@ -21,13 +22,23 @@ app.post('/new-post', async (req, res) => {
   }
 });
 
-app.get('friends-posts', async (req, res) => {
+app.post('/friends-posts', async (req, res) => {
+  console.log('in posts');
   try {
     const result = await getFriendsPosts(req.body);
     res.send(result);
   } catch (error) {
-    logger.error(error);
-    res.status(400).send({ msg: false });
+    logger.error(error, 'posts_service/app');
+  }
+});
+
+app.post('/map-filters', async (req, res) => {
+  try {
+    const result = await mapFiltersService(req.body);
+    logger.debug(JSON.stringify(result), 'posts_service/app');
+    res.send(result);
+  } catch (error) {
+    logger.error(error, 'posts_service/app');
   }
 });
 
