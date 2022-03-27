@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Hr } from '../UiKIt';
-import { storage } from 'firebases';
 
 const SearchBar = (props) => {
   const [list, setList] = useState([]);
@@ -9,12 +8,6 @@ const SearchBar = (props) => {
 
   useEffect(async () => {
     if (props.list && props.list.length > 0) {
-      // const urls = [];
-      // for (let i = 0; i < props.list.length; i++) {
-      //   const x = props.list[i];
-      //   urls.push(await storage.ref('images/' + x.image_id).getDownloadURL());
-      // }
-      // console.log(storage.ref.downloadUrl());
       setList(() => {
         const tmpList = props.list.map((user, index) => (
           <div className="searchbar__input__item" key={'searchItem' + index} onMouseDown={() => userClicked(user._id)}>

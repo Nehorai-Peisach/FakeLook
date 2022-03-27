@@ -4,14 +4,15 @@ import Btn from './kit/Btn';
 import Input from './kit/Input';
 import Link from './kit/Link';
 import IconBtn from './kit/IconBtn';
+import Hr from './kit/Hr';
 
 import Container from './kit/layout/Container';
-import Hr from './kit/layout/Hr';
+import Loading from './kit/layout/Loading';
 
 //elements
-export { SearchBar, Btn, Input, Link, Title, IconBtn };
+export { SearchBar, Btn, Input, Link, Title, IconBtn, Hr };
 
 //layouts
-export { Container, Hr };
+export { Container, Loading };
 
 export default Title;

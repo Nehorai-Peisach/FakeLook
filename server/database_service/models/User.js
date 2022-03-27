@@ -54,7 +54,7 @@ const UserSchema = {
     type: Array,
     required: false,
   },
-  posts: {
+  posts_id: {
     type: Array,
     required: false,
   },

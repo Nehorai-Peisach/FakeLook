@@ -1,12 +1,7 @@
 import { IconBtn, SearchBar } from 'components/uiKit/UiKIt';
 import { useState } from 'react';
-import {
-  IoPersonOutline,
-  IoAddCircleOutline,
-  IoImagesOutline,
-  IoLocationOutline,
-  IoNotificationsOutline
-} from 'react-icons/io5';
+import { useCookies } from 'react-cookie';
+import { IoPersonOutline, IoAddCircleOutline, IoImagesOutline, IoLocationOutline, IoNotificationsOutline } from 'react-icons/io5';
 import Alerter from 'services/alertService/Alerter';
 import getProfileService from 'services/profileServices/getProfileService';
 import searchServices from 'services/searchServices/searchServices';
@@ -16,12 +11,11 @@ import NewPostPage from './newPost/NewPost';
 import ProfilePage from './profile/Profile';
 
 const TopBar = (props) => {
+  const [cookies] = useCookies(['user']);
   const [index, setIndex] = useState(0);
   let classes = ['', '', '', ''];
   for (let i = 0; i < classes.length; i++) {
-    index === i
-      ? (classes[i] = 'top_btn_color active')
-      : (classes[i] = 'top_btn_color');
+    index === i ? (classes[i] = 'top_btn_color active') : (classes[i] = 'top_btn_color');
   }
   const alert = () => {
     Alerter('No New Messages!');
@@ -29,43 +23,21 @@ const TopBar = (props) => {
 
   const [searchedUsers, setSearchedUsers] = useState([]);
   const searchHandler = async (value) => {
-    if (!props.user) return;
-    const res = await searchServices(value, props.user._id);
+    const res = await searchServices(value, cookies.user.data._id);
     setSearchedUsers(res.data);
-  };
-
-  const userClicked = async (id) => {
-    const profile = await getProfileService(id);
-    props.setCurrentPage(
-      <ProfilePage
-        input={profile.data}
-        user={props.user}
-        setUser={props.setUser}
-      />
-    );
   };
 
   return (
     <div className="top_bar">
-      <IconBtn
-        icon={IoNotificationsOutline}
-        className="notification top_btn_color"
-        onClick={alert}
-      />
-      <SearchBar
-        list={searchedUsers}
-        search={searchHandler}
-        onClick={userClicked}
-      />
+      <IconBtn icon={IoNotificationsOutline} className="notification top_btn_color" onClick={alert} />
+      <SearchBar list={searchedUsers} search={searchHandler} onClick={props.userClicked} />
       <div className="pages_btns">
         <IconBtn
           icon={IoImagesOutline}
           className={classes[0]}
           onClick={() => {
             setIndex(0);
-            props.setCurrentPage(
-              <FeedPage socket={props.socket} user={props.user} />
-            );
+            props.setCurrentPage(<FeedPage userClicked={props.userClicked} socket={props.socket} />);
           }}
         />
         <IconBtn
@@ -73,7 +45,7 @@ const TopBar = (props) => {
           className={classes[1]}
           onClick={() => {
             setIndex(1);
-            props.setCurrentPage(<MapPage user={props.user} />);
+            props.setCurrentPage(<MapPage />);
           }}
         />
         <IconBtn
@@ -81,9 +53,7 @@ const TopBar = (props) => {
           className={classes[2]}
           onClick={() => {
             setIndex(2);
-            props.setCurrentPage(
-              <NewPostPage user={props.user} socket={props.socket} />
-            );
+            props.setCurrentPage(<NewPostPage socket={props.socket} />);
           }}
         />
         <IconBtn
@@ -91,7 +61,7 @@ const TopBar = (props) => {
           className={classes[3]}
           onClick={() => {
             setIndex(3);
-            userClicked(props.user._id);
+            props.userClicked(cookies.user.data._id);
           }}
         />
       </div>

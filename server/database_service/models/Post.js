@@ -4,40 +4,40 @@ const Schema = mongoose.Schema;
 const PostSchema = {
   image_id: {
     type: String,
-    required: true
+    required: true,
   },
   location: {
     type: Object,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    required: true
+    required: true,
   },
   user_id: {
     type: Object,
-    required: true
+    required: true,
   },
   text: {
     type: String,
-    required: false
+    required: false,
   },
   tags: {
     type: Array,
-    required: false
+    required: false,
   },
   users_tag: {
     type: Array,
-    required: false
+    required: false,
   },
   users_like: {
     type: Array,
-    required: false
+    required: false,
   },
   comments: {
     type: Array,
-    required: false
-  }
+    required: false,
+  },
 };
 
 const Post = mongoose.model('Post', PostSchema);

@@ -1,10 +1,9 @@
 const router = require('express').Router();
 const logger = require('../../logger');
 const Post = require('../models/Post');
-const { find } = require('../models/User');
 const User = require('../models/User');
 
-router.route('/new-post').post((req, res) => {
+router.route('/new-post').post(async (req, res) => {
   console.log(req.body);
   const newPost = new Post({
     image_id: req.body.image_id,
@@ -13,9 +12,12 @@ router.route('/new-post').post((req, res) => {
     user_id: req.body.user_id,
     text: req.body.text,
     tags: req.body.tags,
-    userTags: req.body.userTags
+    userTags: req.body.userTags,
   });
   try {
+    const user = await User.findById(req.body.user_id);
+    const postsId = [...user.posts_id, req.body.image_id];
+    await User.findByIdAndUpdate(req.body.user_id, { posts_id: postsId });
     newPost.save();
     res.send({ msg: true });
   } catch (error) {
@@ -29,14 +31,17 @@ router.route('/friends-posts').post(async (req, res) => {
   const user_id = req.body.user_id;
   const index = req.body.index;
   const user = await User.findById(user_id);
-  const posts = [];
+  const postsAndUsers = [];
   for (let i = 0; i < user.friends_id.length; i++) {
-    const element = user.friends_id[i];
-    const p = await Post.find({ user_id: element });
-    posts.push(...p);
+    const id = user.friends_id[i];
+    const posts = await Post.find({ user_id: id });
+    for (let j = 0; j < posts.length; j++) {
+      const post = posts[j];
+      const postUser = await User.findById(post.user_id);
+      postsAndUsers.push({ post: post, user: postUser });
+    }
   }
-  console.log(posts);
-  res.send(posts);
+  res.send(postsAndUsers);
 });
 
 router.route('/get-posts').get((req, res) => {
