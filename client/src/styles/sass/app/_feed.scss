@@ -50,15 +50,23 @@
       border-radius: 1rem;
     }
 
-    .bottom_header {
-      display: flex;
-      .like_btn {
-        color: #555;
+    .bottom {
+      &__text {
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin-left: 3rem;
+        margin-bottom: 1rem;
       }
+      &__header {
+        display: flex;
+        .like_btn {
+          color: #555;
+        }
 
-      .view_comments {
-        color: #333;
-        align-self: center;
+        .view_comments {
+          color: #333;
+          align-self: center;
+        }
       }
     }
     .comment_container {

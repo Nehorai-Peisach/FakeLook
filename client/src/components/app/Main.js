@@ -8,6 +8,9 @@ import io from 'socket.io-client';
 import Alerter from 'services/alertService/Alerter';
 import { useCookies } from 'react-cookie';
 import getProfileService from 'services/profileServices/getProfileService';
+import FullPagePopup from 'components/uiKit/kit/layout/FullPagePopup';
+import FullPost from './feed/FullPost';
+import getFriendsPosts from 'services/feedServices/getFriendsPosts';
 
 const socket = io.connect('http://localhost:4005');
 
@@ -29,21 +32,31 @@ const Main = (props) => {
     setCurrentPage(<ProfilePage input={profile.data} socket={socket} />);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     setCurrentPage(<FeedPage userClicked={userClicked} socket={socket} />);
+    const tmp = await getFriendsPosts(userCookie.user.data._id, 0);
+    setPopup(<FullPost postDetails={tmp[0]} />);
   }, []);
+
+  const [fullPopupClassname, setFullPopupClassname] = useState('full_popup__display');
+  const [popup, setPopup] = useState(<div />);
+  const showFullPopup = (popup) => {
+    setPopup(popup);
+    setFullPopupClassname('full_popup__display');
+  };
+  const closeFullPopup = () => {
+    setPopup(<div />);
+    setFullPopupClassname('full_popup__hidden');
+  };
 
   return (
     <div>
       {userCookie.user.data ? (
         userCookie.user.data.nickname ? (
           <div className="main">
-            <TopBar
-              userClicked={userClicked}
-              setCurrentPage={setCurrentPage}
-              socket={socket}
-            />
+            <TopBar userClicked={userClicked} setCurrentPage={setCurrentPage} socket={socket} />
             {currentPage}
+            <FullPagePopup popup={popup} close={closeFullPopup} className={fullPopupClassname} />
           </div>
         ) : (
           <UpdateNickname enterNickname={nicknameHandler} />
