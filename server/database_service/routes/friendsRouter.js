@@ -7,7 +7,7 @@ router.route('/search').post(async (req, res) => {
   const input = req.body.input;
   const currentUserId = req.body.user_id;
   const users = await User.find();
-  const fltered = users.filter((x) => x.nickname && x.nickname.includes(input) && x._id.toString() !== currentUserId);
+  const fltered = users.filter((x) => x.nickname && x.nickname.toLowerCase().includes(input.toLowerCase()) && x._id.toString() !== currentUserId);
 
   const tmp = fltered.map((x) => {
     return { _id: x._id, nickname: x.nickname, image_url: x.image_url };
@@ -49,8 +49,8 @@ router.route('/removefriend').post(async (req, res) => {
   const friendId = req.body.friend_id;
   logger.info(JSON.stringify(userId), 'db/rou/fri/removefriend', 'removefriend requst');
   const user = await User.findOne({ _id: userId });
-  const newFriends = user.friends_id.filter((x) => {
-    x._id && x._id.tostring() !== friendId;
+  const newFriends = user.friends_id.filter((id) => {
+    return id !== friendId;
   });
   await User.findByIdAndUpdate(userId, { friends_id: newFriends });
   logger.debug(newFriends, 'db/rou/fri/removefriend', 'new friends list');
