@@ -4,17 +4,44 @@
   align-items: center;
   justify-content: space-between;
   background-color: $bg_top;
+  z-index: 99;
 
   .pages_btns {
     justify-self: flex-end;
     display: flex;
+    &__menu {
+      display: none;
+    }
   }
 
-  &__menu {
-    display: none;
+  @media only screen and (max-width: $phone_size) {
+    .media_container {
+      background-color: $top_btn_active;
+      border-radius: 1rem;
+      margin-right: 2rem;
+      overflow: auto;
+    }
+    .pages_btns {
+      flex-direction: column;
+      align-self: flex-start;
+
+      &__menu {
+        display: flex;
+        margin-left: 2rem;
+        margin-right: 1rem;
+        font-size: 2rem;
+      }
+
+      .media {
+        &__display {
+          display: flex;
+          color: black !important;
+          margin: 1rem 0;
+        }
+        &__hidden {
+          display: none;
+        }
+      }
+    }
   }
-
-  // @media only screen and (max-width:$phone_size) {
-
-  // }
 }
