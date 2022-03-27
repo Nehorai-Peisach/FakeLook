@@ -332,9 +332,27 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   background-color: #eff8ff; }
 
 .new_post {
-  height: max-content;
-  width: max-content; }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center; }
+  .new_post .new_post_title {
+    height: fit-content;
+    margin: 2rem; }
+    .new_post .new_post_title:before, .new_post .new_post_title:after {
+      margin: 1rem;
+      background-color: gray;
+      content: '';
+      display: inline-block;
+      height: 1px;
+      position: relative;
+      vertical-align: middle;
+      width: 20%;
+      top: 0.2rem; }
   .new_post .interface {
+    background-color: white;
+    border-radius: 1rem;
     display: flex; }
     .new_post .interface .img_container {
       display: grid;
@@ -345,6 +363,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       align-items: center;
       justify-items: center; }
       .new_post .interface .img_container .new_img {
+        outline: solid transparent;
         height: 400px;
         width: 400px;
         grid-area: 1/1;
@@ -355,15 +374,46 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         justify-self: center;
         overflow: hidden;
         grid-area: 1/1;
-        background-color: lightblue;
         border-radius: 1rem;
-        box-shadow: 1px 1px 10px grey; }
+        background-color: #dddddd; }
+        .new_post .interface .img_container .file_btn .hr {
+          color: black; }
         .new_post .interface .img_container .file_btn .img_input {
           display: none; }
     .new_post .interface .inputs_container {
       display: flex;
       flex-direction: column;
-      justify-content: space-around; }
+      justify-content: space-around;
+      align-items: center;
+      margin-right: 5rem; }
+      .new_post .interface .inputs_container .inputs {
+        display: flex;
+        flex-direction: column; }
+        .new_post .interface .inputs_container .inputs .input {
+          background-color: #dddddd;
+          border-radius: 1rem;
+          margin-top: 3rem; }
+      .new_post .interface .inputs_container .icon_btn {
+        flex-direction: row-reverse;
+        padding-left: 2rem; }
+        .new_post .interface .inputs_container .icon_btn .text {
+          font-weight: 800;
+          margin-right: -1.5rem; }
+
+@media only screen and (max-width: 1000px) {
+  .new_post {
+    overflow-y: auto;
+    overflow-x: hidden; }
+    .new_post .interface {
+      flex-direction: column;
+      align-items: center; }
+      .new_post .interface .inputs_container {
+        margin: 0;
+        width: 80%; }
+        .new_post .interface .inputs_container .inputs {
+          width: 100%; }
+        .new_post .interface .inputs_container .icon_btn {
+          margin: 5rem; } }
 
 .profile {
   display: flex;
@@ -480,9 +530,27 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     right: 10px; }
 
 .new_post {
-  height: max-content;
-  width: max-content; }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center; }
+  .new_post .new_post_title {
+    height: fit-content;
+    margin: 2rem; }
+    .new_post .new_post_title:before, .new_post .new_post_title:after {
+      margin: 1rem;
+      background-color: gray;
+      content: '';
+      display: inline-block;
+      height: 1px;
+      position: relative;
+      vertical-align: middle;
+      width: 20%;
+      top: 0.2rem; }
   .new_post .interface {
+    background-color: white;
+    border-radius: 1rem;
     display: flex; }
     .new_post .interface .img_container {
       display: grid;
@@ -493,6 +561,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       align-items: center;
       justify-items: center; }
       .new_post .interface .img_container .new_img {
+        outline: solid transparent;
         height: 400px;
         width: 400px;
         grid-area: 1/1;
@@ -503,12 +572,43 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         justify-self: center;
         overflow: hidden;
         grid-area: 1/1;
-        background-color: lightblue;
         border-radius: 1rem;
-        box-shadow: 1px 1px 10px grey; }
+        background-color: #dddddd; }
+        .new_post .interface .img_container .file_btn .hr {
+          color: black; }
         .new_post .interface .img_container .file_btn .img_input {
           display: none; }
     .new_post .interface .inputs_container {
       display: flex;
       flex-direction: column;
-      justify-content: space-around; }
+      justify-content: space-around;
+      align-items: center;
+      margin-right: 5rem; }
+      .new_post .interface .inputs_container .inputs {
+        display: flex;
+        flex-direction: column; }
+        .new_post .interface .inputs_container .inputs .input {
+          background-color: #dddddd;
+          border-radius: 1rem;
+          margin-top: 3rem; }
+      .new_post .interface .inputs_container .icon_btn {
+        flex-direction: row-reverse;
+        padding-left: 2rem; }
+        .new_post .interface .inputs_container .icon_btn .text {
+          font-weight: 800;
+          margin-right: -1.5rem; }
+
+@media only screen and (max-width: 1000px) {
+  .new_post {
+    overflow-y: auto;
+    overflow-x: hidden; }
+    .new_post .interface {
+      flex-direction: column;
+      align-items: center; }
+      .new_post .interface .inputs_container {
+        margin: 0;
+        width: 80%; }
+        .new_post .interface .inputs_container .inputs {
+          width: 100%; }
+        .new_post .interface .inputs_container .icon_btn {
+          margin: 5rem; } }

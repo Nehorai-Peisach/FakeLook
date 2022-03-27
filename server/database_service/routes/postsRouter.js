@@ -12,7 +12,7 @@ router.route('/new-post').post(async (req, res) => {
     user_id: req.body.user_id,
     text: req.body.text,
     tags: req.body.tags,
-    userTags: req.body.userTags,
+    userTags: req.body.userTags
   });
   try {
     const user = await User.findById(req.body.user_id);
@@ -41,6 +41,7 @@ router.route('/friends-posts').post(async (req, res) => {
       postsAndUsers.push({ post: post, user: postUser });
     }
   }
+  postsAndUsers.sort((a, b) => new Date(b.post.date) - new Date(a.post.date));
   res.send(postsAndUsers);
 });
 

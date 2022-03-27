@@ -44,6 +44,8 @@ module.exports = async function mapFiltersService(filters) {
     });
     filtered = newArray;
   }
+  
+  filtered.sort((a, b) => b.users_like.length - a.users_like.length);
 
   if (filtered.length > 100) {
     filtered.splice(99, filtered.length - 1);

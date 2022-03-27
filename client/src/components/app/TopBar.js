@@ -37,8 +37,16 @@ const TopBar = (props) => {
 
   return (
     <div className="top_bar">
-      <IconBtn icon={IoNotificationsOutline} className="notification top_btn_color" onClick={alert} />
-      <SearchBar list={searchedUsers} search={searchHandler} onClick={props.userClicked} />
+      <IconBtn
+        icon={IoNotificationsOutline}
+        className="notification top_btn_color"
+        onClick={alert}
+      />
+      <SearchBar
+        list={searchedUsers}
+        search={searchHandler}
+        onClick={props.userClicked}
+      />
       <div className="pages_btns">
         <IconBtn
           icon={IoMenuOutline}
@@ -52,7 +60,9 @@ const TopBar = (props) => {
           className={classes[0]}
           onClick={() => {
             setIndex(0);
-            props.setCurrentPage(<FeedPage userClicked={props.userClicked} socket={props.socket} />);
+            props.setCurrentPage(
+              <FeedPage userClicked={props.userClicked} socket={props.socket} />
+            );
           }}
         />
         <IconBtn
@@ -60,7 +70,7 @@ const TopBar = (props) => {
           className={classes[1]}
           onClick={() => {
             setIndex(1);
-            props.setCurrentPage(<MapPage />);
+            props.setCurrentPage(<MapPage socket={props.socket} />);
           }}
         />
         <IconBtn
