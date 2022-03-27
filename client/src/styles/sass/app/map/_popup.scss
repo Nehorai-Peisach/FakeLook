@@ -1,12 +1,9 @@
 .popup {
   height: 150px;
   width: 120px;
-  & :first-child {
-    padding: 0;
-    &:after {
-      background-color: red;
-    }
-  }
+  // & :first-child {
+  //   padding: 0;
+  // }
   cursor: pointer;
   &__header {
     display: flex;
@@ -22,7 +19,9 @@
   }
 
   &__img {
-    height: 80px;
-    width: 80px;
+    height: 100px;
+    width: 100px;
+    position: relative;
+    right: 10px;
   }
 }

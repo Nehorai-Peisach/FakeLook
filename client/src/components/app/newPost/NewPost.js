@@ -4,8 +4,10 @@ import { storage } from 'firebases';
 import { v4 as uuidv4 } from 'uuid';
 import newPostService from 'services/postServices/newPostService';
 import { FiDownload } from 'react-icons/fi';
+import { useCookies } from 'react-cookie';
 
 const NewPost = (props) => {
+  const [cookies] = useCookies(['user']);
   const [image, setImage] = useState({});
   const [imageUrl, setImageUrl] = useState();
   const [text, setText] = useState('');
@@ -36,18 +38,17 @@ const NewPost = (props) => {
         image_id: id,
         location: { lat: latitude, lng: longitude },
         date: Date.now(),
-        user_id: props.user._id,
+        user_id: cookies.user.data._id,
         text: text,
         tags: tagsArray,
-        userTags: userTagsArray
+        userTags: userTagsArray,
       };
       const result = await newPostService(newPost);
 
       // for the real-time feed update
       props.socket.emit('new_post');
 
-      if (result.data.msg)
-        setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
+      if (result.data.msg) setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
       else setAfterPostContent(<h1>Post failed to upload!</h1>);
     });
   };
@@ -82,11 +83,7 @@ const NewPost = (props) => {
             <IconBtn className="transparent" icon={FiDownload}>
               Choose File...
             </IconBtn>
-            <input
-              className="img_input"
-              type="file"
-              onChange={imageHandler}
-            ></input>
+            <input className="img_input" type="file" onChange={imageHandler}></input>
           </label>
         </div>
         <div className="inputs_container">
@@ -99,9 +96,7 @@ const NewPost = (props) => {
           >
             Description...
           </Input>
-          <p className="tags_help">
-            *enter your tags with a: ", " between them
-          </p>
+          <p className="tags_help">*enter your tags with a: ", " between them</p>
           <Input
             className="tags_input"
             type="text"

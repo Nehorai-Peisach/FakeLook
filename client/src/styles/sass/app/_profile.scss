@@ -43,4 +43,19 @@
       }
     }
   }
+
+  &__galery {
+    display: grid;
+    grid-template-columns: repeat(3, 20rem);
+    grid-template-rows: repeat(3, 20rem);
+    gap: 1rem;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: 50% 30%;
+      border-radius: 1rem;
+    }
+  }
 }
