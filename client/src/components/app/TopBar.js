@@ -1,13 +1,7 @@
 import { IconBtn, SearchBar } from 'components/uiKit/UiKIt';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import {
-  IoPersonOutline,
-  IoAddCircleOutline,
-  IoImagesOutline,
-  IoLocationOutline,
-  IoNotificationsOutline
-} from 'react-icons/io5';
+import { IoPersonOutline, IoAddCircleOutline, IoImagesOutline, IoLocationOutline, IoNotificationsOutline } from 'react-icons/io5';
 import Alerter from 'services/alertService/Alerter';
 import getProfileService from 'services/profileServices/getProfileService';
 import searchServices from 'services/searchServices/searchServices';
@@ -18,12 +12,14 @@ import ProfilePage from './profile/Profile';
 
 const TopBar = (props) => {
   const [cookies] = useCookies(['user']);
-  const [index, setIndex] = useState(0);
-  let classes = ['', '', '', ''];
-  for (let i = 0; i < classes.length; i++) {
-    index === i
-      ? (classes[i] = 'top_btn_color active')
-      : (classes[i] = 'top_btn_color');
+  const [btnClassname, setBtnClassname] = useState('media__ hidden');
+  const [btnContainerClassname, setBtnContainerClassname] = useState('media_container__hidden');
+  const [index, setIndex] = useState(1);
+
+  const icons = [IoNotificationsOutline, IoImagesOutline, IoLocationOutline, IoAddCircleOutline, IoPersonOutline];
+  let classes = ['', '', '', '', ''];
+  for (let i = 1; i < classes.length; i++) {
+    index === i ? (classes[i] = 'top_btn_color active media__hidden ' + btnClassname) : (classes[i] = 'top_btn_color ' + btnClassname);
   }
   const alert = () => {
     Alerter('No New Messages!');
@@ -35,51 +31,66 @@ const TopBar = (props) => {
     setSearchedUsers(res.data);
   };
 
+  const [isDisplay, setIsDisplay] = useState(false);
+  const [menuIcon, setMenuIcon] = useState(icons[1]);
+  useEffect(() => {}, [menuIcon]);
+  const menuHandler = async (num) => {
+    setIndex(num);
+    setIsDisplay((pre) => {
+      if (pre) {
+        setBtnClassname('media__display');
+        setBtnContainerClassname('media_container__display');
+      } else {
+        setBtnClassname('media__hidden');
+        setBtnContainerClassname('media_container__hidden');
+      }
+      return !pre;
+    });
+    setMenuIcon(icons[num]);
+  };
+
   return (
     <div className="top_bar">
-      <IconBtn
-        icon={IoNotificationsOutline}
-        className="notification top_btn_color"
-        onClick={alert}
-      />
-      <SearchBar
-        list={searchedUsers}
-        search={searchHandler}
-        onClick={props.userClicked}
-      />
-      <div className="pages_btns">
+      <IconBtn icon={icons[0]} className="notification top_btn_color" onClick={alert} />
+      <SearchBar list={searchedUsers} search={searchHandler} onClick={props.userClicked} />
+      <div className="pages_btns media_container">
         <IconBtn
-          icon={IoImagesOutline}
-          className={classes[0]}
+          icon={() => menuIcon}
+          className={'pages_btns__menu transparent'}
           onClick={() => {
-            setIndex(0);
-            props.setCurrentPage(
-              <FeedPage userClicked={props.userClicked} socket={props.socket} />
-            );
+            menuHandler(index);
           }}
         />
         <IconBtn
-          icon={IoLocationOutline}
+          icon={icons[1]}
           className={classes[1]}
           onClick={() => {
-            setIndex(1);
-            props.setCurrentPage(<MapPage socket={props.socket} />);
+            props.setCurrentPage(<FeedPage userClicked={props.userClicked} socket={props.socket} />);
+            menuHandler(1);
           }}
         />
         <IconBtn
-          icon={IoAddCircleOutline}
+          icon={icons[2]}
           className={classes[2]}
           onClick={() => {
-            setIndex(2);
-            props.setCurrentPage(<NewPostPage socket={props.socket} />);
+            props.setCurrentPage(<MapPage socket={props.socket} />);
+            menuHandler(2);
           }}
         />
         <IconBtn
-          icon={IoPersonOutline}
+          icon={icons[3]}
           className={classes[3]}
           onClick={() => {
-            setIndex(3);
+            props.setCurrentPage(<NewPostPage socket={props.socket} />);
+            menuHandler(3);
+          }}
+        />
+        <IconBtn
+          icon={icons[4]}
+          className={classes[4]}
+          onClick={() => {
             props.userClicked(cookies.user.data._id);
+            menuHandler(4);
           }}
         />
       </div>
