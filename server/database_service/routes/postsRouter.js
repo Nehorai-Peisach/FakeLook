@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { Console } = require('winston/lib/winston/transports');
 const logger = require('../../logger');
 const Post = require('../models/Post');
 const User = require('../models/User');
@@ -27,7 +28,6 @@ router.route('/new-post').post(async (req, res) => {
 });
 
 router.route('/friends-posts').post(async (req, res) => {
-  console.log('in database');
   const user_id = req.body.user_id;
   const index = req.body.index;
   const user = await User.findById(user_id);
@@ -41,6 +41,12 @@ router.route('/friends-posts').post(async (req, res) => {
       postsAndUsers.push({ post: post, user: postUser });
     }
   }
+  const userPosts = await Post.find({ user_id: user_id });
+  for (let i = 0; i < userPosts.length; i++) {
+    const post = userPosts[i];
+    postsAndUsers.push({ post: post, user: user });
+  }
+
   postsAndUsers.sort((a, b) => new Date(b.post.date) - new Date(a.post.date));
   res.send(postsAndUsers);
 });
@@ -53,6 +59,23 @@ router.route('/get-posts').get((req, res) => {
     .catch((err) => {
       logger.error(err, '/database_service/routes/postRouter');
     });
+});
+
+router.route('/like').post(async (req, res) => {
+  const user_id = req.body.user_id;
+  const post_id = req.body.post_id;
+  let isLiked;
+  const post = await Post.findById(post_id);
+  if (post.users_like.includes(user_id)) {
+    const index = post.users_like.indexOf(user_id);
+    post.users_like.splice(index, 1);
+    isLiked = false;
+  } else {
+    post.users_like.push(user_id);
+    isLiked = true;
+  }
+  await Post.findByIdAndUpdate(post_id, { users_like: post.users_like });
+  res.send(isLiked);
 });
 
 module.exports = router;

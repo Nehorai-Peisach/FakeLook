@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export default async function newPostService(postInfo) {
   try {
     const result = await axios.post(

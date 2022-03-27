@@ -5,6 +5,7 @@ const logger = require('../logger');
 const newPostService = require('./services/newPostService');
 const getFriendsPosts = require('./services/getFriendsPosts');
 const mapFiltersService = require('./services/mapFiltersService');
+const likeService = require('./services/likeService');
 const app = express();
 
 const PORT = process.env.POSTS_PORT;
@@ -27,18 +28,26 @@ app.post('/friends-posts', async (req, res) => {
   try {
     const result = await getFriendsPosts(req.body);
     res.send(result);
-  } catch (error) {
-    logger.error(error, 'posts_service/app');
+  } catch (err) {
+    logger.error(err, 'posts_service/app');
   }
 });
 
 app.post('/map-filters', async (req, res) => {
   try {
     const result = await mapFiltersService(req.body);
-    logger.debug(JSON.stringify(result), 'posts_service/app');
     res.send(result);
-  } catch (error) {
-    logger.error(error, 'posts_service/app');
+  } catch (err) {
+    logger.error(err, 'posts_service/app');
+  }
+});
+
+app.post('/like', async (req, res) => {
+  try {
+    const result = await likeService(req.body);
+    res.send(result);
+  } catch (err) {
+    logger.error(err, 'posts_service/app');
   }
 });
 
