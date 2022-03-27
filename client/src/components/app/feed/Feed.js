@@ -24,7 +24,7 @@ const Feed = (props) => {
   };
 
   props.socket.on('check_friends_posts', () => {
-    const result = getFriendsPosts(cookies.user.data._id, posts.length);
+    const result = getFriendsPosts(cookies.user.data._id, 0);
     setPosts(...result.data);
   });
 
@@ -55,7 +55,9 @@ const Feed = (props) => {
         );
       })}
       <Hr />
-      <h1 className="feed__header">You see it all, add more friends to see their posts!</h1>
+      <h1 className="feed__header">
+        You see it all, add more friends to see their posts!
+      </h1>
     </div>
   ) : (
     <Loading />

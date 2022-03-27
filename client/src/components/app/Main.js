@@ -5,13 +5,11 @@ import TopBar from './TopBar';
 import UpdateNickname from './UpdateNickname';
 import nicknameService from 'services/authServices/nicknameService';
 import io from 'socket.io-client';
-import Cookies from 'universal-cookie';
 import Alerter from 'services/alertService/Alerter';
 import { useCookies } from 'react-cookie';
 import getProfileService from 'services/profileServices/getProfileService';
 
 const socket = io.connect('http://localhost:4005');
-const cookies = new Cookies();
 
 const Main = (props) => {
   const [userCookie, setUserCookie] = useCookies(['user']);
@@ -28,7 +26,7 @@ const Main = (props) => {
 
   const userClicked = async (id) => {
     const profile = await getProfileService(id);
-    setCurrentPage(<ProfilePage input={profile.data} />);
+    setCurrentPage(<ProfilePage input={profile.data} socket={socket} />);
   };
 
   useEffect(() => {
@@ -40,7 +38,11 @@ const Main = (props) => {
       {userCookie.user.data ? (
         userCookie.user.data.nickname ? (
           <div className="main">
-            <TopBar  userClicked={userClicked} setCurrentPage={setCurrentPage} socket={socket} />
+            <TopBar
+              userClicked={userClicked}
+              setCurrentPage={setCurrentPage}
+              socket={socket}
+            />
             {currentPage}
           </div>
         ) : (
