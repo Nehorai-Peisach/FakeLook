@@ -40,4 +40,15 @@ router.route('/map-filters').post((req, res) => {
     });
 });
 
+router.route('/like').post((req, res) => {
+  axios
+    .post(DOMAIN_NAME + POSTS_PORT + '/like', req.body)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      logger.error(err, '/gateway_service/routes/postRoutes');
+    });
+});
+
 module.exports = router;

@@ -2,6 +2,7 @@ import { Hr, Loading } from 'components/uiKit/UiKIt';
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import getFriendsPosts from 'services/feedServices/getFriendsPosts';
+import likeService from 'services/postServices/likeService';
 import Post from './Post';
 
 const Feed = (props) => {
@@ -9,14 +10,13 @@ const Feed = (props) => {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
-    loadPhotos();
+    loadPhotos(0);
   }, []);
 
-  const loadPhotos = async () => {
+  const loadPhotos = async (index) => {
     let result;
-    if (posts) {
+    if (posts || index !== 0) {
       result = await getFriendsPosts(cookies.user.data._id, posts.length);
-      console.log(result);
     } else {
       result = await getFriendsPosts(cookies.user.data._id, 0);
     }
@@ -24,16 +24,18 @@ const Feed = (props) => {
   };
 
   props.socket.on('check_friends_posts', () => {
-    const result = getFriendsPosts(cookies.user.data._id, 0);
-    setPosts(...result.data);
+    loadPhotos(0);
   });
 
   const likeHandler = (post_id) => {
-    console.log('like');
+    likeService(
+      { user_id: cookies.user.data._id, post_id: post_id },
+      props.socket
+    );
   };
 
   const commentHandler = () => {
-    console.log('comment');
+    
   };
 
   const userClicked = (id) => {
