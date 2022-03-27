@@ -90,11 +90,11 @@ const MapPage = (props) => {
     <div className="map">
       <div className="map__filters" style={filterStyle}>
         <div className="map__filters__container">
-          <input type="date" onChange={(e) => setDateFrom(e.target.value)} />
-          <input type="date" onChange={(e) => setDateTo(e.target.value)} />
-          <input type="number" placeholder="radius" onChange={(e) => setRadius(e.target.value)} />
-          <input type="text" placeholder="tags" onChange={(e) => setTags(e.target.value)} />
-          <input type="text" placeholder="friend Group" onChange={(e) => setFriendGroup(e.target.value)} />
+          <input className='date_input' type="date" onChange={(e) => setDateFrom(e.target.value)} />
+          <input className='date_input' type="date" onChange={(e) => setDateTo(e.target.value)} />
+          <input className='text_input' type="number" placeholder="radius" onChange={(e) => setRadius(e.target.value)} />
+          <input className='text_input' type="text" placeholder="tags" onChange={(e) => setTags(e.target.value)} />
+          <input className='text_input' type="text" placeholder="friend Group" onChange={(e) => setFriendGroup(e.target.value)} />
           <IconBtn icon={AiOutlineSearch} className="map__filters__container__btn transparent" onClick={setFilters} />
         </div>
       </div>
