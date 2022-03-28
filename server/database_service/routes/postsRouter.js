@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { Console } = require('winston/lib/winston/transports');
 const logger = require('../../logger');
 const Post = require('../models/Post');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 
 router.route('/new-post').post(async (req, res) => {
   console.log(req.body);
@@ -76,6 +76,50 @@ router.route('/like').post(async (req, res) => {
   }
   await Post.findByIdAndUpdate(post_id, { users_like: post.users_like });
   res.send(isLiked);
+});
+
+router.route('/comment').post(async (req, res) => {
+  const user_id = req.body.user_id;
+  const post_id = req.body.post_id;
+  const text = req.body.text;
+  try {
+    const newComment = new Comment({
+      text: text,
+      user_id: user_id,
+      post_id: post_id,
+      users_like: [],
+      date: Date().now()
+    });
+    await newComment.save().then(async (comment) => {
+      const post = await Post.findById(post_id);
+      post.comments.push(comment._id);
+      await Post.findByIdAndUpdate(post_id, { comments: post.comments });
+    });
+    res.send(true);
+  } catch (err) {
+    logger.error(err, '/database_service/routes/postRouter');
+    res.send(false);
+  }
+});
+
+router.route('/getComments').post(async (req, res) => {
+  const post_id = req.body.post_id;
+  const post = await Post.findById(post_id);
+  let commentsData = [];
+  if (post.comments[0]) {
+    for (let i = 0; i < post.comments.length; i++) {
+      const id = post.comments[i];
+      const comment = await Comment.findById(id);
+      const user = await User.findById(comment.user_id);
+      commentsData.push({
+        comment: comment,
+        nickname: user.nickname,
+        image_url: user.image_url
+      });
+    }
+  }
+
+  res.send(commentsData);
 });
 
 module.exports = router;

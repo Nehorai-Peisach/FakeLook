@@ -28,16 +28,16 @@ const Post = (props) => {
 
   const likeHandler = () => {
     setLike(!like);
-    props.likeHandler(props.postDetails.post._id);
+    props.likeHandler(props.postDetails.post._id, props.postDetails.user._id);
   };
 
   const commentHandler = () => {
     const newComment = {
       text: comment,
       user_id: cookies.user.data._id,
-      post_id: props.post._id
+      post_id: props.postDetails.post._id
     };
-    props.commentHandler(newComment);
+    props.commentHandler(newComment, props.postDetails.user._id);
   };
 
   const userClicked = () => {
@@ -74,7 +74,13 @@ const Post = (props) => {
           </Link>
         </div>
         <div className="comment_container">
-          <Input className="comment_input" type="text">
+          <Input
+            className="comment_input"
+            type="text"
+            onChange={(value) => {
+              setComment(value);
+            }}
+          >
             Send a comment...
           </Input>
           <IconBtn
