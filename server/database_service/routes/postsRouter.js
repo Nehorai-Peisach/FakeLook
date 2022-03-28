@@ -88,7 +88,7 @@ router.route('/comment').post(async (req, res) => {
       user_id: user_id,
       post_id: post_id,
       users_like: [],
-      date: Date().now()
+      date: Date.now()
     });
     await newComment.save().then(async (comment) => {
       const post = await Post.findById(post_id);
@@ -106,11 +106,12 @@ router.route('/getComments').post(async (req, res) => {
   const post_id = req.body.post_id;
   const post = await Post.findById(post_id);
   let commentsData = [];
-  if (post.comments[0]) {
+  if (post) {
     for (let i = 0; i < post.comments.length; i++) {
       const id = post.comments[i];
       const comment = await Comment.findById(id);
       const user = await User.findById(comment.user_id);
+      console.log(comment, user);
       commentsData.push({
         comment: comment,
         nickname: user.nickname,
@@ -118,7 +119,7 @@ router.route('/getComments').post(async (req, res) => {
       });
     }
   }
-
+  console.log(commentsData);
   res.send(commentsData);
 });
 
