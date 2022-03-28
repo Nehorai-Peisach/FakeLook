@@ -6,6 +6,8 @@ const newPostService = require('./services/newPostService');
 const getFriendsPosts = require('./services/getFriendsPosts');
 const mapFiltersService = require('./services/mapFiltersService');
 const likeService = require('./services/likeService');
+const commentService = require('./services/commentService');
+const getCommentsService = require('./services/getCommentsService');
 const app = express();
 
 const PORT = process.env.POSTS_PORT;
@@ -45,6 +47,24 @@ app.post('/map-filters', async (req, res) => {
 app.post('/like', async (req, res) => {
   try {
     const result = await likeService(req.body);
+    res.send(result);
+  } catch (err) {
+    logger.error(err, 'posts_service/app');
+  }
+});
+
+app.post('/comment', async (req, res) => {
+  try {
+    const result = await commentService(req.body);
+    res.send(result);
+  } catch (err) {
+    logger.error(err, 'posts_service/app');
+  }
+});
+
+app.post('/getComments', async (req, res) => {
+  try {
+    const result = await getCommentsService(req.body);
     res.send(result);
   } catch (err) {
     logger.error(err, 'posts_service/app');

@@ -2,6 +2,7 @@ import { Hr, Loading } from 'components/uiKit/UiKIt';
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import getFriendsPosts from 'services/feedServices/getFriendsPosts';
+import commentService from 'services/postServices/commentService';
 import likeService from 'services/postServices/likeService';
 import Post from './Post';
 
@@ -27,15 +28,16 @@ const Feed = (props) => {
     loadPhotos(0);
   });
 
-  const likeHandler = (post_id) => {
+  const likeHandler = (post_id, postAuthor_id) => {
     likeService(
       { user_id: cookies.user.data._id, post_id: post_id },
+      postAuthor_id,
       props.socket
     );
   };
 
-  const commentHandler = () => {
-    
+  const commentHandler = (comment, postAuthor_id) => {
+    commentService(comment, postAuthor_id, props.socket);
   };
 
   const userClicked = (id) => {

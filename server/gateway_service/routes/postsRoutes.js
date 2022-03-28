@@ -51,4 +51,26 @@ router.route('/like').post((req, res) => {
     });
 });
 
+router.route('/comment').post((req, res) => {
+  axios
+    .post(DOMAIN_NAME + POSTS_PORT + '/comment', req.body)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      logger.error(err, '/gateway_service/routes/postRoutes');
+    });
+});
+
+router.route('/getComments').post((req, res) => {
+  axios
+    .post(DOMAIN_NAME + POSTS_PORT + '/getComments', req.body)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      logger.error(err, '/gateway_service/routes/postRoutes');
+    });
+});
+
 module.exports = router;
