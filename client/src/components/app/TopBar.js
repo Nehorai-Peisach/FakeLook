@@ -65,7 +65,7 @@ const TopBar = (props) => {
           icon={icons[1]}
           className={classes[1]}
           onClick={() => {
-            props.setCurrentPage(<FeedPage userClicked={props.userClicked} socket={props.socket} />);
+            props.setCurrentPage(<FeedPage openClosePopup={props.openClosePopup} userClicked={props.userClicked} socket={props.socket} />);
             menuHandler(1);
           }}
         />
@@ -73,7 +73,7 @@ const TopBar = (props) => {
           icon={icons[2]}
           className={classes[2]}
           onClick={() => {
-            props.setCurrentPage(<MapPage socket={props.socket} />);
+            props.setCurrentPage(<MapPage openClosePopup={props.openClosePopup} socket={props.socket} />);
             menuHandler(2);
           }}
         />
@@ -81,7 +81,7 @@ const TopBar = (props) => {
           icon={icons[3]}
           className={classes[3]}
           onClick={() => {
-            props.setCurrentPage(<NewPostPage socket={props.socket} />);
+            props.setCurrentPage(<NewPostPage openClosePopup={props.openClosePopup} socket={props.socket} />);
             menuHandler(3);
           }}
         />
