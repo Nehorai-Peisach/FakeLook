@@ -9,7 +9,7 @@ import Alerter from 'services/alertService/Alerter';
 import { useCookies } from 'react-cookie';
 import getProfileService from 'services/profileServices/getProfileService';
 import FullPagePopup from 'components/uiKit/kit/layout/FullPagePopup';
-import FullPost from './feed/FullPost';
+import FullPost from './FullPost';
 import getFriendsPosts from 'services/feedServices/getFriendsPosts';
 
 const socket = io.connect('http://localhost:4005');
@@ -29,7 +29,7 @@ const Main = (props) => {
 
   const userClicked = async (id) => {
     const profile = await getProfileService(id);
-    setCurrentPage(<ProfilePage openClosePopup={[showFullPopup, closeFullPopup]} input={profile.data} socket={socket} />);
+    setCurrentPage(<ProfilePage openClosePopup={[showFullPopup, closeFullPopup]} userClicked={userClicked} input={profile.data} socket={socket} />);
   };
 
   useEffect(async () => {
@@ -49,7 +49,7 @@ const Main = (props) => {
     setFullPopupClassname('full_popup__hidden');
   };
   const openClosePopup = [showFullPopup, closeFullPopup];
-  
+
   return (
     <div>
       {userCookie.user.data ? (

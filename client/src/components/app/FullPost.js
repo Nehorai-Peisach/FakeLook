@@ -4,7 +4,7 @@ import { storage } from 'firebases';
 import { useEffect, useState } from 'react';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import { useCookies } from 'react-cookie';
-import Comment from './Comment';
+import Comment from './feed/Comment';
 
 const FullPost = (props) => {
   const [showFullPopup, closeFullPopup] = props.openClosePopup;

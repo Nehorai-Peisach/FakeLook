@@ -49,7 +49,7 @@ const SignIn = (props) => {
       </Btn>
       <div className="login__links">
         <Link>Forgot password</Link>
-        <Link click={() => props.setIndex(1)}>Create Account</Link>
+        <Link onClick={() => props.setIndex(1)}>Create Account</Link>
       </div>
       <Hr />
       {/* <IconBtn icon={BsFacebook} className="blue">

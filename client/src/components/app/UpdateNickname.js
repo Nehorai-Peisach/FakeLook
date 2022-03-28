@@ -5,8 +5,11 @@ import Alerter from 'services/alertService/Alerter';
 const UpdateNickname = (props) => {
   const [nickname, setNickname] = useState('');
   const onClick = () => {
-    if (nickname.length > 2) props.enterNickname(nickname);
-    else Alerter('Nickname must be more than 2 letters');
+    nickname.length > 2
+      ? nickname.length < 14
+        ? props.enterNickname(nickname)
+        : Alerter('Nickname must be less than 14 letters')
+      : Alerter('Nickname must be more than 2 letters');
   };
   return (
     <div className="login__page">

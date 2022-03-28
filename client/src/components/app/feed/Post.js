@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { storage } from 'firebases';
-import FullPost from './FullPost';
+import FullPost from '../FullPost';
 
 const Post = (props) => {
   const [showFullPopup, closeFullPopup] = props.openClosePopup;

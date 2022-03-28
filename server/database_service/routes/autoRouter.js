@@ -40,20 +40,28 @@ router.route('/sign-up').post((req, res) => {
       if (userFound) {
         logger.info('Already registed to that Email');
         newUser._id = userFound._id;
-        if (newUser.google_id) await googleSignup(newUser);
-        else if (newUser.facebook_id) await facebookSignup(newUser);
-        else await regularSignup(newUser);
-        res.send(true);
+        let result;
+        if (newUser.google_id) result = await googleSignup(newUser, userFound.google_id);
+        else if (newUser.facebook_id) result = await facebookSignup(newUser, userFound.facebook_id);
+        else result = await regularSignup(newUser);
+        res.send(result);
       } else {
         try {
           logger.info('Email is free to register');
-          newUser.save().then(() => {
-            logger.info('User registed');
-            res.send(true);
-          });
+          const check = await User.findOne({ username: newUser.username });
+          logger.silly(check);
+          if (check) {
+            logger.info('Username alredy been taken');
+            res.send({ msg: 'Username alredy been taken', state: false });
+          } else {
+            newUser.save().then(() => {
+              logger.info('User registed');
+              res.send({ msg: 'User registed', state: true });
+            });
+          }
         } catch (error) {
           logger.error(error);
-          res.sendStatus(400).send(false);
+          res.sendStatus(400).send({ msg: 'Server Error', state: false });
         }
       }
     })
@@ -63,16 +71,44 @@ router.route('/sign-up').post((req, res) => {
 });
 
 const regularSignup = async (user) => {
-  await User.findByIdAndUpdate(user._id, { password: user.password, username: user.username });
-  logger.info('User Updated');
+  const checks = [];
+
+  const username = await User.findOne({ username: user.username });
+  logger.silly(username);
+  if (username) checks.push('Username');
+  if (user.email) checks.push('Email');
+
+  if (checks.length === 0) {
+    await User.findByIdAndUpdate(user._id, { password: user.password, username: user.username });
+    logger.info('User Updated');
+    return { msg: 'Register successs', state: true };
+  } else {
+    return { msg: `${myPrint(checks)} is alredy taken`, state: false };
+  }
 };
-const facebookSignup = async (user) => {
+
+const myPrint = (arr) => {
+  switch (arr.length) {
+    case 1:
+      return arr[0];
+    case 2:
+      return arr[0] + ' and ' + arr[1];
+    default:
+      break;
+  }
+};
+
+const facebookSignup = async (user, isFacebook) => {
+  if (isFacebook) return { msg: 'Facebook accout alredy been taken', state: false };
   await User.findByIdAndUpdate(user._id, { facebook_id: user.facebook_id });
   logger.info('User Updated');
+  return { msg: 'Register successs', state: true };
 };
-const googleSignup = async (user) => {
+const googleSignup = async (user, isGoogle) => {
+  if (isGoogle) return { msg: 'Google accout alredy been taken', state: false };
   await User.findByIdAndUpdate(user._id, { google_id: user.google_id });
   logger.info('User Updated');
+  return { msg: 'Register successs', state: true };
 };
 
 router.route('/nickname').post((req, res) => {
