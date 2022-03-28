@@ -12,7 +12,12 @@ router.route('/sign-in').post((req, res) => {
     .then((result) => {
       if (result) {
         logger.debug(result, 'db/auth/signin', 'user was found');
-        const retUser = { _id: result._id, nickname: result.nickname, image_url: result.image_url, friends_id: result.friends_id };
+        const retUser = {
+          _id: result._id,
+          nickname: result.nickname,
+          image_url: result.image_url,
+          friends_id: result.friends_id
+        };
         res.send(retUser);
       } else res.send(false);
     })
@@ -32,7 +37,7 @@ router.route('/sign-up').post((req, res) => {
     google_id: req.body.google_id || null,
     facebook_id: req.body.facebook_id || null,
     nickname: null,
-    bio: "Hey there I'm using FakeLook!",
+    bio: "Hey there I'm using FakeLook!"
   });
 
   User.findOne({ email: newUser.email })
@@ -63,7 +68,10 @@ router.route('/sign-up').post((req, res) => {
 });
 
 const regularSignup = async (user) => {
-  await User.findByIdAndUpdate(user._id, { password: user.password, username: user.username });
+  await User.findByIdAndUpdate(user._id, {
+    password: user.password,
+    username: user.username
+  });
   logger.info('User Updated');
 };
 const facebookSignup = async (user) => {
@@ -87,7 +95,11 @@ router.route('/nickname').post((req, res) => {
             logger.debug(result, 'db/auth/nickname', 'user was found');
             result.nickname = nickname;
             await User.findByIdAndUpdate(userId, { nickname: nickname });
-            const retUser = { _id: result._id, nickname: result.nickname, image_url: result.image_url };
+            const retUser = {
+              _id: result._id,
+              nickname: result.nickname,
+              image_url: result.image_url
+            };
             res.send(retUser);
           })
           .catch((err) => {

@@ -12,13 +12,13 @@ const MapPage = (props) => {
   const [cookies] = useCookies(['user']);
   const [position, setPosition] = useState({
     latitude: 32.109333,
-    longitude: 34.855499,
+    longitude: 34.855499
   });
   const [map, setMap] = useState();
   const [posts, setPosts] = useState([]);
 
   const [filterStyle, setFilterStyle] = useState({
-    width: '0px',
+    width: '0px'
   });
   const [btnFilterStyle, setBtnFilterStyle] = useState({});
   const [flag, setFlag] = useState(false);
@@ -29,12 +29,26 @@ const MapPage = (props) => {
   const [tags, setTags] = useState('');
   const [friendGroup, setFriendGroup] = useState('');
 
-  useEffect(() => {
+  useEffect(async () => {
+    const filters = {
+      user_id: cookies.user.data._id,
+      position: position,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      radius: radius,
+      tags: tags,
+      friendGroup: friendGroup
+    };
+
+    const result = await mapFiltersService(filters);
+    console.log(result);
+    setPosts(result);
     goHome();
   }, []);
 
   useEffect(() => {
-    if (position) map?.flyTo({ lat: position.latitude, lng: position.longitude }, 17);
+    if (position)
+      map?.flyTo({ lat: position.latitude, lng: position.longitude }, 17);
   }, [position]);
 
   const goHome = () => {
@@ -59,7 +73,7 @@ const MapPage = (props) => {
       dateTo: dateTo,
       radius: radius,
       tags: tags,
-      friendGroup: friendGroup,
+      friendGroup: friendGroup
     };
 
     const result = await mapFiltersService(filters);
@@ -70,17 +84,17 @@ const MapPage = (props) => {
   const filtersMenu = () => {
     if (!flag) {
       setBtnFilterStyle({
-        transform: 'rotate(90deg)',
+        transform: 'rotate(90deg)'
       });
       setFilterStyle({
-        width: '400px',
+        width: '30vw'
       });
     } else {
       setBtnFilterStyle({
-        transform: 'rotate(0deg)',
+        transform: 'rotate(0deg)'
       });
       setFilterStyle({
-        width: '0px',
+        width: '0px'
       });
     }
     setFlag(!flag);
@@ -90,19 +104,66 @@ const MapPage = (props) => {
     <div className="map">
       <div className="map__filters" style={filterStyle}>
         <div className="map__filters__container">
-          <input className='date_input' type="date" onChange={(e) => setDateFrom(e.target.value)} />
-          <input className='date_input' type="date" onChange={(e) => setDateTo(e.target.value)} />
-          <input className='text_input' type="number" placeholder="radius" onChange={(e) => setRadius(e.target.value)} />
-          <input className='text_input' type="text" placeholder="tags" onChange={(e) => setTags(e.target.value)} />
-          <input className='text_input' type="text" placeholder="friend Group" onChange={(e) => setFriendGroup(e.target.value)} />
-          <IconBtn icon={AiOutlineSearch} className="map__filters__container__btn transparent" onClick={setFilters} />
+          <label>
+            <span>From:</span>
+            <input
+              className="date_input"
+              type="date"
+              onChange={(e) => setDateFrom(e.target.value)}
+            />
+          </label>
+          <label>
+            <span>to:</span>
+            <input
+              className="date_input"
+              type="date"
+              onChange={(e) => setDateTo(e.target.value)}
+            />
+          </label>
+          <input
+            className="text_input"
+            type="number"
+            placeholder="radius"
+            onChange={(e) => setRadius(e.target.value)}
+          />
+          <input
+            className="text_input"
+            type="text"
+            placeholder="tags"
+            onChange={(e) => setTags(e.target.value)}
+          />
+          <input
+            className="text_input"
+            type="text"
+            placeholder="friend Group"
+            onChange={(e) => setFriendGroup(e.target.value)}
+          />
+          <IconBtn
+            icon={AiOutlineSearch}
+            className="map__filters__container__btn blue"
+            onClick={setFilters}
+          />
         </div>
       </div>
       <div>
-        <IconBtn className="map__btn__filters blue" style={btnFilterStyle} icon={BiMapPin} onClick={filtersMenu}></IconBtn>
-        <IconBtn className="map__btn__filters blue" icon={AiOutlineHome} onClick={goHome}></IconBtn>
+        <IconBtn
+          className="map__btn__filters blue"
+          style={btnFilterStyle}
+          icon={BiMapPin}
+          onClick={filtersMenu}
+        ></IconBtn>
+        <IconBtn
+          className="map__btn__filters blue"
+          icon={AiOutlineHome}
+          onClick={goHome}
+        ></IconBtn>
       </div>
-      <MapContainer whenCreated={setMap} className="map__container" center={[32.109333, 34.855499]} zoom={13}>
+      <MapContainer
+        whenCreated={setMap}
+        className="map__container"
+        center={[32.109333, 34.855499]}
+        zoom={13}
+      >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -110,7 +171,10 @@ const MapPage = (props) => {
         {posts.map((post) => {
           return <MapMarker post={post} />;
         })}
-        <Circle center={[position.latitude, position.longitude]} radius={radius} />
+        <Circle
+          center={[position.latitude, position.longitude]}
+          radius={radius}
+        />
       </MapContainer>
     </div>
   );
