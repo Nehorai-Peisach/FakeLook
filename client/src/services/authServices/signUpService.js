@@ -31,6 +31,6 @@ export async function facebookSignUpService(name, email, facebook_id) {
 
 const signup = async (newUser) => {
   const user = await axios.post('http://localhost:4000/api/auth/sign-up', newUser);
-  if (user) return true;
-  return false;
+  if (user.data) return user.data;
+  return null;
 };

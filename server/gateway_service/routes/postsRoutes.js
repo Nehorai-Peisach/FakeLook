@@ -9,7 +9,6 @@ router.route('/new-post').post((req, res) => {
   axios
     .post(DOMAIN_NAME + POSTS_PORT + '/new-post', req.body)
     .then((result) => {
-      // console.log(result.data);
       res.send(result.data);
     })
     .catch((err) => {
@@ -70,6 +69,17 @@ router.route('/getComments').post((req, res) => {
     })
     .catch((err) => {
       logger.error(err, '/gateway_service/routes/postRoutes');
+    });
+});
+
+router.route('/getPostsByUserId').post((req, res) => {
+  axios
+    .post(DOMAIN_NAME + POSTS_PORT + '/getPostsByUserId', req.body)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      logger.error(err, '/gateway_service/routes/getPostsByUserId');
     });
 });
 

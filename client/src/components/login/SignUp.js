@@ -1,5 +1,4 @@
-import { Hr, Btn, Input, Link, Title, IconBtn } from 'components/uiKit/UiKIt';
-import { BsFacebook, BsGoogle } from 'react-icons/bs';
+import { Hr, Btn, Input, Link, Title } from 'components/uiKit/UiKIt';
 import LoginGoogle from './LoginGoogle';
 import { useEffect, useState } from 'react';
 import loginService from 'services/authServices/signUpService';
@@ -42,11 +41,9 @@ const SignUp = (props) => {
         //   subject: 'Verify your email in FakeLook',
         // });
         // window.location.href = '/sign-in';
-        props.setIndex(0);
-        Alerter('User Registerd, Go to your email and verify!');
-      } else {
-        Alerter('Email already in use, Use different Email!');
-      }
+        if (result.state) props.setIndex(0);
+        Alerter(result.msg);
+      } else Alerter(result.msg);
     }
   };
 
@@ -103,7 +100,7 @@ const SignUp = (props) => {
       <Btn type="submit" onClick={onLoginHandler} className={btnClass}>
         Sign up
       </Btn>
-      <Link click={() => props.setIndex(0)}>Already have an account - sign in</Link>
+      <Link onClick={() => props.setIndex(0)}>Already have an account - sign in</Link>
       <Hr />
       <LoginGoogle />
     </form>

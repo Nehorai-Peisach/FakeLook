@@ -13,7 +13,7 @@ router.route('/new-post').post(async (req, res) => {
     user_id: req.body.user_id,
     text: req.body.text,
     tags: req.body.tags,
-    userTags: req.body.userTags
+    userTags: req.body.userTags,
   });
   try {
     const user = await User.findById(req.body.user_id);
@@ -115,12 +115,18 @@ router.route('/getComments').post(async (req, res) => {
       commentsData.push({
         comment: comment,
         nickname: user.nickname,
-        image_url: user.image_url
+        image_url: user.image_url,
       });
     }
   }
   console.log(commentsData);
   res.send(commentsData);
+});
+
+router.route('/getPostsByUserId').post(async (req, res) => {
+  const userId = req.body.user_id;
+  const posts = await Post.find({ user_id: userId });
+  res.send(posts);
 });
 
 module.exports = router;

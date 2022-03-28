@@ -8,6 +8,7 @@ const mapFiltersService = require('./services/mapFiltersService');
 const likeService = require('./services/likeService');
 const commentService = require('./services/commentService');
 const getCommentsService = require('./services/getCommentsService');
+const getPostsByUserIdService = require('./services/getPostsByUserIdService');
 const app = express();
 
 const PORT = process.env.POSTS_PORT;
@@ -65,6 +66,15 @@ app.post('/comment', async (req, res) => {
 app.post('/getComments', async (req, res) => {
   try {
     const result = await getCommentsService(req.body);
+    res.send(result);
+  } catch (err) {
+    logger.error(err, 'posts_service/app');
+  }
+});
+
+app.post('/getPostsByUserId', async (req, res) => {
+  try {
+    const result = await getPostsByUserIdService(req.body);
     res.send(result);
   } catch (err) {
     logger.error(err, 'posts_service/app');
