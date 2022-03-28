@@ -13,6 +13,14 @@ const CommentSchema = {
   post_id: {
     type: Object,
     required: true
+  },
+  users_like: {
+    type: Object,
+    required: false
+  },
+  date: {
+    type: Date,
+    required: true
   }
 };
 
