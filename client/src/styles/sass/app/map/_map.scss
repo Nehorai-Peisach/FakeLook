@@ -17,10 +17,44 @@
     &__container {
       display: flex;
       flex-direction: column;
+      gap: 30px;
+      margin-top: 30px;
+      align-items: center;
 
+      label {
+        display: flex;
+        flex-direction: column;
+        span {
+          font-size: 1.5rem;
+          font-weight: 800;
+        }
+      }
+
+      input {
+        width: 25vw;
+        height: 4rem;
+        padding-left: 10px;
+        border-radius: 1rem;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 800;
+      }
       .date_input {
       }
       .text_input {
+      }
+      &__btn {
+        height: 40px;
+        width: 40px;
+        display: block;
+        border-radius: 50%;
+        top: 80px;
+        padding: 0;
+        transition: all 0.7s;
+
+        .icon {
+          height: 100%;
+          margin: 0;
+        }
       }
     }
   }

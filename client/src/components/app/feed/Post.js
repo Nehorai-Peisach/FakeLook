@@ -12,14 +12,19 @@ const Post = (props) => {
   const [comment, setComment] = useState('');
   const [like, setLike] = useState(false);
   const [img, setImg] = useState();
+  const [comments, setComments] = useState(props.postDetails.post.comments);
 
   useEffect(async () => {
     if (props.postDetails) {
-      let isLiked = props.postDetails.post.users_like.includes(cookies.user.data._id);
+      let isLiked = props.postDetails.post.users_like.includes(
+        cookies.user.data._id
+      );
       if (isLiked) setLike(true);
       else setLike(false);
 
-      const url = await storage.ref(`images/${props.postDetails.post.image_id}`).getDownloadURL();
+      const url = await storage
+        .ref(`images/${props.postDetails.post.image_id}`)
+        .getDownloadURL();
       setImg(url);
     }
   }, [props.postDetails]);
@@ -30,12 +35,15 @@ const Post = (props) => {
   };
 
   const commentHandler = () => {
-    const newComment = {
-      text: comment,
-      user_id: cookies.user.data._id,
-      post_id: props.postDetails.post._id
-    };
-    props.commentHandler(newComment, props.postDetails.user._id);
+    if (comment !== '') {
+      const newComment = {
+        text: comment,
+        user_id: cookies.user.data._id,
+        post_id: props.postDetails.post._id
+      };
+      setComments((prevState) => [...prevState, 1]);
+      props.commentHandler(newComment, props.postDetails.user._id);
+    }
   };
 
   const userClicked = () => {
@@ -52,6 +60,7 @@ const Post = (props) => {
         isLike={like}
         commentHandler={props.commentHandler}
         openClosePopup={props.openClosePopup}
+        setComments={setComments}
       />
     );
   };
@@ -59,15 +68,28 @@ const Post = (props) => {
   return (
     <div className="post">
       <a className="header" onClick={() => userClicked()}>
-        <img className="profile_img" src={props.postDetails.user.image_url}></img>
+        <img
+          className="profile_img"
+          src={props.postDetails.user.image_url}
+        ></img>
         <p className="username">{props.postDetails.user.nickname}</p>
       </a>
-      <div className="img_container">{img ? <img className="img" src={img} onClick={openFull}></img> : <Loading className="img" />}</div>
+      <div className="img_container">
+        {img ? (
+          <img className="img" src={img} onClick={openFull}></img>
+        ) : (
+          <Loading className="img" />
+        )}
+      </div>
       <div className="bottom">
         <div className="bottom__header">
-          <IconBtn onClick={likeHandler} icon={like ? IoHeart : IoHeartOutline} className="like_btn transparent"></IconBtn>
+          <IconBtn
+            onClick={likeHandler}
+            icon={like ? IoHeart : IoHeartOutline}
+            className="like_btn transparent"
+          ></IconBtn>
           <Link className="view_comments" onClick={openFull}>
-            View all {props.postDetails.post.users_like.length} comments
+            View all {comments.length} comments
           </Link>
         </div>
         <div className="bottom__text">{props.postDetails.post.text}</div>
@@ -81,7 +103,11 @@ const Post = (props) => {
           >
             Send a comment...
           </Input>
-          <IconBtn onClick={commentHandler} icon={RiSendPlaneFill} className="comment_btn"></IconBtn>
+          <IconBtn
+            onClick={commentHandler}
+            icon={RiSendPlaneFill}
+            className="comment_btn"
+          ></IconBtn>
         </div>
       </div>
     </div>

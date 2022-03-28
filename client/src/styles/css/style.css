@@ -577,7 +577,34 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     transition: all 0.5s !important; }
     .map__filters__container {
       display: flex;
-      flex-direction: column; }
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 30px;
+      align-items: center; }
+      .map__filters__container label {
+        display: flex;
+        flex-direction: column; }
+        .map__filters__container label span {
+          font-size: 1.5rem;
+          font-weight: 800; }
+      .map__filters__container input {
+        width: 25vw;
+        height: 4rem;
+        padding-left: 10px;
+        border-radius: 1rem;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 800; }
+      .map__filters__container__btn {
+        height: 40px;
+        width: 40px;
+        display: block;
+        border-radius: 50%;
+        top: 80px;
+        padding: 0;
+        transition: all 0.7s; }
+        .map__filters__container__btn .icon {
+          height: 100%;
+          margin: 0; }
   .map__container {
     height: calc(100vh - 6rem);
     width: 100%;
