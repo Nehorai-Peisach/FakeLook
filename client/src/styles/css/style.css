@@ -147,7 +147,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   width: calc(100% - 2rem - 2px);
   display: block;
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   font-size: 1.5rem;
   background: rgba(255, 255, 255, 0.1) !important;
   border: 1px solid rgba(0, 0, 0, 0); }
@@ -289,8 +289,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     margin: auto;
     background-color: white;
     border-radius: 1rem;
-    max-height: 80vh;
-    max-width: 80vw;
+    overflow: hidden;
     min-height: 200px;
     min-width: 350px; }
   .full_popup__hidden {
@@ -337,7 +336,8 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       width: 400px;
       object-fit: cover;
       object-position: 50% 30%;
-      border-radius: 1rem; }
+      border-radius: 1rem;
+      cursor: pointer; }
     .feed .post .bottom__text {
       font-weight: 800;
       font-size: 1.5rem;
@@ -678,9 +678,91 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .full_post {
   width: 100%;
   height: 100%;
-  display: flex; }
-  .full_post__img {
-    max-height: 500px;
-    max-width: 500px;
-    object-fit: cover;
-    object-position: 50% 30%; }
+  max-height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+  justify-items: center;
+  overflow-x: hidden; }
+  .full_post__img_container {
+    height: 50vw;
+    width: 50vw;
+    padding: 1rem; }
+    .full_post__img_container__img {
+      border-radius: 1rem;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: 50% 30%; }
+  .full_post__ditails {
+    align-self: flex-start;
+    height: 100%;
+    max-height: 90vh;
+    grid-template-rows: max-content 1fr max-content;
+    display: grid;
+    padding: 0 1rem;
+    border-radius: 1rem; }
+    .full_post__ditails .input__input:focus {
+      border: 1px solid transparent; }
+    .full_post__ditails .header {
+      margin: 1rem;
+      display: flex;
+      align-items: center;
+      width: max-content;
+      border-radius: 50px 20px 20px 50px;
+      cursor: pointer; }
+      .full_post__ditails .header .profile_img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%; }
+      .full_post__ditails .header .username {
+        font-weight: 800;
+        font-size: 1.4rem;
+        margin-left: 1rem; }
+    .full_post__ditails .comments_container {
+      overflow-x: hidden;
+      overflow-y: auto; }
+      .full_post__ditails .comments_container .comments {
+        height: 300vh; }
+    .full_post__ditails .bottom {
+      margin-bottom: 1rem; }
+      .full_post__ditails .bottom__header {
+        display: flex;
+        padding: 1rem;
+        overflow: hidden; }
+        .full_post__ditails .bottom__header .like_btn {
+          margin: 0;
+          padding: 0;
+          color: #555; }
+        .full_post__ditails .bottom__header__text {
+          height: fit-content;
+          font-weight: 800;
+          font-size: 1.5rem; }
+        .full_post__ditails .bottom__header .view_comments {
+          color: #333;
+          align-self: center; }
+    .full_post__ditails .comment_container {
+      display: flex;
+      box-shadow: 1px 1px 2px gray;
+      border-radius: 1rem; }
+      .full_post__ditails .comment_container .comment_input {
+        color: gray; }
+        .full_post__ditails .comment_container .comment_input::placeholder {
+          color: gray;
+          opacity: 0.5; }
+      .full_post__ditails .comment_container .comment_btn {
+        margin: auto;
+        padding: 0;
+        background-color: transparent; }
+  @media only screen and (max-width: 1000px) {
+    .full_post {
+      height: 90vh;
+      width: 80vw;
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; }
+      .full_post__ditails {
+        width: 95%;
+        max-height: 100%;
+        min-height: calc(90vh - 50vw); } }

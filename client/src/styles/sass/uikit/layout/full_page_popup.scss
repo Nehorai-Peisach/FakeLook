@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-
+  
   & > * {
     grid-area: 1/1;
   }
@@ -17,20 +17,21 @@
     height: 100vh;
     width: 100vw;
   }
-
+  
   .btn {
     margin-top: 2rem;
     align-self: flex-start;
     justify-self: flex-end;
   }
-
+  
   &__content {
     margin: auto;
     background-color: white;
     border-radius: 1rem;
+    overflow: hidden;
 
-    max-height: 80vh;
-    max-width: 80vw;
+    // max-height: 80vh;
+    // max-width: 80vw;
     min-height: 200px;
     min-width: 350px;
   }

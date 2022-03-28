@@ -4,7 +4,7 @@ const Link = (props) => {
 
   const ClickHandler = (e) => {
     e.preventDefault();
-    if (props.click) props.click();
+    if (props.onClick) props.onClick();
   };
 
   return (

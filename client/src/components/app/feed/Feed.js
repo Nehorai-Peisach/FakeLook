@@ -53,6 +53,7 @@ const Feed = (props) => {
             postDetails={post}
             likeHandler={likeHandler}
             commentHandler={commentHandler}
+            openClosePopup={props.openClosePopup}
           />
         );
       })}

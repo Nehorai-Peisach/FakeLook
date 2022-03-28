@@ -29,16 +29,16 @@ const Main = (props) => {
 
   const userClicked = async (id) => {
     const profile = await getProfileService(id);
-    setCurrentPage(<ProfilePage input={profile.data} socket={socket} />);
+    setCurrentPage(<ProfilePage openClosePopup={[showFullPopup, closeFullPopup]} input={profile.data} socket={socket} />);
   };
 
   useEffect(async () => {
-    setCurrentPage(<FeedPage userClicked={userClicked} socket={socket} />);
-    const tmp = await getFriendsPosts(userCookie.user.data._id, 0);
-    setPopup(<FullPost postDetails={tmp[0]} />);
+    setCurrentPage(<FeedPage openClosePopup={[showFullPopup, closeFullPopup]} userClicked={userClicked} socket={socket} />);
+    // const tmp = await getFriendsPosts(userCookie.user.data._id, 0);
+    // setPopup(<FullPost postDetails={tmp[0]} />);
   }, []);
 
-  const [fullPopupClassname, setFullPopupClassname] = useState('full_popup__display');
+  const [fullPopupClassname, setFullPopupClassname] = useState('full_popup__hidden');
   const [popup, setPopup] = useState(<div />);
   const showFullPopup = (popup) => {
     setPopup(popup);
@@ -48,13 +48,14 @@ const Main = (props) => {
     setPopup(<div />);
     setFullPopupClassname('full_popup__hidden');
   };
-
+  const openClosePopup = [showFullPopup, closeFullPopup];
+  
   return (
     <div>
       {userCookie.user.data ? (
         userCookie.user.data.nickname ? (
           <div className="main">
-            <TopBar userClicked={userClicked} setCurrentPage={setCurrentPage} socket={socket} />
+            <TopBar openClosePopup={openClosePopup} userClicked={userClicked} setCurrentPage={setCurrentPage} socket={socket} />
             {currentPage}
             <FullPagePopup popup={popup} close={closeFullPopup} className={fullPopupClassname} />
           </div>
