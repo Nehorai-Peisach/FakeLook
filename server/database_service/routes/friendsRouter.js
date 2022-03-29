@@ -23,6 +23,7 @@ router.route('/search').post(async (req, res) => {
 
 router.route('/getprofile').post(async (req, res) => {
   const userId = req.body.user_id;
+
   logger.info(
     JSON.stringify(userId),
     'db/rou/fri/getprofile',
@@ -30,16 +31,35 @@ router.route('/getprofile').post(async (req, res) => {
   );
   const user = await User.findOne({ _id: userId });
 
+
   const tmp = {
     _id: user._id,
+    name: user.name,
     image_url: user.image_url,
     nickname: user.nickname,
     bio: user.bio,
     friends_id: user.friends_id,
-    posts_id: user.posts_id
+    posts_id: user.posts_id,
+    email: user.email,
   };
   logger.debug(tmp, 'db/rou/fri/getprofile', 'profile found');
   res.send(tmp);
+});
+
+router.route('/editProfile').post(async (req, res) => {
+  const userId = req.body._id;
+
+  logger.info(JSON.stringify(userId), 'db/rou/fri/getprofile', 'profile requst');
+  const user = await User.findByIdAndUpdate(userId, {
+    name: req.body.name,
+    image_url: req.body.image_url,
+    nickname: req.body.nickname,
+    bio: req.body.bio,
+    email: req.body.email,
+  });
+
+  logger.debug(user, 'db/rou/fri/getprofile', 'profile found');
+  res.send(user);
 });
 
 router.route('/addfriend').post(async (req, res) => {

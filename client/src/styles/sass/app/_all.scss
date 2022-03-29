@@ -1,11 +1,16 @@
-@import './feed';
-@import './main';
-@import './map';
-@import './new_post';
-@import './profile';
-@import './top_bar';
-@import './map/all';
-@import './new_post';
-@import './full_post';
-@import './comment';
 @import './new_friend_group'
+@import './general/main';
+@import './general/top_bar';
+
+@import './profile/profile';
+@import './profile/edit_profile';
+
+@import './new_post/new_post';
+
+@import './map/map';
+@import './map/popup';
+
+@import './posts/feed';
+@import './posts/comment';
+@import './posts/full_post';
+
