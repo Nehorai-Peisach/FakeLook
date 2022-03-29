@@ -61,7 +61,7 @@ const Feed = (props) => {
       })}
       <Hr />
       <h1 className="feed__header">
-        You see it all, add more friends to see their posts!
+        You've seen it all, add more friends to see their posts!
       </h1>
     </div>
   ) : (
