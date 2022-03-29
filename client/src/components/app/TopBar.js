@@ -12,7 +12,7 @@ import ProfilePage from './profile/Profile';
 
 const TopBar = (props) => {
   const [cookies] = useCookies(['user']);
-  const [btnClassname, setBtnClassname] = useState('media__ hidden');
+  const [btnClassname, setBtnClassname] = useState('media__hidden');
   const [btnContainerClassname, setBtnContainerClassname] = useState('media_container__hidden');
   const [index, setIndex] = useState(1);
 
@@ -31,7 +31,7 @@ const TopBar = (props) => {
     setSearchedUsers(res.data);
   };
 
-  const [isDisplay, setIsDisplay] = useState(false);
+  const [isDisplay, setIsDisplay] = useState(true);
   const [menuIcon, setMenuIcon] = useState(icons[1]);
   useEffect(() => {}, [menuIcon]);
   const menuHandler = async (num) => {
