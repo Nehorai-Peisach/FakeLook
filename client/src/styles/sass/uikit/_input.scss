@@ -1,7 +1,10 @@
 input,
 input:hover,
 input:focus,
-input:active {
+input:active,
+textarea textarea:hover,
+textarea:focus,
+textarea:active {
   outline: none;
 }
 input:-webkit-autofill {
@@ -19,19 +22,16 @@ input:-webkit-autofill {
     width: 100%;
   }
   &__text {
+    font-size: 1.5rem;
   }
   &__input {
     width: calc(100% - 2rem - 2px);
+    min-width: 20rem;
     display: block;
     padding: 1rem;
     border-radius: 1rem;
     font-size: 1.5rem;
     background: rgba(255, 255, 255, 0.1) !important;
-    // color: white;
-    // &::placeholder {
-    //    color: white;
-    //    opacity: 0.5;
-    // }
     border: 1px solid rgba(0, 0, 0, 0);
     &:focus {
       border: 1px solid #ccc;
