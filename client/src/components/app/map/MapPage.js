@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Circle } from 'react-leaflet';
 import { Map, Icon } from 'leaflet';
 import { Btn, IconBtn, Input } from 'components/uiKit/UiKIt';
-import { AiOutlineHome, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineHome, AiOutlineSearch, AiOutlinePlus } from 'react-icons/ai';
 import { BiMapPin } from 'react-icons/bi';
 import mapFiltersService from 'services/mapServices/mapFiltersServices';
 import MapMarker from './MapMarker';
 import { useCookies } from 'react-cookie';
+import FullPagePopup from 'components/uiKit/kit/layout/FullPagePopup';
+import NewFriendGroup from '../friendGroup/NewFriendGroup';
 
 const MapPage = (props) => {
   const [cookies] = useCookies(['user']);
@@ -35,7 +37,7 @@ const MapPage = (props) => {
       position: position,
       dateFrom: dateFrom,
       dateTo: dateTo,
-      radius: radius,
+      radius: radius * 1000,
       tags: tags,
       friendGroup: friendGroup
     };
@@ -79,6 +81,10 @@ const MapPage = (props) => {
     const result = await mapFiltersService(filters);
     console.log(result);
     setPosts(result);
+  };
+
+  const onNewGroupClick = () => {
+    props.openClosePopup[0](<NewFriendGroup />);
   };
 
   const filtersMenu = () => {
@@ -132,12 +138,15 @@ const MapPage = (props) => {
             placeholder="tags"
             onChange={(e) => setTags(e.target.value)}
           />
-          <input
-            className="text_input"
-            type="text"
-            placeholder="friend Group"
-            onChange={(e) => setFriendGroup(e.target.value)}
-          />
+          <div className="fg_input">
+            <input
+              className="text_input"
+              type="text"
+              placeholder="friend Group"
+              onChange={(e) => setFriendGroup(e.target.value)}
+            />
+            <IconBtn icon={AiOutlinePlus} onClick={onNewGroupClick} />
+          </div>
           <IconBtn
             icon={AiOutlineSearch}
             className="map__filters__container__btn blue"
@@ -173,7 +182,7 @@ const MapPage = (props) => {
         })}
         <Circle
           center={[position.latitude, position.longitude]}
-          radius={radius}
+          radius={radius * 1000}
         />
       </MapContainer>
     </div>

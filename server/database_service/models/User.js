@@ -12,56 +12,56 @@ const UserSchema = {
   // },
   name: {
     type: String,
-    required: true,
+    required: true
   },
   image_url: {
     type: String,
-    required: false,
+    required: false
   },
   username: {
     type: String,
-    required: false,
+    required: false
   },
   nickname: {
     type: String,
-    required: false,
+    required: false
   },
   email: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: false,
+    required: false
   },
   google_id: {
     type: String,
-    required: false,
+    required: false
   },
   facebook_id: {
     type: String,
-    required: false,
+    required: false
   },
   friends_id: {
     type: Array,
-    required: false,
+    required: false
   },
-  friends_group_id: {
+  friends_groups: {
     type: Array,
-    required: false,
+    required: false
   },
   block_list: {
     type: Array,
-    required: false,
+    required: false
   },
   posts_id: {
     type: Array,
-    required: false,
+    required: false
   },
   bio: {
     type: String,
-    required: false,
-  },
+    required: false
+  }
 };
 
 const User = mongoose.model('User', UserSchema);

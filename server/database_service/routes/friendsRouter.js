@@ -7,7 +7,12 @@ router.route('/search').post(async (req, res) => {
   const input = req.body.input;
   const currentUserId = req.body.user_id;
   const users = await User.find();
-  const fltered = users.filter((x) => x.nickname && x.nickname.toLowerCase().includes(input.toLowerCase()) && x._id.toString() !== currentUserId);
+  const fltered = users.filter(
+    (x) =>
+      x.nickname &&
+      x.nickname.toLowerCase().includes(input.toLowerCase()) &&
+      x._id.toString() !== currentUserId
+  );
 
   const tmp = fltered.map((x) => {
     return { _id: x._id, nickname: x.nickname, image_url: x.image_url };
@@ -18,7 +23,11 @@ router.route('/search').post(async (req, res) => {
 
 router.route('/getprofile').post(async (req, res) => {
   const userId = req.body.user_id;
-  logger.info(JSON.stringify(userId), 'db/rou/fri/getprofile', 'profile requst');
+  logger.info(
+    JSON.stringify(userId),
+    'db/rou/fri/getprofile',
+    'profile requst'
+  );
   const user = await User.findOne({ _id: userId });
 
   const tmp = {
@@ -27,7 +36,7 @@ router.route('/getprofile').post(async (req, res) => {
     nickname: user.nickname,
     bio: user.bio,
     friends_id: user.friends_id,
-    posts_id: user.posts_id,
+    posts_id: user.posts_id
   };
   logger.debug(tmp, 'db/rou/fri/getprofile', 'profile found');
   res.send(tmp);
@@ -36,7 +45,11 @@ router.route('/getprofile').post(async (req, res) => {
 router.route('/addfriend').post(async (req, res) => {
   const userId = req.body.user_id;
   const friendId = req.body.friend_id;
-  logger.info(JSON.stringify(userId), 'db/rou/fri/addfriend', 'addfriend requst');
+  logger.info(
+    JSON.stringify(userId),
+    'db/rou/fri/addfriend',
+    'addfriend requst'
+  );
   const user = await User.findOne({ _id: userId });
   const newFriends = [...user.friends_id, friendId];
   await User.findByIdAndUpdate(userId, { friends_id: newFriends });
@@ -47,7 +60,11 @@ router.route('/addfriend').post(async (req, res) => {
 router.route('/removefriend').post(async (req, res) => {
   const userId = req.body.user_id;
   const friendId = req.body.friend_id;
-  logger.info(JSON.stringify(userId), 'db/rou/fri/removefriend', 'removefriend requst');
+  logger.info(
+    JSON.stringify(userId),
+    'db/rou/fri/removefriend',
+    'removefriend requst'
+  );
   const user = await User.findOne({ _id: userId });
   const newFriends = user.friends_id.filter((id) => {
     return id !== friendId;
@@ -55,6 +72,33 @@ router.route('/removefriend').post(async (req, res) => {
   await User.findByIdAndUpdate(userId, { friends_id: newFriends });
   logger.debug(newFriends, 'db/rou/fri/removefriend', 'new friends list');
   res.send(true);
+});
+
+router.route('/newGroup').post(async (req, res) => {
+  try {
+    const user_id = req.body.user_id;
+    const group = req.body.group;
+    const user = await User.findById(user_id);
+    user.friends_groups.push(group);
+    await User.findByIdAndUpdate(user_id, {
+      friends_groups: user.friends_groups
+    });
+    res.send(true);
+  } catch (err) {
+    logger.error(err, 'db/rou/fri/newGroup');
+    res.send(false);
+  }
+});
+
+router.route('/getGroups').post(async (req, res) => {
+  try {
+    const user_id = req.body.user_id;
+    const user = await User.findById(user_id);
+    res.send(user.friends_groups);
+  } catch (err) {
+    logger.error(err, 'db/rou/fri/getGroups');
+    res.send([]);
+  }
 });
 
 module.exports = router;

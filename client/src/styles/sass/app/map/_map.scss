@@ -30,6 +30,24 @@
         }
       }
 
+      .fg_input {
+        display: flex;
+        input {
+          width: 20vw;
+        }
+        .btn {
+          margin-left: 5px;
+          width: 5vw;
+          padding: 0;
+          display: block;
+
+          .icon {
+            height: 100%;
+            margin: 0;
+          }
+        }
+      }
+
       input {
         width: 25vw;
         height: 4rem;
