@@ -573,6 +573,18 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         .map__filters__container label span {
           font-size: 1.5rem;
           font-weight: 800; }
+      .map__filters__container .fg_input {
+        display: flex; }
+        .map__filters__container .fg_input input {
+          width: 20vw; }
+        .map__filters__container .fg_input .btn {
+          margin-left: 5px;
+          width: 5vw;
+          padding: 0;
+          display: block; }
+          .map__filters__container .fg_input .btn .icon {
+            height: 100%;
+            margin: 0; }
       .map__filters__container input {
         width: 25vw;
         height: 4rem;
@@ -807,3 +819,74 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         width: 95%;
         max-height: 100%;
         min-height: calc(40vh - 50px); } }
+
+.comment {
+  font-size: 1.2rem;
+  display: flex;
+  margin: 2rem 0; }
+  .comment__img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer; }
+    .comment__img:hover {
+      opacity: 0.5; }
+  .comment__nickname {
+    cursor: pointer; }
+    .comment__nickname:hover {
+      opacity: 0.5; }
+
+.fg {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: fit-content;
+  padding: 0;
+  font-size: 1.7rem; }
+  .fg__title {
+    padding: 0;
+    height: min-content;
+    width: 100%; }
+    .fg__title:before, .fg__title:after {
+      margin: 1rem;
+      background-color: gray;
+      content: '';
+      display: inline-block;
+      height: 1px;
+      position: relative;
+      vertical-align: middle;
+      width: 10%;
+      top: 0.2rem; }
+  .fg__container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-left: 20px;
+    gap: 30px; }
+    .fg__container__name {
+      width: 33vw; }
+    .fg__container__friend-search__input {
+      position: inherit !important;
+      border: 1px solid #dddddd; }
+    .fg__container__selected {
+      display: flex; }
+      .fg__container__selected__item {
+        padding: 3px 15px;
+        margin-right: 10px;
+        background-color: #0099ff;
+        color: white;
+        border-radius: 0.5rem;
+        cursor: pointer; }
+    .fg__container__btn {
+      display: flex;
+      flex-direction: row-reverse;
+      margin-bottom: 20px; }
+      .fg__container__btn .icon {
+        margin-left: 5px; }
+  .fg .error {
+    color: red;
+    margin-bottom: 5px;
+    border: 2px solid red;
+    width: 33vw;
+    padding: 3px 15px;
+    border-radius: 1rem; }

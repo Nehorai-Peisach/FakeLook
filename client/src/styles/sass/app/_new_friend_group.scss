@@ -1,0 +1,75 @@
+.fg {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: fit-content;
+  padding: 0;
+  font-size: 1.7rem;
+
+  &__title {
+      padding: 0;
+      height:min-content;
+      width: 100%;
+    &:before,
+    &:after {
+      margin: 1rem;
+      background-color: gray;
+      content: '';
+      display: inline-block;
+      height: 1px;
+      position: relative;
+      vertical-align: middle;
+      width: 10%;
+      top: 0.2rem;
+    }
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-left: 20px;
+    gap: 30px;
+
+    &__name {
+      width: 33vw;
+    }
+
+    &__friend-search {
+      &__input {
+        position: inherit !important;
+        border: 1px solid $grey_light;
+      }
+    }
+
+    &__selected {
+      display: flex;
+
+      &__item {
+        padding: 3px 15px;
+        margin-right: 10px;
+        background-color: $bg_top;
+        color: white;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+    }
+
+    &__btn {
+      display: flex;
+      flex-direction: row-reverse;
+      margin-bottom: 20px;
+      .icon {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .error {
+    color: red;
+    margin-bottom: 5px;
+    border: 2px solid red;
+    width: 33vw;
+    padding: 3px 15px;
+    border-radius: 1rem;
+  }
+}

@@ -3,6 +3,8 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { Hr } from '../UiKIt';
 
 const SearchBar = (props) => {
+  let className = '';
+  if (props.className) className = props.className;
   const [list, setList] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
@@ -10,7 +12,11 @@ const SearchBar = (props) => {
     if (props.list && props.list.length > 0) {
       setList(() => {
         const tmpList = props.list.map((user, index) => (
-          <div className="searchbar__input__item" key={'searchItem' + index} onMouseDown={() => userClicked(user._id)}>
+          <div
+            className="searchbar__input__item"
+            key={'searchItem' + index}
+            onMouseDown={() => userClicked(user._id, user.nickname)}
+          >
             <img className="searchbar__input__item__img" src={user.image_url} />
             {user.nickname}
           </div>
@@ -20,9 +26,9 @@ const SearchBar = (props) => {
     }
   }, [props.list]);
 
-  const userClicked = (id) => {
+  const userClicked = (id, nickname) => {
     setSearchValue('');
-    props.onClick(id);
+    props.onClick(id, nickname);
   };
 
   useEffect(() => {
@@ -31,9 +37,14 @@ const SearchBar = (props) => {
   }, [searchValue]);
 
   return (
-    <div className={'searchbar ' + props.className}>
+    <div className={'searchbar ' + className}>
       <IoSearchOutline className="searchbar__icon" />
-      <input className="searchbar__input" placeholder="Search..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)}></input>
+      <input
+        className="searchbar__input"
+        placeholder="Search..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      ></input>
       <div className={'searchbar__input__list'}>{list}</div>
     </div>
   );

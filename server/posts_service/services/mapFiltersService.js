@@ -21,16 +21,22 @@ module.exports = async function mapFiltersService(filters) {
   }
 
   if (filters.radius > 0) {
-    console.log(filters.radius);
+    let r = 6371;
+    let lat = filters.position.latitude;
+    let lng = filters.position.longitude;
+    lat = (lat * Math.PI) / 180;
+    lng = (lng * Math.PI) / 180;
     filtered = filtered.filter((p) => {
-      return (
-        filters.radius >
-        Math.sqrt(
-          Math.pow(filters.position.latitude - p.location.lat, 2) +
-            Math.pow(filters.position.longitude - p.location.lng, 2)
-        ) *
-          100000
-      );
+      let plat = (p.location.lat * Math.PI) / 180;
+      let plng = (p.location.lng * Math.PI) / 180;
+      let dlat = lat - plat;
+      let dlng = lng - plng;
+      let a =
+        Math.pow(Math.sin(dlat / 2), 2) +
+        Math.cos(lat) * Math.cos(plat) * Math.pow(Math.sin(dlng / 2), 2);
+
+      let c = 2 * Math.asin(Math.sqrt(a));
+      return filters.radius >= c * r;
     });
   }
 
@@ -44,7 +50,7 @@ module.exports = async function mapFiltersService(filters) {
     });
     filtered = newArray;
   }
-  
+
   filtered.sort((a, b) => b.users_like.length - a.users_like.length);
 
   if (filtered.length > 100) {
