@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'universal-cookie';
 
 export default async function updateProfileService(id, setUser) {
   try {

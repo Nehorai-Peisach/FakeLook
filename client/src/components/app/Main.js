@@ -9,8 +9,6 @@ import Alerter from 'services/alertService/Alerter';
 import { useCookies } from 'react-cookie';
 import getProfileService from 'services/profileServices/getProfileService';
 import FullPagePopup from 'components/uiKit/kit/layout/FullPagePopup';
-import FullPost from './FullPost';
-import getFriendsPosts from 'services/feedServices/getFriendsPosts';
 
 const socket = io.connect('http://localhost:4005');
 

@@ -8,6 +8,7 @@ import updateProfileService from 'services/profileServices/updateProfileService'
 import { storage } from 'firebases';
 import getPostsByUserId from 'services/postServices/getPostsByUserId';
 import FullPost from '../FullPost';
+import EditProfile from './EditProfile';
 
 const Profile = (props) => {
   const [cookies, setCookies] = useCookies(['user']);
@@ -28,8 +29,9 @@ const Profile = (props) => {
     setIndex(1);
   };
 
+  const [edit, setEdit] = useState(false);
   const editProfile = () => {
-    console.log('edit');
+    setEdit(true);
   };
 
   const states = [
@@ -91,7 +93,7 @@ const Profile = (props) => {
     }
   }, [props.input]);
 
-  return (
+  return !edit ? (
     <div className="profile">
       <div className="header">
         <img src={props.input.image_url} className="img" />
@@ -115,6 +117,8 @@ const Profile = (props) => {
         <Loading />
       )}
     </div>
+  ) : (
+    <EditProfile openClosePopup={props.openClosePopup} user={props.input} setCookies={setCookies} save={() => setEdit(null)} />
   );
 };
 
