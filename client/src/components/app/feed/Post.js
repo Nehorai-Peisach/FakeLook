@@ -5,33 +5,20 @@ import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { storage } from 'firebases';
 import FullPost from '../FullPost';
+import commentService from 'services/postServices/commentService';
+import likeService from 'services/postServices/likeService';
 
 const Post = (props) => {
-  const [showFullPopup, closeFullPopup] = props.openClosePopup;
   const [cookies] = useCookies(['user']);
   const [comment, setComment] = useState('');
   const [like, setLike] = useState(false);
   const [img, setImg] = useState();
   const [comments, setComments] = useState(props.postDetails.post.comments);
 
-  useEffect(async () => {
-    if (props.postDetails) {
-      let isLiked = props.postDetails.post.users_like.includes(
-        cookies.user.data._id
-      );
-      if (isLiked) setLike(true);
-      else setLike(false);
-
-      const url = await storage
-        .ref(`images/${props.postDetails.post.image_id}`)
-        .getDownloadURL();
-      setImg(url);
-    }
-  }, [props.postDetails]);
-
-  const likeHandler = () => {
-    setLike(!like);
-    props.likeHandler(props.postDetails.post._id, props.postDetails.user._id);
+  const likeHandler = (flag = null) => {
+    if (flag != null) setLike(flag);
+    else setLike(!like);
+    likeService({ user_id: cookies.user.data._id, post_id: props.postDetails.post._id }, props.postDetails.user._id, props.socket);
   };
 
   const commentHandler = () => {
@@ -39,10 +26,10 @@ const Post = (props) => {
       const newComment = {
         text: comment,
         user_id: cookies.user.data._id,
-        post_id: props.postDetails.post._id
+        post_id: props.postDetails.post._id,
       };
       setComments((prevState) => [...prevState, 1]);
-      props.commentHandler(newComment, props.postDetails.user._id);
+      commentService(newComment, cookies.user.data._id, props.socket);
     }
   };
 
@@ -50,17 +37,28 @@ const Post = (props) => {
     props.userClicked(props.postDetails.user._id);
   };
 
+  useEffect(async () => {
+    if (props.postDetails) {
+      let isLiked = props.postDetails.post.users_like.includes(cookies.user.data._id);
+      if (isLiked) setLike(true);
+      else setLike(false);
+
+      const url = await storage.ref(`images/${props.postDetails.post.image_id}`).getDownloadURL();
+      setImg(url);
+    }
+  }, [props.postDetails]);
+
   const openFull = () => {
     console.log('full');
-    showFullPopup(
+    props.openClosePopup[0](
       <FullPost
+        socket={props.socket}
         userClicked={props.userClicked}
         postDetails={props.postDetails}
-        likeHandler={likeHandler}
-        isLike={like}
-        commentHandler={props.commentHandler}
         openClosePopup={props.openClosePopup}
         setComments={setComments}
+        likeHandler={likeHandler}
+        isLike={like}
       />
     );
   };
@@ -68,26 +66,13 @@ const Post = (props) => {
   return (
     <div className="post">
       <a className="header" onClick={() => userClicked()}>
-        <img
-          className="profile_img"
-          src={props.postDetails.user.image_url}
-        ></img>
+        <img className="profile_img" src={props.postDetails.user.image_url}></img>
         <p className="username">{props.postDetails.user.nickname}</p>
       </a>
-      <div className="img_container">
-        {img ? (
-          <img className="img" src={img} onClick={openFull}></img>
-        ) : (
-          <Loading className="img" />
-        )}
-      </div>
+      <div className="img_container">{img ? <img className="img" src={img} onClick={openFull}></img> : <Loading className="img" />}</div>
       <div className="bottom">
         <div className="bottom__header">
-          <IconBtn
-            onClick={likeHandler}
-            icon={like ? IoHeart : IoHeartOutline}
-            className="like_btn transparent"
-          ></IconBtn>
+          <IconBtn onClick={likeHandler} icon={like ? IoHeart : IoHeartOutline} className="like_btn transparent"></IconBtn>
           <Link className="view_comments" onClick={openFull}>
             View all {comments.length} comments
           </Link>
@@ -103,11 +88,7 @@ const Post = (props) => {
           >
             Send a comment...
           </Input>
-          <IconBtn
-            onClick={commentHandler}
-            icon={RiSendPlaneFill}
-            className="comment_btn"
-          ></IconBtn>
+          <IconBtn onClick={commentHandler} icon={RiSendPlaneFill} className="comment_btn"></IconBtn>
         </div>
       </div>
     </div>

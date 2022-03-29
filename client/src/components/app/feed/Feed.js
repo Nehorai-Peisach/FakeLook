@@ -2,8 +2,6 @@ import { Hr, Loading } from 'components/uiKit/UiKIt';
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import getFriendsPosts from 'services/feedServices/getFriendsPosts';
-import commentService from 'services/postServices/commentService';
-import likeService from 'services/postServices/likeService';
 import Post from './Post';
 
 const Feed = (props) => {
@@ -28,41 +26,22 @@ const Feed = (props) => {
     loadPhotos(0);
   });
 
-  const likeHandler = (post_id, postAuthor_id) => {
-    likeService(
-      { user_id: cookies.user.data._id, post_id: post_id },
-      postAuthor_id,
-      props.socket
-    );
-  };
-
-  const commentHandler = (comment, postAuthor_id) => {
-    commentService(comment, postAuthor_id, props.socket);
-  };
-
-  const userClicked = (id) => {
-    props.userClicked(id);
-  };
-
   return posts ? (
     <div className="feed">
       <h1 className="feed__header">Whats New?</h1>
       {posts.map((post, index) => {
         return (
-          <Post
-            key={'post' + index}
-            userClicked={userClicked}
-            postDetails={post}
-            likeHandler={likeHandler}
-            commentHandler={commentHandler}
-            openClosePopup={props.openClosePopup}
-          />
+          <Post key={'post' + index} socket={props.socket} userClicked={props.userClicked} postDetails={post} openClosePopup={props.openClosePopup} />
         );
       })}
       <Hr />
+<<<<<<< HEAD
       <h1 className="feed__header">
         You've seen it all, add more friends to see their posts!
       </h1>
+=======
+      <h1 className="feed__header">You see it all, add more friends to see their posts!</h1>
+>>>>>>> 3b711c22f3972434eaa2dfb5f11edb4363640a13
     </div>
   ) : (
     <Loading />
