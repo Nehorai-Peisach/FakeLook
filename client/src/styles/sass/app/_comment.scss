@@ -1,0 +1,20 @@
+.comment {
+  font-size: 1.2rem;
+  display: flex;
+  margin: 2rem 0;
+  &__img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  &__nickname {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}

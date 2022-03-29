@@ -12,7 +12,7 @@ import FullPost from '../FullPost';
 const Profile = (props) => {
   const [cookies, setCookies] = useCookies(['user']);
   const [index, setIndex] = useState(0);
-  const [likes, setLikes] = useState();
+  const [likes, setLikes] = useState(0);
   const [posts, setPosts] = useState();
 
   const addFriend = async () => {
@@ -27,37 +27,67 @@ const Profile = (props) => {
     await updateProfileService(cookies.user.data._id, setCookies);
     setIndex(1);
   };
+
   const editProfile = () => {
     console.log('edit');
   };
+
   const states = [
     { icon: AiOutlineEdit, color: 'grey', onClick: editProfile },
     { icon: AiOutlineUserAdd, color: 'green', onClick: addFriend },
     { icon: AiOutlineUserDelete, color: 'red', onClick: removeFriend },
   ];
 
-  const likeHandler = () => {};
+  const likeHandler = (flag, postId) => {
+    const post = posts.filter((x) => x._id === postId)[0];
+    const tmp = post;
+
+    if (flag) {
+      setLikes((pre) => pre + 1);
+      post.users_like.push(cookies.user.data._id);
+    } else {
+      setLikes((pre) => pre - 1);
+      const index = post.users_like.indexOf(cookies.user.data._id);
+      post.users_like.splice(index, 1);
+    }
+
+    setPosts((pre) => {
+      const i = pre.indexOf(tmp);
+      pre[i] = post;
+      return pre;
+    });
+  };
 
   const postClickHandler = (post) => {
     const postDetails = { user: props.input, post: post };
     props.openClosePopup[0](
-      <FullPost userClicked={props.userClicked} postDetails={postDetails} likeHandler={likeHandler} openClosePopup={props.openClosePopup} />
+      <FullPost
+        socket={props.socket}
+        userClicked={props.userClicked}
+        postDetails={postDetails}
+        openClosePopup={props.openClosePopup}
+        likeHandler={likeHandler}
+      />
     );
   };
 
   useEffect(async () => {
+    await setPosts();
     if (props.input) {
       if (props.input._id === cookies.user.data._id) setIndex(0);
       else cookies.user.data.friends_id && cookies.user.data.friends_id.includes(props.input._id) ? setIndex(2) : setIndex(1);
 
       const arr = [];
+      let likeCount = 0;
       const tmpPosts = await getPostsByUserId(props.input._id);
       for (let i = 0; i < tmpPosts.length; i++) {
         const post = tmpPosts[i];
         const url = await storage.ref(`images/${post.image_id}`).getDownloadURL();
         arr.push({ ...post, image_url: url });
+        likeCount += post.users_like.length;
       }
       setPosts(arr);
+      setLikes(likeCount);
     }
   }, [props.input]);
 
@@ -70,7 +100,7 @@ const Profile = (props) => {
           <IconBtn icon={states[index].icon} className={states[index].color} onClick={() => states[index].onClick()} />
           <p className="bio">{props.input.bio}</p>
           <Btn className="friends transparent">Friends: {props.input.friends_id.length}</Btn>
-          <Btn className="likes transparent">Likes: {props.input.friends_id.length}</Btn>
+          <Btn className="likes transparent">Likes: {likes}</Btn>
           <Btn className="posts transparent">Posts: {props.input.posts_id.length}</Btn>
         </div>
       </div>
