@@ -11,29 +11,54 @@ router
 
 router
   .route('/getprofile')
-  .post(async (req, res) => res.send(await doCommand(req.body, 'getprofile')));
+  .post(async (req, res) =>
+    res.send(await doCommand({ user_id: req.body.user_id }, 'getprofile'))
+  );
 
 router
   .route('/editprofile')
-  .post(async (req, res) => res.send(await doCommand(req.body, 'editprofile')));
+  .post(async (req, res) =>
+    res.send(await doCommand({ newUser: req.body.newUser }, 'editprofile'))
+  );
 
 router
   .route('/addfriend')
-  .post(async (req, res) => res.send(await doCommand(req.body, 'addfriend')));
+  .post(async (req, res) =>
+    res.send(
+      await doCommand(
+        { user_id: req.body.user_id, friend_id: req.body.friend_id },
+        'addfriend'
+      )
+    )
+  );
 
 router
   .route('/removefriend')
   .post(async (req, res) =>
-    res.send(await doCommand(req.body, 'removefriend'))
+    res.send(
+      await doCommand(
+        { user_id: req.body.user_id, friend_id: req.body.friend_id },
+        'removefriend'
+      )
+    )
   );
 
 router
   .route('/newGroup')
-  .post(async (req, res) => res.send(await doCommand(req.body, 'newGroup')));
+  .post(async (req, res) =>
+    res.send(
+      await doCommand(
+        { user_id: req.body.user_id, group: req.body.group },
+        'newGroup'
+      )
+    )
+  );
 
 router
   .route('/getGroups')
-  .post(async (req, res) => res.send(await doCommand(req.body, 'getGroups')));
+  .post(async (req, res) =>
+    res.send(await doCommand({ user_id: req.body.user_id }, 'getGroups'))
+  );
 
 const doCommand = async (data, destination) => {
   logger.info(

@@ -1,11 +1,15 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 export default async function editProfileService(newUser, user, setUser) {
+  const cookies = new Cookies();
+  const u = cookies.get('user');
+  const token = u.accessToken;
   try {
     const tmpUser = user;
     const tmp = await axios.post(
       'http://localhost:4000/api/friends/editProfile',
-      newUser
+      { token, newUser }
     );
 
     tmpUser.name = tmp.data.name;
