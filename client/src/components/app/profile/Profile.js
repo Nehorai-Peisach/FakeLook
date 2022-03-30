@@ -118,7 +118,7 @@ const Profile = (props) => {
       )}
     </div>
   ) : (
-    <EditProfile openClosePopup={props.openClosePopup} user={props.input} setCookies={setCookies} save={() => setEdit(null)} />
+    <EditProfile userClicked={props.userClicked} user={props.input} setCookies={setCookies} save={() => setEdit(null)} />
   );
 };
 

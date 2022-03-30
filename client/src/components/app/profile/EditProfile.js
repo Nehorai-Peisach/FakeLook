@@ -58,6 +58,7 @@ const EditProfile = (props) => {
                 props.user,
                 props.setCookies
               );
+              props.userClicked(props.user._id);
               console.log(url);
             });
         }
@@ -65,15 +66,18 @@ const EditProfile = (props) => {
     } else {
       await editProfileService(
         {
+          _id: props.user._id,
           name: name,
           image_url: imageUrl,
           nickname: nickname,
           bio: bio,
           email: email,
         },
+        props.user,
         props.setCookies
       );
     }
+    props.userClicked(props.user._id);
     props.save();
   };
 
