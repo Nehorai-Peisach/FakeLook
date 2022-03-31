@@ -6,6 +6,37 @@
   background-color: $bg_top;
   z-index: 99;
 
+  .notification_container__items {
+    display: none;
+  }
+  .notification_active {
+    background-color: $top_btn_active !important;
+    border-radius: 1rem 1rem 0 0;
+    padding-bottom: 2rem;
+  }
+  .notification_items {
+    display: none;
+  }
+
+  .notification {
+    align-self: flex-start;
+
+    .icon {
+      color: black;
+    }
+    .notification_container {
+      user-select: none;
+      background-color: $top_btn_active;
+      border-radius: 0 0 1rem 1rem;
+      padding: 0.5rem 2rem;
+      height: 40rem;
+      overflow-y: auto;
+
+      &__items {
+        display: grid;
+      }
+    }
+  }
   .pages_btns {
     justify-self: flex-end;
     display: flex;
@@ -44,4 +75,24 @@
       }
     }
   }
+}
+
+.ball {
+  height: 1.5rem;
+  min-width: 1.5rem;
+  width: max-content;
+  background-color: rgb(255, 152, 152);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 5.2rem;
+  top: 1.6rem;
+  user-select: none;
+  padding: 1px 2px 1px 1px;
+}
+
+.disable {
+  display: none;
 }

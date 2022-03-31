@@ -1,4 +1,4 @@
-import { IconBtn, SearchBar } from 'components/uiKit/UiKIt';
+import { Hr, IconBtn, SearchBar } from 'components/uiKit/UiKIt';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { IoPersonOutline, IoAddCircleOutline, IoImagesOutline, IoLocationOutline, IoNotificationsOutline } from 'react-icons/io5';
@@ -8,12 +8,18 @@ import searchServices from 'services/searchServices/searchServices';
 import FeedPage from './feed/Feed';
 import MapPage from './map/MapPage';
 import NewPostPage from './newPost/NewPost';
+import Nofification from './Nofification';
 import ProfilePage from './profile/Profile';
+import { v4 as uuidv4 } from 'uuid';
+import FullPost from './FullPost';
 
 const TopBar = (props) => {
   const [cookies] = useCookies(['user']);
   const [btnClassname, setBtnClassname] = useState('media__hidden');
   const [btnContainerClassname, setBtnContainerClassname] = useState('media_container__hidden');
+  const [nofiticationClassname, setNofiticationClassname] = useState('');
+  const [notifications, setNotifications] = useState([]);
+  const [notifyIconClassname, setNotifyIconClassname] = useState('');
   const [index, setIndex] = useState(1);
 
   const icons = [IoNotificationsOutline, IoImagesOutline, IoLocationOutline, IoAddCircleOutline, IoPersonOutline];
@@ -21,8 +27,11 @@ const TopBar = (props) => {
   for (let i = 1; i < classes.length; i++) {
     index === i ? (classes[i] = 'top_btn_color active media__hidden ' + btnClassname) : (classes[i] = 'top_btn_color ' + btnClassname);
   }
-  const alert = () => {
-    Alerter('No New Messages!');
+  const notificationHandler = () => {
+    if (!nofiticationClassname) {
+      setNofiticationClassname('notification');
+      // Alerter('No New Messages!');
+    } else setNofiticationClassname('');
   };
 
   const [searchedUsers, setSearchedUsers] = useState([]);
@@ -49,9 +58,67 @@ const TopBar = (props) => {
     setMenuIcon(icons[num]);
   };
 
+  useEffect(() => {
+    props.socket.on('like_notify', (data) => {
+      if (data.post_info.user_id !== cookies.user.data._id) return;
+
+      const tmp = {
+        _id: uuidv4(),
+        comment: { text: data.is_like ? 'Liked your post!' : 'Unliked your post!' },
+        nickname: data.user_info.nickname,
+        image_url: data.user_info.image_url,
+        profile_url: data.user_info.profile_url,
+        user_id: data.user_info.user_id,
+      };
+      setNotifications((pre) => [...pre, tmp]);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (notifications.length > 0) setNotifyIconClassname('ball');
+    else setNotifyIconClassname('ball disable');
+  }, [notifications]);
+
+  const postClickHandler = (input) => {
+    console.log(input);
+    const tmp = {
+      post: { image_url: input.image_url },
+      user: {},
+    };
+    // props.openClosePopup[0](
+    //   <FullPost socket={props.socket} userClicked={props.userClicked} postDetails={input} openClosePopup={props.openClosePopup} />
+    // );
+  };
+  const nameClickHandler = (id, removeId) => {
+    props.userClicked(id);
+    setNotifications((arr) => arr.filter((x) => x._id !== removeId));
+  };
+
   return (
     <div className="top_bar">
-      <IconBtn icon={icons[0]} className="notification top_btn_color" onClick={alert} />
+      <div className={nofiticationClassname}>
+        <IconBtn
+          icon={icons[0]}
+          className={nofiticationClassname ? 'top_btn_color notification_active' : 'top_btn_color'}
+          onClick={notificationHandler}
+        />
+        <div className={'ball ' + notifyIconClassname}>+{notifications.length}</div>
+        <div className="notification_container">
+          {notifications.length > 0 ? (
+            notifications.map((detail) => (
+              <Nofification
+                // bgClick={postClickHandler}
+                bgClick={nameClickHandler}
+                nicknameClick={nameClickHandler}
+                detail={detail}
+                className={'notification_container__items'}
+              ></Nofification>
+            ))
+          ) : (
+            <div className={'notification_container__items'}>Don't have any new messages!</div>
+          )}
+        </div>
+      </div>
       <SearchBar list={searchedUsers} search={searchHandler} onClick={props.userClicked} />
       <div className="pages_btns media_container">
         <IconBtn

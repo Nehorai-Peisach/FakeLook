@@ -1,10 +1,12 @@
-.comment {
+.notify_message {
   cursor: pointer;
   font-size: 1.2rem;
   display: grid;
-  grid-template-columns: 40px 1fr;
+  grid-template-columns: 40px 1fr 40px;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  border-radius: 20px 1rem 1rem 20px;
 
   &__can_click {
     &:hover {
@@ -14,11 +16,22 @@
   }
 
   margin: 2rem 0;
+  &__profile,
   &__img {
-    grid-area: 1/1;
     height: 40px;
     width: 40px;
+    object-fit: cover;
+    object-position: 50% 30%;
+  }
+
+  &__profile {
+    grid-area: 1/1;
     border-radius: 50%;
+  }
+  &__img {
+    grid-area: 1/3;
+    border-radius: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
   &__container {
     margin-left: 1rem;
@@ -32,10 +45,9 @@
     }
   }
   &__bg {
-    grid-area: 1/1/2/3;
+    grid-area: 1/1/2/4;
     width: 100%;
     height: 100%;
-    border-radius: 20px 1rem 1rem 20px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
   }
 }

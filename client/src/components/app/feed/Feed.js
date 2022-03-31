@@ -9,6 +9,10 @@ const Feed = (props) => {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
+    props.socket.on('check_friends_posts', () => {
+      loadPhotos(0);
+      console.log('isload');
+    });
     loadPhotos(0);
   }, []);
 
@@ -22,28 +26,18 @@ const Feed = (props) => {
     setPosts(result);
   };
 
-  props.socket.on('check_friends_posts', () => {
-    loadPhotos(0);
-  });
+  //---------------------- RealTime ----------------------
 
   return posts ? (
     <div className="feed">
       <h1 className="feed__header">Whats New?</h1>
       {posts.map((post, index) => {
         return (
-          <Post
-            key={'post' + index}
-            socket={props.socket}
-            userClicked={props.userClicked}
-            postDetails={post}
-            openClosePopup={props.openClosePopup}
-          />
+          <Post key={'post' + index} socket={props.socket} userClicked={props.userClicked} postDetails={post} openClosePopup={props.openClosePopup} />
         );
       })}
       <Hr />
-      <h1 className="feed__header">
-        You've seen it all, add more friends to see their posts!
-      </h1>
+      <h1 className="feed__header">You've seen it all, add more friends to see their posts!</h1>
     </div>
   ) : (
     <Loading />

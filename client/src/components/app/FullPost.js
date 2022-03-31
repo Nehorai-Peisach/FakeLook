@@ -17,7 +17,19 @@ const FullPost = (props) => {
   const [comments, setComments] = useState();
 
   const likeHandler = async () => {
-    await likeService({ user_id: cookies.user.data._id, post_id: props.postDetails.post._id }, props.postDetails.user._id, props.socket);
+    const url = await storage.ref(`images/${props.postDetails.post.image_id}`).getDownloadURL();
+    const userInfo = {
+      user_id: cookies.user.data._id,
+      nickname: cookies.user.data.nickname,
+      profile_url: cookies.user.data.image_url,
+      image_url: url,
+    };
+    const postInfo = {
+      user_id: props.postDetails.user._id,
+      post_id: props.postDetails.post._id,
+    };
+    await likeService(userInfo, postInfo, !like, props.socket);
+
     if (props.likeHandler) props.likeHandler(!like, props.postDetails.post._id);
     await setLike(!like);
   };
