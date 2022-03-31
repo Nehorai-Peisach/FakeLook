@@ -16,7 +16,7 @@ router.route('/sign-in').post((req, res) => {
           _id: result._id,
           nickname: result.nickname,
           image_url: result.image_url,
-          friends_id: result.friends_id
+          friends_id: result.friends_id,
         };
         res.send(retUser);
       } else res.send(false);
@@ -37,7 +37,7 @@ router.route('/sign-up').post((req, res) => {
     google_id: req.body.google_id || null,
     facebook_id: req.body.facebook_id || null,
     nickname: null,
-    bio: "Hey there I'm using FakeLook!"
+    bio: "Hey there I'm using FakeLook!",
   });
 
   User.findOne({ email: newUser.email })
@@ -54,7 +54,6 @@ router.route('/sign-up').post((req, res) => {
         try {
           logger.info('Email is free to register');
           const check = await User.findOne({ username: newUser.username });
-          logger.silly(check);
           if (check) {
             logger.info('Username alredy been taken');
             res.send({ msg: 'Username alredy been taken', state: false });
@@ -79,7 +78,6 @@ const regularSignup = async (user) => {
   const checks = [];
 
   const username = await User.findOne({ username: user.username });
-  logger.silly(username);
   if (username) checks.push('Username');
   if (user.email) checks.push('Email');
 
@@ -131,7 +129,7 @@ router.route('/nickname').post((req, res) => {
             const retUser = {
               _id: result._id,
               nickname: result.nickname,
-              image_url: result.image_url
+              image_url: result.image_url,
             };
             res.send(retUser);
           })
