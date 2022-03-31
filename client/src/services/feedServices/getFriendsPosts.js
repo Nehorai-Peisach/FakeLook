@@ -10,6 +10,7 @@ export default async function getFriendsPosts(id, index) {
       'http://localhost:4000/api/posts/friends-posts',
       { token: token, user_id: id, index: index }
     );
+    if (result.status === 401 || result.status === 403) return null;
     return result.data;
   } catch (error) {
     console.log(error);

@@ -23,6 +23,8 @@ const Feed = (props) => {
     } else {
       result = await getFriendsPosts(cookies.user.data._id, 0);
     }
+    console.log(result)
+    if (result === null) window.location.href = '/';
     setPosts(result);
   };
 
