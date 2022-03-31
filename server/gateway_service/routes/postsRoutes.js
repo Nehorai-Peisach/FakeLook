@@ -45,7 +45,7 @@ router.route('/map-filters').post((req, res) => {
 });
 
 router.route('/like').post((req, res) => {
-  let data = req.body.likeInfo;
+  let data = req.body.post_info;
   axios
     .post(DOMAIN_NAME + POSTS_PORT + '/like', data)
     .then((result) => {
