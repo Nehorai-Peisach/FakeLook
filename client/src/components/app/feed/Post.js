@@ -15,10 +15,25 @@ const Post = (props) => {
   const [img, setImg] = useState();
   const [comments, setComments] = useState(props.postDetails.post.comments);
 
-  const likeHandler = (flag = null) => {
-    if (flag != null) setLike(flag);
-    else setLike(!like);
-    likeService({ user_id: cookies.user.data._id, post_id: props.postDetails.post._id }, props.postDetails.user._id, props.socket);
+  const likeHandler = async (flag = null) => {
+    if (flag !== null) setLike(flag);
+    else {
+      const url = await storage.ref(`images/${props.postDetails.post.image_id}`).getDownloadURL();
+
+      const userInfo = {
+        user_id: cookies.user.data._id,
+        nickname: cookies.user.data.nickname,
+        profile_url: cookies.user.data.image_url,
+        image_url: url,
+      };
+      const postInfo = {
+        user_id: props.postDetails.user._id,
+        post_id: props.postDetails.post._id,
+      };
+      likeService(userInfo, postInfo, !like, props.socket);
+      setLike(!like);
+      console.log(props.postDetails);
+    }
   };
 
   const commentHandler = () => {
@@ -72,7 +87,7 @@ const Post = (props) => {
       <div className="img_container">{img ? <img className="img" src={img} onClick={openFull}></img> : <Loading className="img" />}</div>
       <div className="bottom">
         <div className="bottom__header">
-          <IconBtn onClick={likeHandler} icon={like ? IoHeart : IoHeartOutline} className="like_btn transparent"></IconBtn>
+          <IconBtn onClick={() => likeHandler()} icon={like ? IoHeart : IoHeartOutline} className="like_btn transparent"></IconBtn>
           <Link className="view_comments" onClick={openFull}>
             View all {comments.length} comments
           </Link>

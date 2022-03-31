@@ -4,7 +4,6 @@ const logger = require('../logger');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-const likeService = require('./services/likeService');
 
 const DOMAIN_NAME = process.env.DOMAIN_NAME;
 const PORT = process.env.REALTIME_PORT;
@@ -19,8 +18,8 @@ app.use(cors());
 const io = new Server(server, {
   cors: {
     origin: DOMAIN_NAME + CLIENT_PORT,
-    methods: ['GET', 'POST']
-  }
+    methods: ['GET', 'POST'],
+  },
 });
 
 io.on('connection', (socket) => {
@@ -30,12 +29,12 @@ io.on('connection', (socket) => {
     socket.to('global_room').emit('check_friends_posts');
   });
 
-  socket.on('like_post', (data) => {
-    const result = likeService(data);
-    // socket.to('global_room').emit('like_notify', result.data)
+  socket.on('like_post', async (data) => {
+    console.log(data);
+    socket.to('global_room').emit('like_notify', data);
   });
 });
 
 server.listen(PORT, () => {
-  logger.silly(`Connected to ${PORT}`);
+  logger.http(`RealTime Connected to ${PORT}`);
 });
