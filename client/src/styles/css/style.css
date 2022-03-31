@@ -508,6 +508,11 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         justify-self: flex-start; }
       .profile .header .details .btn {
         padding: 0; }
+      .profile .header .details .block_btn {
+        grid-area: 2/3 !important;
+        background-color: #36373c; }
+        .profile .header .details .block_btn .icon {
+          color: white; }
       .profile .header .details .bio {
         justify-self: flex-start;
         align-self: flex-start;
@@ -515,7 +520,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         margin-top: 1rem;
         word-break: break-all;
         overflow: hidden;
-        grid-area: 2/1/3/4; }
+        grid-area: 2/1/3/3; }
       .profile .header .details .friends {
         padding: 0;
         justify-self: flex-start;
