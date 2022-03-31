@@ -14,13 +14,13 @@ const LoginGoogle = (props) => {
     } else Alerter("Can't connect to that Google Account!");
   };
 
-  const notConnectGoogle = () => {
+  const notConnectGoogle = (err) => {
     Alerter("Can't connect to that Google Account!");
   };
 
   return (
     <GoogleLogin
-      clientId="1029852783351-4f72fqmgojl6l4330dfo5d01jluic2ds.apps.googleusercontent.com"
+      clientId="841577799854-bfv38hpa452vnccsd5387aoro0lvoadr.apps.googleusercontent.com"
       buttonText="Login with Google"
       onSuccess={connectGoogle}
       onFailure={notConnectGoogle}
