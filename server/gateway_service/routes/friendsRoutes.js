@@ -7,7 +7,14 @@ const FRIENDS_PORT = process.env.FRIENDS_PORT;
 
 router
   .route('/search')
-  .post(async (req, res) => res.send(await doCommand(req.body, 'search')));
+  .post(async (req, res) =>
+    res.send(
+      await doCommand(
+        { input: req.body.data.input, user_id: req.body.data.user_id },
+        'search'
+      )
+    )
+  );
 
 router
   .route('/getprofile')
