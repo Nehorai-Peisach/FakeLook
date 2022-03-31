@@ -5,7 +5,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
 
-const DOMAIN_NAME = process.env.DOMAIN_NAME;
+const CLIENT_DOMAIN_NAME = process.env.CLIENT_DOMAIN_NAME;
 const PORT = process.env.REALTIME_PORT;
 const CLIENT_PORT = process.env.CLIENT_PORT;
 
@@ -17,7 +17,7 @@ app.use(cors());
 
 const io = new Server(server, {
   cors: {
-    origin: DOMAIN_NAME + CLIENT_PORT,
+    origin: CLIENT_DOMAIN_NAME + CLIENT_PORT,
     methods: ['GET', 'POST'],
   },
 });

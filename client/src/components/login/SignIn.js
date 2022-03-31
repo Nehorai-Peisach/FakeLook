@@ -3,6 +3,7 @@ import LoginGoogle from './LoginGoogle';
 import { useEffect, useState } from 'react';
 import signInService from 'services/authServices/signInService';
 import Alerter from 'services/alertService/Alerter';
+import LoginFacebook from './LoginFacebook';
 
 const SignIn = (props) => {
   const [username, setUsername] = useState('');
@@ -52,9 +53,7 @@ const SignIn = (props) => {
         <Link onClick={() => props.setIndex(1)}>Create Account</Link>
       </div>
       <Hr />
-      {/* <IconBtn icon={BsFacebook} className="blue">
-          Login with Facebook
-        </IconBtn> */}
+      <LoginFacebook />
       <LoginGoogle />
     </form>
   );
