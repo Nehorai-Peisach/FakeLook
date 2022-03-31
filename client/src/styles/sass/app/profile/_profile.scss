@@ -37,6 +37,13 @@
       .btn {
         padding: 0;
       }
+      .block_btn {
+        grid-area: 2/3 !important;
+        background-color: $DARK_BG;
+        .icon {
+            color: white;
+        }
+      }
       .bio {
         justify-self: flex-start;
         align-self: flex-start;
@@ -44,7 +51,7 @@
         margin-top: 1rem;
         word-break: break-all;
         overflow: hidden;
-        grid-area: 2/1/3/4;
+        grid-area: 2/1/3/3;
       }
       .friends {
         padding: 0;

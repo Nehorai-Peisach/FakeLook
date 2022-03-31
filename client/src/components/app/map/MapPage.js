@@ -169,6 +169,7 @@ const MapPage = (props) => {
       </div>
       <MapContainer
         openClosePopup="open"
+        closePopupOnClick={false}
         whenCreated={setMap}
         className="map__container"
         center={[32.109333, 34.855499]}
