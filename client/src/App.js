@@ -10,7 +10,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/app" element={<Main />} />
-          <Route path="/fg" element={<NewFriendGroup />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -168,6 +168,7 @@ const MapPage = (props) => {
         ></IconBtn>
       </div>
       <MapContainer
+        openClosePopup="open"
         whenCreated={setMap}
         className="map__container"
         center={[32.109333, 34.855499]}
@@ -178,7 +179,7 @@ const MapPage = (props) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {posts.map((post) => {
-          return <MapMarker post={post} />;
+          return <MapMarker map={map} post={post} />;
         })}
         <Circle
           center={[position.latitude, position.longitude]}

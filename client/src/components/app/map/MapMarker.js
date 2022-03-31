@@ -1,11 +1,13 @@
 import { storage } from 'firebases';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import getProfileService from 'services/profileServices/getProfileService';
 
 const MapMarker = (props) => {
   const [user, setUser] = useState({});
   const [imgRef, setImgRef] = useState('');
+  const [refReady, setRefReady] = useState(false);
+  let popupRef = useRef();
 
   useEffect(async () => {
     const result = await getProfileService(props.post.user_id);
@@ -16,9 +18,20 @@ const MapMarker = (props) => {
     setImgRef(url);
   }, []);
 
+  useEffect(() => {
+    if (refReady) popupRef.openOn(props.map);
+  }, [refReady]);
+
   return (
     <Marker position={[props.post.location.lat, props.post.location.lng]}>
-      <Popup className="popup">
+      <Popup
+        className="popup"
+        autoClose={false}
+        ref={(r) => {
+          popupRef = r;
+          setRefReady(true);
+        }}
+      >
         <label onClick={() => console.log('go to post')}>
           <div className="popup__header">
             <img
