@@ -20,7 +20,7 @@ router.route('/new-post').post((req, res) => {
 router.route('/friends-posts').post((req, res) => {
   let data = {
     user_id: req.body.user_id,
-    index: req.body.index
+    index: req.body.index,
   };
   axios
     .post(DOMAIN_NAME + POSTS_PORT + '/friends-posts', data)
@@ -70,7 +70,7 @@ router.route('/comment').post((req, res) => {
 
 router.route('/getComments').post((req, res) => {
   let data = {
-    post_id: req.body.post_id
+    post_id: req.body.post_id,
   };
   axios
     .post(DOMAIN_NAME + POSTS_PORT + '/getComments', data)
@@ -91,6 +91,21 @@ router.route('/getPostsByUserId').post((req, res) => {
     })
     .catch((err) => {
       logger.error(err, '/gateway_service/routes/getPostsByUserId');
+    });
+});
+
+router.route('/removePostById').post((req, res) => {
+  let data = {
+    user_id: req.body.user_id,
+    post_id: req.body.post_id,
+  };
+  axios
+    .post(DOMAIN_NAME + POSTS_PORT + '/removePostById', data)
+    .then((result) => {
+      res.send(result.data);
+    })
+    .catch((err) => {
+      logger.error(err, '/gateway_service/routes/removePostById');
     });
 });
 
