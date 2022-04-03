@@ -31,7 +31,6 @@ router.route('/getprofile').post(async (req, res) => {
   );
   const user = await User.findOne({ _id: userId });
 
-
   const tmp = {
     _id: user._id,
     name: user.name,
@@ -40,7 +39,7 @@ router.route('/getprofile').post(async (req, res) => {
     bio: user.bio,
     friends_id: user.friends_id,
     posts_id: user.posts_id,
-    email: user.email,
+    email: user.email
   };
   logger.debug(tmp, 'db/rou/fri/getprofile', 'profile found');
   res.send(tmp);
@@ -49,13 +48,17 @@ router.route('/getprofile').post(async (req, res) => {
 router.route('/editProfile').post(async (req, res) => {
   const userId = req.body._id;
 
-  logger.info(JSON.stringify(userId), 'db/rou/fri/getprofile', 'profile requst');
+  logger.info(
+    JSON.stringify(userId),
+    'db/rou/fri/getprofile',
+    'profile requst'
+  );
   const user = await User.findByIdAndUpdate(userId, {
     name: req.body.name,
     image_url: req.body.image_url,
     nickname: req.body.nickname,
     bio: req.body.bio,
-    email: req.body.email,
+    email: req.body.email
   });
 
   logger.debug(user, 'db/rou/fri/getprofile', 'profile found');
@@ -118,6 +121,36 @@ router.route('/getGroups').post(async (req, res) => {
   } catch (err) {
     logger.error(err, 'db/rou/fri/getGroups');
     res.send([]);
+  }
+});
+
+router.route('/block').post(async (req, res) => {
+  try {
+    const user_id = req.body.blockInfo.user_id;
+    const blocked_id = req.body.blockInfo.blocked_user_id;
+    const user = await User.findById(user_id);
+    const blockedUser = await User.findById(blocked_id);
+    
+    if (user.friends_id.includes(blocked_id)) {
+      let index = user.friends_id.indexOf(blocked_id);
+      user.friends_id.splice(index, 1);
+      index = blockedUser.friends_id.indexOf(user_id);
+      blockedUser.friends_id.splice(index, 1);
+
+      await User.findByIdAndUpdate(blocked_id, {
+        friends_id: blockedUser.friends_id
+      });
+    }
+    user.block_list.push(blocked_id);
+    await User.findByIdAndUpdate(user_id, {
+      friends_id: user.friends_id,
+      block_list: user.block_list
+    });
+
+    res.send(true);
+  } catch (err) {
+    logger.error(err, 'db/rou/fri/block');
+    res.send(false);
   }
 });
 
