@@ -17,6 +17,8 @@ import FullPost from '../FullPost';
 import EditProfile from './EditProfile';
 import YesNoPopup from 'components/uiKit/kit/layout/YesNoPopup';
 import removePostByIdService from 'services/postServices/removePostByIdService';
+import blockService from 'services/blockServices/blockService';
+import unblockService from 'services/blockServices/unblockService';
 
 const Profile = (props) => {
   const [cookies, setCookies] = useCookies(['user']);
@@ -107,7 +109,6 @@ const Profile = (props) => {
         cookies.user.data.friends_id.includes(props.input._id)
           ? setIndex(2)
           : setIndex(1);
-
       const arr = [];
       let likeCount = 0;
       const tmpPosts = await getPostsByUserId(props.input._id);
@@ -118,11 +119,15 @@ const Profile = (props) => {
           .getDownloadURL();
         arr.push({ ...post, image_url: url });
         likeCount += post.users_like.length;
+
+        if (cookies.user.data.block_list.includes(props.input._id)) {
+          setBtnDisplay('none');
+        }
       }
       setPosts(arr);
       setLikes(likeCount);
     }
-  }, [props.input, refresh]);
+  }, [props.input, refresh, blockState]);
 
   const onBlockHandler = () => {
     if (blockState === 'not blocked') {
@@ -146,20 +151,27 @@ const Profile = (props) => {
         </div>
       );
     } else {
-      setBtnDisplay('block');
-      setBlockState('not blocked');
       unblockUser();
     }
   };
 
-  const blockUser = () => {
-    console.log('blocked');
-    setBtnDisplay('none');
-    props.openClosePopup[1]();
+  const blockUser = async () => {
+    console.log(props.input._id);
+    const result = await blockService(cookies.user.data._id, props.input._id);
+    await updateProfileService(cookies.user.data._id, setCookies);
+    if (result) {
+      setBtnDisplay('none');
+      props.openClosePopup[1]();
+    }
   };
 
-  const unblockUser = () => {
-    console.log('unblocked');
+  const unblockUser = async () => {
+    const result = await unblockService(cookies.user.data._id, props.input._id);
+    await updateProfileService(cookies.user.data._id, setCookies);
+    if (result) {
+      setBtnDisplay('block');
+      setBlockState('not blocked');
+    }
   };
 
   return !edit ? (

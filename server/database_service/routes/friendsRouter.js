@@ -39,7 +39,8 @@ router.route('/getprofile').post(async (req, res) => {
     bio: user.bio,
     friends_id: user.friends_id,
     posts_id: user.posts_id,
-    email: user.email
+    email: user.email,
+    block_list: user.block_list
   };
   logger.debug(tmp, 'db/rou/fri/getprofile', 'profile found');
   res.send(tmp);
@@ -130,7 +131,7 @@ router.route('/block').post(async (req, res) => {
     const blocked_id = req.body.blockInfo.blocked_user_id;
     const user = await User.findById(user_id);
     const blockedUser = await User.findById(blocked_id);
-    
+
     if (user.friends_id.includes(blocked_id)) {
       let index = user.friends_id.indexOf(blocked_id);
       user.friends_id.splice(index, 1);
@@ -142,14 +143,48 @@ router.route('/block').post(async (req, res) => {
       });
     }
     user.block_list.push(blocked_id);
+    for (let i = 0; i < user.friends_groups.length; i++) {
+      const element = user.friends_groups[i];
+      for (let j = 0; j < element.friends_id.length; j++) {
+        const e = element.friends_id[j];
+        if (e === blocked_id) {
+          const index = element.friends_id.indexOf(e);
+          element.friends_id.splice(index, 1);
+        }
+      }
+      if (element.friends_id.length === 0) {
+        const index = user.friends_groups.indexOf(element);
+        user.friends_groups.splice(index, 1);
+      }
+    }
     await User.findByIdAndUpdate(user_id, {
       friends_id: user.friends_id,
-      block_list: user.block_list
+      block_list: user.block_list,
+      friends_groups: user.friends_groups
     });
 
     res.send(true);
   } catch (err) {
     logger.error(err, 'db/rou/fri/block');
+    res.send(false);
+  }
+});
+
+router.route('/unblock').post(async (req, res) => {
+  try {
+    const user_id = req.body.blockInfo.user_id;
+    const blocked_id = req.body.blockInfo.blocked_user_id;
+    const user = await User.findById(user_id);
+
+    const index = user.block_list.indexOf(blocked_id);
+    user.block_list.splice(index, 1);
+    await User.findByIdAndUpdate(user_id, {
+      block_list: user.block_list
+    });
+
+    res.send(true);
+  } catch (err) {
+    logger.error(err, 'db/rou/fri/unblock');
     res.send(false);
   }
 });

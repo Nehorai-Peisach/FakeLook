@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-export default async function getGroups(userId, blokedUserId) {
+export default async function blockService(userId, blockedUserId) {
   const cookies = new Cookies();
   const user = cookies.get('user');
   const token = user.accessToken;
@@ -10,7 +10,7 @@ export default async function getGroups(userId, blokedUserId) {
       token: token,
       blockInfo: {
         user_id: userId,
-        bloked_user_id: blokedUserId
+        blocked_user_id: blockedUserId
       }
     });
     if (result) return result.data;
