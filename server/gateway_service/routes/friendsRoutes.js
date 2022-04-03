@@ -71,6 +71,10 @@ router.route('/block').post(async (req, res) => {
   res.send(await doCommand({ blockInfo: req.body.blockInfo }, 'block'));
 });
 
+router.route('/unblock').post(async (req, res) => {
+  res.send(await doCommand({ blockInfo: req.body.blockInfo }, 'unblock'));
+});
+
 const doCommand = async (data, destination) => {
   logger.info(
     JSON.stringify(data),

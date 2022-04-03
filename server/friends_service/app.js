@@ -8,6 +8,8 @@ const removeFriend = require('./services/removeFriend');
 const searchService = require('./services/searchService');
 const newGroupService = require('./services/newGroupService');
 const getGroupsService = require('./services/getGroupsService');
+const blockUserService = require('./services/blockUserService');
+const unblockService = require('./services/unblockService');
 
 const PORT = process.env.FRIENDS_PORT;
 const app = express();
@@ -41,9 +43,13 @@ app.post('/getGroups', async (req, res) =>
   res.send(await doService(getGroupsService, req.body, 'getGroups'))
 );
 
-app.post('/block', async(req, res) => {
-    res.send(await doService(blockUserService, req.body, 'block'))
-})
+app.post('/block', async (req, res) => {
+  res.send(await doService(blockUserService, req.body, 'block'));
+});
+
+app.post('/unblock', async (req, res) => {
+  res.send(await doService(unblockService, req.body, 'unblock'));
+});
 
 const doService = async (service, data, text) => {
   try {
