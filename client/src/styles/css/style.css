@@ -266,6 +266,23 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   width: 90%;
   margin: 1% 5%; }
 
+.yes_no_popup {
+  height: 200px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .yes_no_popup span {
+    font-size: 2rem; }
+  .yes_no_popup div {
+    display: flex;
+    gap: 1rem; }
+    .yes_no_popup div .yes {
+      background-color: #84ff6b; }
+    .yes_no_popup div .no {
+      background-color: #ff6b6b; }
+
 .loading {
   height: 100%;
   width: 100%;
@@ -553,6 +570,30 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       object-position: 50% 30%;
       border-radius: 1rem;
       cursor: pointer; }
+    .profile__galery__post {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr; }
+      .profile__galery__post > * {
+        grid-area: 1/1; }
+      .profile__galery__post__delete_icon {
+        margin: 0;
+        padding: 0;
+        height: 15%;
+        width: 15%;
+        min-height: 30px;
+        min-width: 30px;
+        border-radius: 50%;
+        justify-content: center;
+        background-color: #ff6b6b;
+        align-self: flex-end;
+        justify-self: flex-end;
+        margin: 1rem; }
+        .profile__galery__post__delete_icon .icon {
+          margin: 0;
+          font-size: 100%; }
+        .profile__galery__post__delete_icon .text {
+          display: none; }
 
 .edit_profile {
   height: 100%;

@@ -11,6 +11,15 @@ class logger {
   debug = (data = '', path = '', message = '') => myLog.debug(path + ':\t' + message + '\n' + data + '\n');
   silly = (data = '', path = '', message = '') => myLog.silly(path + ':\t' + message + '\n' + data + '\n');
 }
+// class logger {
+//   error = () => {};
+//   warn = () => {};
+//   info = () => {};
+//   http = () => {};
+//   verbose = () => {};
+//   debug = () => {};
+//   silly = () => {};
+// }
 
 // if (process.env.NODE_ENV === 'production') {
 //   logger = productionLogger();
