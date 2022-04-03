@@ -1,7 +1,13 @@
 import { Btn, Hr, IconBtn, Loading } from 'components/uiKit/UiKIt';
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { AiOutlineEdit, AiOutlineUserAdd, AiOutlineUserDelete, AiOutlineStop, AiOutlineDelete } from 'react-icons/ai';
+import {
+  AiOutlineEdit,
+  AiOutlineUserAdd,
+  AiOutlineUserDelete,
+  AiOutlineStop,
+  AiOutlineDelete
+} from 'react-icons/ai';
 import addFriendService from 'services/profileServices/addFriendService';
 import removeFriendService from 'services/profileServices/removeFriendService';
 import updateProfileService from 'services/profileServices/updateProfileService';
@@ -11,7 +17,6 @@ import FullPost from '../FullPost';
 import EditProfile from './EditProfile';
 import YesNoPopup from 'components/uiKit/kit/layout/YesNoPopup';
 import removePostByIdService from 'services/postServices/removePostByIdService';
-
 
 const Profile = (props) => {
   const [cookies, setCookies] = useCookies(['user']);
@@ -42,7 +47,9 @@ const Profile = (props) => {
   };
 
   const deletePostHandler = (id) => {
-    props.openClosePopup[0](<YesNoPopup onClickHandler={(answer) => deletePost(answer, id)} />);
+    props.openClosePopup[0](
+      <YesNoPopup onClickHandler={(answer) => deletePost(answer, id)} />
+    );
   };
 
   const deletePost = async (isDel, id) => {
@@ -55,7 +62,7 @@ const Profile = (props) => {
   const states = [
     { icon: AiOutlineEdit, color: 'grey', onClick: editProfile },
     { icon: AiOutlineUserAdd, color: 'green', onClick: addFriend },
-    { icon: AiOutlineUserDelete, color: 'red', onClick: removeFriend },
+    { icon: AiOutlineUserDelete, color: 'red', onClick: removeFriend }
   ];
 
   const likeHandler = (flag, postId) => {
@@ -95,14 +102,20 @@ const Profile = (props) => {
     await setPosts([]);
     if (props.input) {
       if (props.input._id === cookies.user.data._id) setIndex(0);
-      else cookies.user.data.friends_id && cookies.user.data.friends_id.includes(props.input._id) ? setIndex(2) : setIndex(1);
+      else
+        cookies.user.data.friends_id &&
+        cookies.user.data.friends_id.includes(props.input._id)
+          ? setIndex(2)
+          : setIndex(1);
 
       const arr = [];
       let likeCount = 0;
       const tmpPosts = await getPostsByUserId(props.input._id);
       for (let i = 0; i < tmpPosts.length; i++) {
         const post = tmpPosts[i];
-        const url = await storage.ref(`images/${post.image_id}`).getDownloadURL();
+        const url = await storage
+          .ref(`images/${post.image_id}`)
+          .getDownloadURL();
         arr.push({ ...post, image_url: url });
         likeCount += post.users_like.length;
       }
@@ -147,7 +160,7 @@ const Profile = (props) => {
 
   const unblockUser = () => {
     console.log('unblocked');
-  }
+  };
 
   return !edit ? (
     <div className="profile">
@@ -169,9 +182,13 @@ const Profile = (props) => {
             ></IconBtn>
           )}
           <p className="bio">{props.input.bio}</p>
-          <Btn className="friends transparent">Friends: {props.input.friends_id.length}</Btn>
+          <Btn className="friends transparent">
+            Friends: {props.input.friends_id.length}
+          </Btn>
           <Btn className="likes transparent">Likes: {likes}</Btn>
-          <Btn className="posts transparent">Posts: {posts ? posts.length : 0}</Btn>
+          <Btn className="posts transparent">
+            Posts: {posts ? posts.length : 0}
+          </Btn>
         </div>
       </div>
       <Hr />
@@ -180,7 +197,11 @@ const Profile = (props) => {
           {posts.map((x, i) => {
             return (
               <div className="profile__galery__post">
-                <img key={'profilePosts' + i} src={x.image_url} onClick={() => postClickHandler(x)}></img>
+                <img
+                  key={'profilePosts' + i}
+                  src={x.image_url}
+                  onClick={() => postClickHandler(x)}
+                ></img>
                 <IconBtn
                   key={'deleteIcon ' + i}
                   icon={AiOutlineDelete}
@@ -196,7 +217,12 @@ const Profile = (props) => {
       )}
     </div>
   ) : (
-    <EditProfile userClicked={props.userClicked} user={props.input} setCookies={setCookies} save={() => setEdit(null)} />
+    <EditProfile
+      userClicked={props.userClicked}
+      user={props.input}
+      setCookies={setCookies}
+      save={() => setEdit(null)}
+    />
   );
 };
 
