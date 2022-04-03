@@ -31,7 +31,11 @@ const NewPost = (props) => {
   const postHandler = () => {
     if (image) {
       navigator.geolocation.getCurrentPosition(async (currentLocation) => {
-        const { latitude, longitude } = currentLocation.coords;
+        // const { latitude, longitude } = currentLocation.coords;
+
+        const latitude = getRandomInRange(-90, 90, 6);
+        const longitude = getRandomInRange(-180, 180, 6);
+
         const id = uuidv4();
         uploadImage(id);
         const tagsArray = tags.split(', ');
@@ -56,6 +60,11 @@ const NewPost = (props) => {
       });
     }
   };
+
+  function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    s;
+  }
 
   const uploadImage = (id) => {
     const uploadTask = storage.ref(`images/${id}`).put(image);
