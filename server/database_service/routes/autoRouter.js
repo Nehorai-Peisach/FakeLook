@@ -17,6 +17,7 @@ router.route('/sign-in').post((req, res) => {
           nickname: result.nickname,
           image_url: result.image_url,
           friends_id: result.friends_id,
+          block_list: result.block_list
         };
         res.send(retUser);
       } else res.send(false);
@@ -37,7 +38,7 @@ router.route('/sign-up').post((req, res) => {
     google_id: req.body.google_id || null,
     facebook_id: req.body.facebook_id || null,
     nickname: null,
-    bio: "Hey there I'm using FakeLook!",
+    bio: "Hey there I'm using FakeLook!"
   });
 
   User.findOne({ email: newUser.email })
@@ -46,8 +47,10 @@ router.route('/sign-up').post((req, res) => {
         logger.info('Already registed to that Email');
         newUser._id = userFound._id;
         let result;
-        if (newUser.google_id) result = await googleSignup(newUser, userFound.google_id);
-        else if (newUser.facebook_id) result = await facebookSignup(newUser, userFound.facebook_id);
+        if (newUser.google_id)
+          result = await googleSignup(newUser, userFound.google_id);
+        else if (newUser.facebook_id)
+          result = await facebookSignup(newUser, userFound.facebook_id);
         else result = await regularSignup(newUser);
         res.send(result);
       } else {
@@ -82,7 +85,10 @@ const regularSignup = async (user) => {
   if (user.email) checks.push('Email');
 
   if (checks.length === 0) {
-    await User.findByIdAndUpdate(user._id, { password: user.password, username: user.username });
+    await User.findByIdAndUpdate(user._id, {
+      password: user.password,
+      username: user.username
+    });
     logger.info('User Updated');
     return { msg: 'Register successs', state: true };
   } else {
@@ -102,7 +108,8 @@ const myPrint = (arr) => {
 };
 
 const facebookSignup = async (user, isFacebook) => {
-  if (isFacebook) return { msg: 'Facebook accout alredy been taken', state: false };
+  if (isFacebook)
+    return { msg: 'Facebook accout alredy been taken', state: false };
   await User.findByIdAndUpdate(user._id, { facebook_id: user.facebook_id });
   logger.info('User Updated');
   return { msg: 'Register successs', state: true };
@@ -129,7 +136,7 @@ router.route('/nickname').post((req, res) => {
             const retUser = {
               _id: result._id,
               nickname: result.nickname,
-              image_url: result.image_url,
+              image_url: result.image_url
             };
             res.send(retUser);
           })

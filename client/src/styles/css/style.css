@@ -317,6 +317,21 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     overflow: hidden;
     min-height: 200px;
     min-width: 350px; }
+    .full_popup__content .block_popup {
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around; }
+      .full_popup__content .block_popup__title {
+        font-size: 2rem; }
+      .full_popup__content .block_popup__btns {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around; }
+        .full_popup__content .block_popup__btns__block {
+          background-color: red; }
   .full_popup__hidden {
     display: none; }
   .full_popup__display {

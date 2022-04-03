@@ -34,6 +34,26 @@
     // max-width: 80vw;
     min-height: 200px;
     min-width: 350px;
+
+    .block_popup {
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        &__title {
+            font-size: 2rem;
+        }
+        &__btns {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            &__block {
+                background-color: red;
+            }
+        }
+    }
   }
 
   &__hidden {
