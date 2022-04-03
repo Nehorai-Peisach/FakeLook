@@ -125,6 +125,21 @@ router.route('/getGroups').post(async (req, res) => {
   }
 });
 
+router.route('/getGroupByName').post(async (req, res) => {
+  try {
+    const name = req.body.name;
+    const user_id = req.body.user_id;
+    const user = await User.findById(user_id);
+    user.friends_groups.forEach((g) => {
+      if (g.name === name) res.send(g);
+      else res.send(null);
+    });
+  } catch (err) {
+    logger.error(err, 'db/rou/fri/getGroupByName');
+    res.send(null);
+  }
+});
+
 router.route('/block').post(async (req, res) => {
   try {
     const user_id = req.body.blockInfo.user_id;
