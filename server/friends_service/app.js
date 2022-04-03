@@ -41,6 +41,10 @@ app.post('/getGroups', async (req, res) =>
   res.send(await doService(getGroupsService, req.body, 'getGroups'))
 );
 
+app.post('/block', async(req, res) => {
+    res.send(await doService(blockUserService, req.body, 'block'))
+})
+
 const doService = async (service, data, text) => {
   try {
     const result = await service(data);

@@ -67,6 +67,10 @@ router
     res.send(await doCommand({ user_id: req.body.user_id }, 'getGroups'))
   );
 
+router.route('/block').post(async (req, res) => {
+  res.send(await doCommand({ blockInfo: req.body.blockInfo }, 'block'));
+});
+
 const doCommand = async (data, destination) => {
   logger.info(
     JSON.stringify(data),
