@@ -122,7 +122,7 @@ const Profile = (props) => {
 
         if (cookies.user.data.block_list.includes(props.input._id)) {
           setBtnDisplay('none');
-        }
+        } else setBtnDisplay('block');
       }
       setPosts(arr);
       setLikes(likeCount);
@@ -162,6 +162,7 @@ const Profile = (props) => {
     if (result) {
       setBtnDisplay('none');
       props.openClosePopup[1]();
+      setBlockState('bloked');
     }
   };
 
