@@ -41,7 +41,7 @@
         grid-area: 2/3 !important;
         background-color: $DARK_BG;
         .icon {
-            color: white;
+          color: white;
         }
       }
       .bio {
@@ -95,6 +95,38 @@
       object-position: 50% 30%;
       border-radius: 1rem;
       cursor: pointer;
+    }
+
+    &__post {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      & > * {
+        grid-area: 1/1;
+      }
+      &__delete_icon {
+        margin: 0;
+        padding: 0;
+        height: 15%;
+        width: 15%;
+        min-height: 30px;
+        min-width: 30px;
+        border-radius: 50%;
+        justify-content: center;
+
+        background-color: $red_light;
+        align-self: flex-end;
+        justify-self: flex-end;
+        margin: 1rem;
+
+        .icon {
+          margin: 0;
+          font-size: 100%;
+        }
+        .text {
+          display: none;
+        }
+      }
     }
   }
 }
