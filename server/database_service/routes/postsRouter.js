@@ -88,7 +88,7 @@ router.route('/comment').post(async (req, res) => {
       user_id: user_id,
       post_id: post_id,
       users_like: [],
-      date: Date.now()
+      date: Date.now(),
     });
     await newComment.save().then(async (comment) => {
       const post = await Post.findById(post_id);
@@ -127,6 +127,19 @@ router.route('/getPostsByUserId').post(async (req, res) => {
   const userId = req.body.user_id;
   const posts = await Post.find({ user_id: userId });
   res.send(posts);
+});
+
+router.route('/removePostById').post(async (req, res) => {
+  const userId = req.body.user_id;
+  const postId = req.body.post_id;
+
+  const user = await User.findById(userId);
+  console.log(user);
+
+  const posts = user.posts_id.filter((x) => x !== postId);
+  await User.findByIdAndUpdate(userId, { posts_id: posts });
+  await Post.findOneAndRemove({ image_id: postId });
+  res.send(true);
 });
 
 module.exports = router;

@@ -9,6 +9,7 @@ const likeService = require('./services/likeService');
 const commentService = require('./services/commentService');
 const getCommentsService = require('./services/getCommentsService');
 const getPostsByUserIdService = require('./services/getPostsByUserIdService');
+const removePostByIdService = require('./services/removePostByIdService');
 const app = express();
 
 const PORT = process.env.POSTS_PORT;
@@ -80,6 +81,16 @@ app.post('/getPostsByUserId', async (req, res) => {
     logger.error(err, 'posts_service/app');
   }
 });
+
+app.post('/removePostById', async (req, res) => {
+  try {
+    const result = await removePostByIdService(req.body);
+    res.send(result);
+  } catch (err) {
+    logger.error(err, 'posts_service/app/removePostById');
+  }
+});
+
 
 app.listen(PORT, () => {
   logger.http(`Posts_service is running on port:${PORT}`);
