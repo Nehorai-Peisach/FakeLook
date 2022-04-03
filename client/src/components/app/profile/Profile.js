@@ -30,6 +30,8 @@ const Profile = (props) => {
   const [btnDisplay, setBtnDisplay] = useState('block');
   const [blockState, setBlockState] = useState('not blocked');
 
+  const [blockedUser, setBlockedUser] = useState(false);
+
   const addFriend = async () => {
     await addFriendService(cookies.user.data._id, props.input._id);
     await updateProfileService(cookies.user.data._id, setCookies);
@@ -103,6 +105,8 @@ const Profile = (props) => {
   useEffect(async () => {
     await setPosts([]);
     if (props.input) {
+      if (props.input.block_list.includes(cookies.user.data._id))
+        setBlockedUser(true);
       if (props.input._id === cookies.user.data._id) setIndex(0);
       else
         cookies.user.data.friends_id &&
@@ -207,23 +211,27 @@ const Profile = (props) => {
       <Hr />
       {posts ? (
         <div className="profile__galery">
-          {posts.map((x, i) => {
-            return (
-              <div className="profile__galery__post">
-                <img
-                  key={'profilePosts' + i}
-                  src={x.image_url}
-                  onClick={() => postClickHandler(x)}
-                ></img>
-                <IconBtn
-                  key={'deleteIcon ' + i}
-                  icon={AiOutlineDelete}
-                  className="profile__galery__post__delete_icon"
-                  onClick={() => deletePostHandler(x.image_id)}
-                />
-              </div>
-            );
-          })}
+          {blockedUser ? (
+            posts.map((x, i) => {
+              return (
+                <div className="profile__galery__post">
+                  <img
+                    key={'profilePosts' + i}
+                    src={x.image_url}
+                    onClick={() => postClickHandler(x)}
+                  ></img>
+                  <IconBtn
+                    key={'deleteIcon ' + i}
+                    icon={AiOutlineDelete}
+                    className="profile__galery__post__delete_icon"
+                    onClick={() => deletePostHandler(x.image_id)}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            <h1>You are not authorized to see this content...</h1>
+          )}
         </div>
       ) : (
         <Loading />
