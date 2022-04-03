@@ -41,7 +41,7 @@ module.exports = async function mapFiltersService(filters) {
     });
   }
 
-  if (filters.tags !== '' || filtered.tags !== undefined) {
+  if (filters.tags !== '' || filters.tags !== undefined) {
     const newArray = [];
     const tags = filters.tags.split(', ');
     filtered.forEach((p) => {
@@ -50,6 +50,23 @@ module.exports = async function mapFiltersService(filters) {
       });
     });
     filtered = newArray;
+  }
+
+  if (filters.friendGroup !== '' || filters.friendGroup !== undefined) {
+    const group = await axios.post(
+      DOMAIN_NAME + DB_PORT + '/api/postsRoutes/getGroupByName',
+      { name: filters.group, user_id: filters.user_id }
+    );
+    if (group.data) {
+      let newList = [];
+      const friendsIds = group.data.friends_id;
+      filtered.forEach((p) => {
+        friendsIds.forEach((f) => {
+          if (f == p.user_id) newList.push(p);
+        });
+      });
+      filtered = newList;
+    }
   }
 
   filtered.sort((a, b) => b.users_like.length - a.users_like.length);
