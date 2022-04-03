@@ -103,11 +103,16 @@ router.route('/newGroup').post(async (req, res) => {
     const user_id = req.body.user_id;
     const group = req.body.group;
     const user = await User.findById(user_id);
-    user.friends_groups.push(group);
-    await User.findByIdAndUpdate(user_id, {
-      friends_groups: user.friends_groups
-    });
-    res.send(true);
+    const groupNames = user.friends_groups.forEach((g) => g.name);
+    if (user.groupNames.include(group.name)) {
+      res.send(false);
+    } else {
+      user.friends_groups.push(group);
+      await User.findByIdAndUpdate(user_id, {
+        friends_groups: user.friends_groups
+      });
+      res.send(true);
+    }
   } catch (err) {
     logger.error(err, 'db/rou/fri/newGroup');
     res.send(false);
