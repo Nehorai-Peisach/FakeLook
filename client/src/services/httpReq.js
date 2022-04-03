@@ -1,24 +1,23 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-export default async function httpReq(url, reqInfo) {
+export default async (url, body) => {
   const cookies = new Cookies();
   const user = cookies.get('user');
   const token = user.accessToken;
 
+  console.log(body);
   try {
-    const result = await axios.post(
-      url,
-      { reqInfo },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const result = await axios.post('http://localhost:4000/api/' + url, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return result;
   } catch (err) {
+    cookies.remove('user');
     console.log(err);
-    return false;
+    window.location.reload(false);
+    return null;
   }
-}
+};

@@ -1,17 +1,7 @@
-import axios from 'axios';
-import Cookies from 'universal-cookie';
+import httpReq from 'services/httpReq';
 
-export default async function getGroups(user_id) {
-  const cookies = new Cookies();
-  const user = cookies.get('user');
-  const token = user.accessToken;
-  try {
-    const result = await axios.post(
-      'http://localhost:4000/api/friends/getGroups',
-      { token: token, user_id }
-    );
-    if (result) return result.data;
-  } catch (err) {
-    console.log(err);
-  }
-}
+export default async (userId) => {
+  const data = { user_id: userId };
+  const result = await httpReq('friends/getGroups', data);
+  return result.data;
+};

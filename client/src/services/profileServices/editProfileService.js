@@ -1,26 +1,15 @@
-import axios from 'axios';
-import Cookies from 'universal-cookie';
+import httpReq from 'services/httpReq';
 
-export default async function editProfileService(newUser, user, setUser) {
-  const cookies = new Cookies();
-  const u = cookies.get('user');
-  const token = u.accessToken;
-  try {
-    const tmpUser = user;
-    const tmp = await axios.post(
-      'http://localhost:4000/api/friends/editProfile',
-      { token, newUser }
-    );
+export default async (newUser, user, setUser) => {
+  const tmpUser = user;
+  const result = httpReq('friends/editProfile', newUser);
 
-    tmpUser.name = tmp.data.name;
-    tmpUser.image_url = tmp.data.image_url;
-    tmpUser.nickname = tmp.data.nickname;
-    tmpUser.bio = tmp.data.bio;
-    tmpUser.email = tmp.data.email;
+  tmpUser.name = result.data.name;
+  tmpUser.image_url = result.data.image_url;
+  tmpUser.nickname = result.data.nickname;
+  tmpUser.bio = result.data.bio;
+  tmpUser.email = result.data.email;
 
-    setUser('user', { data: tmpUser });
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
+  setUser('user', { data: tmpUser });
+  return result.data;
+};

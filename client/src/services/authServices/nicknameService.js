@@ -1,6 +1,10 @@
-import axios from 'axios';
+import httpReq from 'services/httpReq';
 
-export default async function nicknameService(userId, nickname) {
-  const result = await axios.post('http://localhost:4000/api/auth/nickname', { user_id: userId, nickname: nickname });
+export default async (userId, nickname) => {
+  const data = {
+    user_id: userId,
+    nickname: nickname,
+  };
+  const result = await httpReq('auth/nickname', {data});
   return result.data;
-}
+};

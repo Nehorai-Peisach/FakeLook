@@ -22,28 +22,14 @@ app.listen(PORT, () => {
 });
 
 function authenticateToken(req, res, next) {
-  const token = req.body.token;
-  if (token == null) return res.sendStatus(401);
+  const token = req.headers.authorization.split(/\s+/).pop() || null;
+  if (token === null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
       console.log(err);
       return res.sendStatus(403);
     }
-    delete req.body.token;
     next();
   });
 }
-// function authenticateToken(req, res, next) {
-//   const token = req.headers.authorization.split(/\s+/).pop() || null;
-//   if (token === null) return res.sendStatus(401);
-
-//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-//     if (err) {
-//       console.log(err);
-//       return res.sendStatus(403);
-//     }
-//     // delete req.body.token;
-//     next();
-//   });
-// }

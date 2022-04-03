@@ -14,8 +14,7 @@ app.post('/sign-in', async (req, res) => {
   try {
     const result = await loginService(req.body);
     console.log('here is: ' + JSON.stringify(result));
-    if (result)
-      res.send({ data: result, accessToken: generateAccessToken(result) });
+    if (result) res.send({ data: result, accessToken: generateAccessToken(result) });
     else res.send(null);
   } catch (error) {
     logger.error('An error occurred', error, 'auth/app/signin');
@@ -46,7 +45,7 @@ app.post('/nickname', async (req, res) => {
 function generateAccessToken(user) {
   const username = { name: user.username };
   return jwt.sign(username, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '900s'
+    expiresIn: '900s',
   });
 }
 

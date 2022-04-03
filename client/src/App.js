@@ -1,6 +1,6 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Main from 'components/app/Main';
-import Login from 'components/login/Login';
+import Login from 'components/login/LoginPage';
 import NewFriendGroup from 'components/app/friendGroup/NewFriendGroup';
 
 function App() {
