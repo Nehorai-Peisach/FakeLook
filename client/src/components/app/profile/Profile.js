@@ -14,12 +14,16 @@ import { storage } from 'firebases';
 import getPostsByUserId from 'services/postServices/getPostsByUserId';
 import FullPost from '../FullPost';
 import EditProfile from './EditProfile';
+import FullPagePopup from 'components/uiKit/kit/layout/FullPagePopup';
 
 const Profile = (props) => {
   const [cookies, setCookies] = useCookies(['user']);
   const [index, setIndex] = useState(0);
   const [likes, setLikes] = useState(0);
   const [posts, setPosts] = useState();
+
+  const [btnDisplay, setBtnDisplay] = useState('block');
+  const [blockState, setBlockState] = useState('not blocked');
 
   const addFriend = async () => {
     await addFriendService(cookies.user.data._id, props.input._id);
@@ -104,6 +108,44 @@ const Profile = (props) => {
     }
   }, [props.input]);
 
+  const onBlockHandler = () => {
+    if (blockState === 'not blocked') {
+      setBlockState('blocked');
+      props.openClosePopup[0](
+        <div className="block_popup">
+          <span className="block_popup__title">
+            Are you sure you want to block?
+          </span>
+          <div className="block_popup__btns">
+            <Btn className="block_popup__btns__block" onClick={blockUser}>
+              Block
+            </Btn>
+            <Btn
+              className="block_popup__btns__cansel"
+              onClick={props.openClosePopup[1]}
+            >
+              Cancel
+            </Btn>
+          </div>
+        </div>
+      );
+    } else {
+      setBtnDisplay('block');
+      setBlockState('not blocked');
+      unblockUser();
+    }
+  };
+
+  const blockUser = () => {
+    console.log('blocked');
+    setBtnDisplay('none');
+    props.openClosePopup[1]();
+  };
+
+  const unblockUser = () => {
+    console.log('unblocked');
+  }
+
   return !edit ? (
     <div className="profile">
       <div className="header">
@@ -111,11 +153,18 @@ const Profile = (props) => {
         <div className="details">
           <h1 className="name">{props.input.nickname}</h1>
           <IconBtn
+            style={{ display: btnDisplay }}
             icon={states[index].icon}
             className={states[index].color}
             onClick={() => states[index].onClick()}
           />
-          {index !== 0 &&  <IconBtn className="block_btn" icon={AiOutlineStop}></IconBtn>}
+          {index !== 0 && (
+            <IconBtn
+              className="block_btn"
+              icon={AiOutlineStop}
+              onClick={onBlockHandler}
+            ></IconBtn>
+          )}
           <p className="bio">{props.input.bio}</p>
           <Btn className="friends transparent">
             Friends: {props.input.friends_id.length}
