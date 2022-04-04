@@ -6,7 +6,7 @@ import {
   AiOutlineUserAdd,
   AiOutlineUserDelete,
   AiOutlineStop,
-  AiOutlineDelete,
+  AiOutlineDelete
 } from 'react-icons/ai';
 import addFriendService from 'services/profileServices/addFriendService';
 import removeFriendService from 'services/profileServices/removeFriendService';
@@ -46,7 +46,9 @@ const Profile = (props) => {
   };
 
   const deletePostHandler = (id) => {
-    props.openClosePopup[0](<YesNoPopup onClickHandler={(answer) => deletePost(answer, id)} />);
+    props.openClosePopup[0](
+      <YesNoPopup onClickHandler={(answer) => deletePost(answer, id)} />
+    );
   };
 
   const deletePost = async (isDel, id) => {
@@ -59,7 +61,7 @@ const Profile = (props) => {
   const states = [
     { icon: AiOutlineEdit, color: 'grey', onClick: editProfile },
     { icon: AiOutlineUserAdd, color: 'green', onClick: addFriend },
-    { icon: AiOutlineUserDelete, color: 'red', onClick: removeFriend },
+    { icon: AiOutlineUserDelete, color: 'red', onClick: removeFriend }
   ];
 
   const likeHandler = (flag, postId) => {
@@ -98,11 +100,14 @@ const Profile = (props) => {
   useEffect(async () => {
     await setPosts([]);
     if (props.input) {
-      if (props.input.block_list.includes(cookies.user.data._id))
+      if (props.input.block_list.includes(cookies.user.data._id)) {
         setBlockedUser(true);
+        setBtnDisplay('none');
+      }
       if (props.input._id === cookies.user.data._id) setIndex(0);
       else
-        cookies.user.data.friends_id && cookies.user.data.friends_id.includes(props.input._id)
+        cookies.user.data.friends_id &&
+        cookies.user.data.friends_id.includes(props.input._id)
           ? setIndex(2)
           : setIndex(1);
       const arr = [];
@@ -110,7 +115,9 @@ const Profile = (props) => {
       const tmpPosts = await getPostsByUserId(props.input._id);
       for (let i = 0; i < tmpPosts.length; i++) {
         const post = tmpPosts[i];
-        const url = await storage.ref(`images/${post.image_id}`).getDownloadURL();
+        const url = await storage
+          .ref(`images/${post.image_id}`)
+          .getDownloadURL();
         arr.push({ ...post, image_url: url });
         likeCount += post.users_like.length;
 
@@ -128,12 +135,17 @@ const Profile = (props) => {
       setBlockState('blocked');
       props.openClosePopup[0](
         <div className="block_popup">
-          <span className="block_popup__title">Are you sure you want to block?</span>
+          <span className="block_popup__title">
+            Are you sure you want to block?
+          </span>
           <div className="block_popup__btns">
             <Btn className="block_popup__btns__block" onClick={blockUser}>
               Block
             </Btn>
-            <Btn className="block_popup__btns__cansel" onClick={props.openClosePopup[1]}>
+            <Btn
+              className="block_popup__btns__cansel"
+              onClick={props.openClosePopup[1]}
+            >
               Cancel
             </Btn>
           </div>
@@ -183,13 +195,19 @@ const Profile = (props) => {
               ></IconBtn>
             )}
             <p className="bio">{props.input.bio}</p>
-            <Btn className="friends transparent">Friends: {props.input.friends_id.length}</Btn>
+            <Btn className="friends transparent">
+              Friends: {props.input.friends_id.length}
+            </Btn>
             <Btn className="likes transparent">Likes: {likes}</Btn>
-            <Btn className="posts transparent">Posts: {posts ? posts.length : 0}</Btn>
+            <Btn className="posts transparent">
+              Posts: {posts ? posts.length : 0}
+            </Btn>
           </div>
         </div>
         <Hr />
-        {posts ? (
+        {blockedUser ? (
+          <h1>You are not premited to see this...</h1>
+        ) : posts ? (
           <div className="profile__galery">
             {posts.map((x, i) => {
               return (
