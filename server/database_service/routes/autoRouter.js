@@ -41,12 +41,11 @@ router.route('/sign-up').post((req, res) => {
       } else {
         try {
           logger.info('Email is free to register');
-          if (newUser.username) {
-            const check = await User.findOne({ username: newUser.username });
-            if (check) {
-              logger.info('Username alredy been taken');
-              res.send({ msg: 'Username alredy been taken', state: false });
-            }
+          if (!newUser.username) res.send({ msg: 'Username alredy been taken', state: false });
+          const check = await User.findOne({ username: newUser.username });
+          if (check) {
+            logger.info('Username alredy been taken');
+            res.send({ msg: 'Username alredy been taken', state: false });
           } else {
             newUser.save().then(() => {
               logger.info('User registed');
