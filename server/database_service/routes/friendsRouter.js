@@ -87,11 +87,17 @@ router.route('/newGroup').post(async (req, res) => {
     const user_id = req.body.user_id;
     const group = req.body.group;
     const user = await User.findById(user_id);
-    user.friends_groups.push(group);
-    await User.findByIdAndUpdate(user_id, {
-      friends_groups: user.friends_groups,
-    });
-    res.send(true);
+    const groupNames = user.friends_groups.forEach((g) => g.name);
+    if (user.groupNames.include(group.name)) {
+      res.send(false);
+    } else {
+      user.friends_groups.push(group);
+      await User.findByIdAndUpdate(user_id, {
+        friends_groups: user.friends_groups
+      });
+      res.send(true);
+    }
+
   } catch (err) {
     logger.error(err, 'db/rou/fri/newGroup');
     res.send(false);
@@ -106,6 +112,21 @@ router.route('/getGroups').post(async (req, res) => {
   } catch (err) {
     logger.error(err, 'db/rou/fri/getGroups');
     res.send([]);
+  }
+});
+
+router.route('/getGroupByName').post(async (req, res) => {
+  try {
+    const name = req.body.name;
+    const user_id = req.body.user_id;
+    const user = await User.findById(user_id);
+    user.friends_groups.forEach((g) => {
+      if (g.name === name) res.send(g);
+      else res.send(null);
+    });
+  } catch (err) {
+    logger.error(err, 'db/rou/fri/getGroupByName');
+    res.send(null);
   }
 });
 

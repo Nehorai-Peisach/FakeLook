@@ -29,6 +29,8 @@ const Profile = (props) => {
   const [btnDisplay, setBtnDisplay] = useState('block');
   const [blockState, setBlockState] = useState('not blocked');
 
+  const [blockedUser, setBlockedUser] = useState(false);
+
   const addFriend = async () => {
     await addFriendService(cookies.user.data._id, props.input._id);
     setIndex(2);
@@ -96,6 +98,8 @@ const Profile = (props) => {
   useEffect(async () => {
     await setPosts([]);
     if (props.input) {
+      if (props.input.block_list.includes(cookies.user.data._id))
+        setBlockedUser(true);
       if (props.input._id === cookies.user.data._id) setIndex(0);
       else
         cookies.user.data.friends_id && cookies.user.data.friends_id.includes(props.input._id)
