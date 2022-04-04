@@ -6,7 +6,9 @@ const DB_PORT = process.env.DB_PORT;
 
 module.exports = async function mapFiltersService(filters) {
   console.log(filters);
-  const result = await axios.get(DOMAIN_NAME + DB_PORT + '/api/postsRoutes/get-posts');
+  const result = await axios.get(
+    DOMAIN_NAME + DB_PORT + '/api/postsRoutes/get-posts'
+  );
 
   let filtered = result.data.filter((p) => p.user_id !== filters.user_id);
 
@@ -50,19 +52,20 @@ module.exports = async function mapFiltersService(filters) {
     filtered = newArray;
   }
 
-  if (filters.friendGroup !== '' || filters.friendGroup !== undefined) {
+  if (filters.friendGroup) {
     const group = await axios.post(
-      DOMAIN_NAME + DB_PORT + '/api/postsRoutes/getGroupByName',
-      { name: filters.group, user_id: filters.user_id }
+      DOMAIN_NAME + DB_PORT + '/api/friendsRoutes/getGroupByName',
+      { name: filters.friendGroup, user_id: filters.user_id }
     );
     if (group.data) {
       let newList = [];
       const friendsIds = group.data.friends_id;
       filtered.forEach((p) => {
         friendsIds.forEach((f) => {
-          if (f == p.user_id) newList.push(p);
+          if (f === p.user_id) newList.push(p);
         });
       });
+      console.log(newList);
       filtered = newList;
     }
   }
