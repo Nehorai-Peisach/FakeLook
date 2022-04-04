@@ -11,10 +11,8 @@ const MapMarker = (props) => {
 
   useEffect(async () => {
     const result = await getProfileService(props.post.user_id);
-    setUser(result.data);
-    const url = await storage
-      .ref(`images/${props.post.image_id}`)
-      .getDownloadURL();
+    setUser(result);
+    const url = await storage.ref(`images/${props.post.image_id}`).getDownloadURL();
     setImgRef(url);
   }, []);
 

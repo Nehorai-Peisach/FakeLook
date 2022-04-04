@@ -3,24 +3,11 @@ const logger = require('../../logger');
 const User = require('../models/User');
 
 router.route('/sign-in').post((req, res) => {
-  let filter = {};
-  if (req.body.google_id) filter = { google_id: req.body.google_id };
-  else if (req.body.facebook_id) filter = { facebook_id: req.body.facebook_id };
-  else filter = { username: req.body.username, password: req.body.password };
-
+  const filter = req.body;
   User.findOne(filter)
     .then((result) => {
-      if (result) {
-        logger.debug(result, 'db/auth/signin', 'user was found');
-        const retUser = {
-          _id: result._id,
-          nickname: result.nickname,
-          image_url: result.image_url,
-          friends_id: result.friends_id,
-          block_list: result.block_list
-        };
-        res.send(retUser);
-      } else res.send(false);
+      if (result) res.send(result);
+      else res.send(false);
     })
     .catch((err) => {
       logger.error(err, 'db/auth/signin', 'error in finding user');
@@ -38,7 +25,7 @@ router.route('/sign-up').post((req, res) => {
     google_id: req.body.google_id || null,
     facebook_id: req.body.facebook_id || null,
     nickname: null,
-    bio: "Hey there I'm using FakeLook!"
+    bio: "Hey there I'm using FakeLook!",
   });
 
   User.findOne({ email: newUser.email })
@@ -47,19 +34,19 @@ router.route('/sign-up').post((req, res) => {
         logger.info('Already registed to that Email');
         newUser._id = userFound._id;
         let result;
-        if (newUser.google_id)
-          result = await googleSignup(newUser, userFound.google_id);
-        else if (newUser.facebook_id)
-          result = await facebookSignup(newUser, userFound.facebook_id);
+        if (newUser.google_id) result = await googleSignup(newUser, userFound.google_id);
+        else if (newUser.facebook_id) result = await facebookSignup(newUser, userFound.facebook_id);
         else result = await regularSignup(newUser);
         res.send(result);
       } else {
         try {
           logger.info('Email is free to register');
-          const check = await User.findOne({ username: newUser.username });
-          if (check) {
-            logger.info('Username alredy been taken');
-            res.send({ msg: 'Username alredy been taken', state: false });
+          if (newUser.username) {
+            const check = await User.findOne({ username: newUser.username });
+            if (check) {
+              logger.info('Username alredy been taken');
+              res.send({ msg: 'Username alredy been taken', state: false });
+            }
           } else {
             newUser.save().then(() => {
               logger.info('User registed');
@@ -87,7 +74,7 @@ const regularSignup = async (user) => {
   if (checks.length === 0) {
     await User.findByIdAndUpdate(user._id, {
       password: user.password,
-      username: user.username
+      username: user.username,
     });
     logger.info('User Updated');
     return { msg: 'Register successs', state: true };
@@ -108,8 +95,7 @@ const myPrint = (arr) => {
 };
 
 const facebookSignup = async (user, isFacebook) => {
-  if (isFacebook)
-    return { msg: 'Facebook accout alredy been taken', state: false };
+  if (isFacebook) return { msg: 'Facebook accout alredy been taken', state: false };
   await User.findByIdAndUpdate(user._id, { facebook_id: user.facebook_id });
   logger.info('User Updated');
   return { msg: 'Register successs', state: true };
@@ -136,7 +122,7 @@ router.route('/nickname').post((req, res) => {
             const retUser = {
               _id: result._id,
               nickname: result.nickname,
-              image_url: result.image_url
+              image_url: result.image_url,
             };
             res.send(retUser);
           })

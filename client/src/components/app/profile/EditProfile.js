@@ -46,36 +46,28 @@ const EditProfile = (props) => {
             .child(id)
             .getDownloadURL()
             .then(async (url) => {
-              await editProfileService(
-                {
-                  _id: props.user._id,
-                  name: name,
-                  image_url: url,
-                  nickname: nickname,
-                  bio: bio,
-                  email: email,
-                },
-                props.user,
-                props.setCookies
-              );
+              await editProfileService({
+                _id: props.user._id,
+                name: name,
+                image_url: url,
+                nickname: nickname,
+                bio: bio,
+                email: email,
+              });
               props.userClicked(props.user._id);
               console.log(url);
             });
         }
       );
     } else {
-      await editProfileService(
-        {
-          _id: props.user._id,
-          name: name,
-          image_url: imageUrl,
-          nickname: nickname,
-          bio: bio,
-          email: email,
-        },
-        props.user,
-        props.setCookies
-      );
+      await editProfileService({
+        _id: props.user._id,
+        name: name,
+        image_url: imageUrl,
+        nickname: nickname,
+        bio: bio,
+        email: email,
+      });
     }
     props.userClicked(props.user._id);
     props.save();
@@ -100,10 +92,19 @@ const EditProfile = (props) => {
         <Input value={name} text="Full Name" onChange={(value) => changeHandler(setName, value)}>
           Full Name...
         </Input>
-        <Input value={nickname} text="Nickname" onChange={(value) => changeHandler(setNickname, value)}>
+        <Input
+          value={nickname}
+          text="Nickname"
+          onChange={(value) => changeHandler(setNickname, value)}
+        >
           Nickname...
         </Input>
-        <Input textarea={true} value={bio} text="Bio" onChange={(value) => changeHandler(setBio, value)}>
+        <Input
+          textarea={true}
+          value={bio}
+          text="Bio"
+          onChange={(value) => changeHandler(setBio, value)}
+        >
           Bio...
         </Input>
         <Input value={email} text="Email" onChange={(value) => changeHandler(setEmail, value)}>

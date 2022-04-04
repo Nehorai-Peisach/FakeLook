@@ -6,7 +6,7 @@ import { facebookSignUpService } from 'services/authServices/signUpService';
 
 const LoginFacebook = (props) => {
   const responseFacebook = async (response) => {
-    await console.log(response);
+    console.log(response);
     const isRegistered = await facebookSignUpService(response.name, response.email, response.id);
     if (isRegistered) {
       const isLogin = await facebookSignInService(response.id);

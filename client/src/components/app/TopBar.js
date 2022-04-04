@@ -1,4 +1,4 @@
-import { Hr, IconBtn, SearchBar } from 'components/uiKit/UiKIt';
+import { IconBtn, SearchBar } from 'components/uiKit/UiKIt';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { IoPersonOutline, IoAddCircleOutline, IoImagesOutline, IoLocationOutline, IoNotificationsOutline } from 'react-icons/io5';
@@ -36,8 +36,8 @@ const TopBar = (props) => {
 
   const [searchedUsers, setSearchedUsers] = useState([]);
   const searchHandler = async (value) => {
-    const res = await searchServices(value, cookies.user.data._id);
-    setSearchedUsers(res.data);
+    const result = await searchServices(value, cookies.user.data._id);
+    setSearchedUsers(result);
   };
 
   const [isDisplay, setIsDisplay] = useState(true);

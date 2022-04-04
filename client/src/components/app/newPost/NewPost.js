@@ -54,7 +54,7 @@ const NewPost = (props) => {
         // for the real-time feed update
         props.socket.emit('new_post');
 
-        if (result.data.msg)
+        if (result)
           setAfterPostContent(<h1>Post as been uploaded successfully!</h1>);
         else setAfterPostContent(<h1>Post failed to upload!</h1>);
       });

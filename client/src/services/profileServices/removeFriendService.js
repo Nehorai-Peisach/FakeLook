@@ -1,18 +1,10 @@
-import axios from 'axios';
-import Cookies from 'universal-cookie';
+import httpReq from 'services/httpReq';
+import updateProfileService from './updateProfileService';
 
-export default async function removeFriendService(userId, friendId) {
-  const cookies = new Cookies();
-  const user = cookies.get('user');
-  const token = user.accessToken;
-  try {
-    const result = await axios.post(
-      'http://localhost:4000/api/friends/removefriend',
-      { token: token, user_id: userId, friend_id: friendId }
-    );
-    return result;
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
+export default async (userId, friendId) => {
+  const data = { user_id: userId, friend_id: friendId };
+  const result = await httpReq('friends/removefriend', data);
+  await updateProfileService(userId);
+
+  return result.data;
+};

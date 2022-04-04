@@ -6,9 +6,7 @@ const DB_PORT = process.env.DB_PORT;
 
 module.exports = async function mapFiltersService(filters) {
   console.log(filters);
-  const result = await axios.get(
-    DOMAIN_NAME + DB_PORT + '/api/postsRoutes/get-posts'
-  );
+  const result = await axios.get(DOMAIN_NAME + DB_PORT + '/api/postsRoutes/get-posts');
 
   let filtered = result.data.filter((p) => p.user_id !== filters.user_id);
 

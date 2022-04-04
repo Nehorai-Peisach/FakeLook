@@ -20,20 +20,33 @@ const Main = (props) => {
     if (userCookie.user.data) {
       const newUser = await nicknameService(userCookie.user.data._id, nickname);
       if (newUser) {
-        setUserCookie('user', { data: newUser });
+        userCookie.user.data.nickname = newUser.nickname;
+        userCookie.user.data.image_url = newUser.image_url;
+        setUserCookie('user', userCookie.user);
       } else Alerter('This nickname already been taken, use different one!');
     }
   };
 
   const userClicked = async (id) => {
     const profile = await getProfileService(id);
-    setCurrentPage(<ProfilePage openClosePopup={[showFullPopup, closeFullPopup]} userClicked={userClicked} input={profile.data} socket={socket} />);
+    setCurrentPage(
+      <ProfilePage
+        openClosePopup={[showFullPopup, closeFullPopup]}
+        userClicked={userClicked}
+        input={profile}
+        socket={socket}
+      />
+    );
   };
 
   useEffect(async () => {
-    setCurrentPage(<FeedPage openClosePopup={[showFullPopup, closeFullPopup]} userClicked={userClicked} socket={socket} />);
-    // const tmp = await getFriendsPosts(userCookie.user.data._id, 0);
-    // setPopup(<FullPost postDetails={tmp[0]} />);
+    setCurrentPage(
+      <FeedPage
+        openClosePopup={[showFullPopup, closeFullPopup]}
+        userClicked={userClicked}
+        socket={socket}
+      />
+    );
   }, []);
 
   const [fullPopupClassname, setFullPopupClassname] = useState('full_popup__hidden');
@@ -48,12 +61,23 @@ const Main = (props) => {
   };
   const openClosePopup = [showFullPopup, closeFullPopup];
 
+  const [user, setUser] = useState();
+  useEffect(() => {
+    if (userCookie.user && userCookie.user.data) setUser(userCookie.user.data);
+    else setUser();
+  }, [userCookie]);
+
   return (
     <div>
-      {userCookie.user.data ? (
-        userCookie.user.data.nickname ? (
+      {user ? (
+        user.nickname ? (
           <div className="main">
-            <TopBar openClosePopup={openClosePopup} userClicked={userClicked} setCurrentPage={setCurrentPage} socket={socket} />
+            <TopBar
+              openClosePopup={openClosePopup}
+              userClicked={userClicked}
+              setCurrentPage={setCurrentPage}
+              socket={socket}
+            />
             {currentPage}
             <FullPagePopup popup={popup} close={closeFullPopup} className={fullPopupClassname} />
           </div>

@@ -1,29 +1,26 @@
-import axios from 'axios';
+import httpReq from 'services/httpReq';
 import Cookies from 'universal-cookie';
 
-export default async function updateProfileService(id, setUser) {
+export default async (id) => {
   const cookies = new Cookies();
   const user = cookies.get('user');
-  const token = user.accessToken;
-  try {
-    const profile = await axios.post(
-      'http://localhost:4000/api/friends/getprofile',
-      { token: token, user_id: id }
-    );
 
-    const userCookie = {
-      data: {
-        _id: profile.data._id,
-        nickname: profile.data.nickname,
-        image_url: profile.data.image_url,
-        friends_id: profile.data.friends_id,
-        block_list: profile.data.block_list
-      },
-      accessToken: user.accessToken
-    };
-    setUser('user', userCookie);
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
+  const data = { user_id: id };
+  const result = await httpReq('friends/getprofile', data, 'updateProfileService');
+
+  const userCookie = {
+    data: {
+      _id: result.data._id,
+      nickname: result.data.nickname,
+      image_url: result.data.image_url,
+      friends_id: result.data.friends_id,
+      block_list: result.data.block_list,
+    },
+    accessToken: user.accessToken,
+  };
+
+  await cookies.set('user', userCookie);
+  // window.location.reload(false);
+
+  return result.data;
+};

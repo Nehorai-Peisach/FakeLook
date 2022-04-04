@@ -1,20 +1,13 @@
-import axios from 'axios';
-import Cookies from 'universal-cookie';
+import httpReq from 'services/httpReq';
+import updateProfileService from 'services/profileServices/updateProfileService';
 
-export default async function blockService(userId, blockedUserId) {
-  const cookies = new Cookies();
-  const user = cookies.get('user');
-  const token = user.accessToken;
-  try {
-    const result = await axios.post('http://localhost:4000/api/friends/block', {
-      token: token,
-      blockInfo: {
-        user_id: userId,
-        blocked_user_id: blockedUserId
-      }
-    });
-    if (result) return result.data;
-  } catch (err) {
-    console.log(err);
-  }
-}
+export default async (userId, blockedUserId) => {
+  const data = {
+    user_id: userId,
+    blocked_user_id: blockedUserId,
+  };
+  const result = await httpReq('friends/block', data, 'blockService');
+  await updateProfileService(userId);
+
+  return result.data;
+};

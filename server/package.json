@@ -1,11 +1,11 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "gateway_port: 4000\r authentication_port: 4001\r posts_port: 4002\r social_port: 4003\r friends_port: 4004\r realtime_port: 4005\r database_port: 5000",
+  "description": "gateway_port: 4000\r authentication_port: 4001\r posts_port: 4002\r friends_port: 4004\r realtime_port: 4005\r database_port: 5000",
   "scripts": {
-    "start": "concurrently \"cd database_service && npm start\" \"cd gateway_service && npm start\" \"cd authentication_service && npm start\" \"cd posts_service && npm start\" \"cd social_service && npm start\" \"cd friends_service && npm start\" \"cd realtime_service && npm start\" \"cd logger_service && npm start\" ",
-    "dev": "concurrently \"cd database_service && npm run dev\" \"cd gateway_service && npm run dev\" \"cd authentication_service && npm run dev\" \"cd posts_service && npm run dev\" \"cd social_service && npm run dev\" \"cd friends_service && npm run dev\" \"cd realtime_service && npm run dev\" \"cd logger_service && npm run dev\" ",
-    "i": "npm i concurrently && concurrently \"cd database_service && npm i\" \"cd gateway_service && npm i\" \"cd authentication_service && npm i\" \"cd posts_service && npm i\" \"cd social_service && npm i\" \"cd friends_service && npm i\" \"cd realtime_service && npm i\" \"cd logger_service && npm i\" "
+    "start": "concurrently \"cd database_service && npm start\" \"cd gateway_service && npm start\"  \"cd friends_service && npm start\" \"cd realtime_service && npm start\" \"cd logger_service && npm start\" ",
+    "dev": "concurrently \"cd database_service && npm run dev\" \"cd gateway_service && npm run dev\" \"cd authentication_service && npm run dev\" \"cd posts_service && npm run dev\"  \"cd friends_service && npm run dev\" \"cd realtime_service && npm run dev\" \"cd logger_service && npm run dev\" ",
+    "i": "npm i concurrently && concurrently \"cd database_service && npm i\" \"cd gateway_service && npm i\" \"cd authentication_service && npm i\" \"cd posts_service && npm i\"  \"cd friends_service && npm i\" \"cd realtime_service && npm i\" \"cd logger_service && npm i\" "
   },
   "license": "ISC",
   "dependencies": {

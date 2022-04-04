@@ -1,17 +1,7 @@
-import axios from 'axios';
-import Cookies from 'universal-cookie';
+import httpReq from 'services/httpReq';
 
-export default async function getComments(post_id) {
-  const cookies = new Cookies();
-  const user = cookies.get('user');
-  const token = user.accessToken;
-  try {
-    const result = await axios.post(
-      'http://localhost:4000/api/posts/getComments',
-      { token, post_id }
-    );
-    return result.data;
-  } catch (err) {
-    console.log(err);
-  }
-}
+export default async (postId) => {
+  const data = { post_id: postId };
+  const result = await httpReq('posts/getComments', data);
+  return result.data;
+};
