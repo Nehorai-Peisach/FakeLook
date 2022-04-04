@@ -6,9 +6,9 @@ const DOMAIN_NAME = process.env.DOMAIN_NAME;
 const POSTS_PORT = process.env.POSTS_PORT;
 
 router.route('/new-post').post((req, res) => {
-  let data = req.body.postInfo;
+  let data = req.body;
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/new-post', data)
+    .post(DOMAIN_NAME + POSTS_PORT + '/new-post', req.body)
     .then((result) => {
       res.send(result.data);
     })
@@ -23,7 +23,7 @@ router.route('/friends-posts').post((req, res) => {
     index: req.body.index,
   };
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/friends-posts', data)
+    .post(DOMAIN_NAME + POSTS_PORT + '/friends-posts', req.body)
     .then((result) => {
       res.send(result.data);
     })
@@ -35,7 +35,7 @@ router.route('/friends-posts').post((req, res) => {
 router.route('/map-filters').post((req, res) => {
   let filters = req.body.filters;
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/map-filters', filters)
+    .post(DOMAIN_NAME + POSTS_PORT + '/map-filters', req.body)
     .then((result) => {
       res.send(result.data);
     })
@@ -47,7 +47,7 @@ router.route('/map-filters').post((req, res) => {
 router.route('/like').post((req, res) => {
   let data = req.body.post_info;
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/like', data)
+    .post(DOMAIN_NAME + POSTS_PORT + '/like', req.body)
     .then((result) => {
       res.send(result.data);
     })
@@ -59,7 +59,7 @@ router.route('/like').post((req, res) => {
 router.route('/comment').post((req, res) => {
   let data = req.body.commentInfo;
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/comment', data)
+    .post(DOMAIN_NAME + POSTS_PORT + '/comment', req.body)
     .then((result) => {
       res.send(result.data);
     })
@@ -73,7 +73,7 @@ router.route('/getComments').post((req, res) => {
     post_id: req.body.post_id,
   };
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/getComments', data)
+    .post(DOMAIN_NAME + POSTS_PORT + '/getComments', req.body)
     .then((result) => {
       res.send(result.data);
     })
@@ -85,7 +85,7 @@ router.route('/getComments').post((req, res) => {
 router.route('/getPostsByUserId').post((req, res) => {
   let data = { user_id: req.body.user_id };
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/getPostsByUserId', data)
+    .post(DOMAIN_NAME + POSTS_PORT + '/getPostsByUserId', req.body)
     .then((result) => {
       res.send(result.data);
     })
@@ -100,7 +100,7 @@ router.route('/removePostById').post((req, res) => {
     post_id: req.body.post_id,
   };
   axios
-    .post(DOMAIN_NAME + POSTS_PORT + '/removePostById', data)
+    .post(DOMAIN_NAME + POSTS_PORT + '/removePostById', req.body)
     .then((result) => {
       res.send(result.data);
     })

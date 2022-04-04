@@ -4,7 +4,7 @@
 import httpReq from 'services/httpReq';
 
 export default async (commentInfo, user_id, socket) => {
-  const data = { commentInfo };
+  const data = commentInfo;
   const result = await httpReq('posts/comment', data);
   console.log('comment Added Successfully');
   return result.data;

@@ -23,7 +23,7 @@ app.post('/new-post', async (req, res) => {
     res.send(result);
   } catch (error) {
     logger.error(error);
-    res.status(400).send({ msg: false });
+    res.status(400).send(false);
   }
 });
 
@@ -39,6 +39,7 @@ app.post('/friends-posts', async (req, res) => {
 
 app.post('/map-filters', async (req, res) => {
   try {
+    logger.silly(req.body);
     const result = await mapFiltersService(req.body);
     res.send(result);
   } catch (err) {
@@ -90,7 +91,6 @@ app.post('/removePostById', async (req, res) => {
     logger.error(err, 'posts_service/app/removePostById');
   }
 });
-
 
 app.listen(PORT, () => {
   logger.http(`Posts_service is running on port:${PORT}`);

@@ -20,7 +20,9 @@ const Main = (props) => {
     if (userCookie.user.data) {
       const newUser = await nicknameService(userCookie.user.data._id, nickname);
       if (newUser) {
-        setUserCookie('user', { data: newUser });
+        userCookie.user.data.nickname = newUser.nickname;
+        userCookie.user.data.image_url = newUser.image_url;
+        setUserCookie('user', userCookie.user);
       } else Alerter('This nickname already been taken, use different one!');
     }
   };

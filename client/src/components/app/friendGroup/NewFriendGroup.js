@@ -16,9 +16,7 @@ const NewFriendGroup = () => {
 
   const searchHandler = async (value) => {
     const res = await searchServices(value, cookies.user.data._id);
-    const friends = res.data.filter((x) =>
-      cookies.user.data.friends_id.includes(x._id)
-    );
+    const friends = res.filter((x) => cookies.user.data.friends_id.includes(x._id));
     setSearchedUsers(friends);
   };
 
@@ -38,14 +36,9 @@ const NewFriendGroup = () => {
   };
 
   const createGroup = async () => {
-    if (name === '')
-      setNoNameError(
-        <div className="error">Please enter your group name!</div>
-      );
+    if (name === '') setNoNameError(<div className="error">Please enter your group name!</div>);
     if (friendsList.length === 0) {
-      setNoFriendsError(
-        <div className="error">Please select at least one friend!</div>
-      );
+      setNoFriendsError(<div className="error">Please select at least one friend!</div>);
     }
     if (name !== '' && friendsList.length > 0) {
       let newList = [];
@@ -55,7 +48,7 @@ const NewFriendGroup = () => {
       }
       const newGroup = {
         name: name,
-        friends_id: newList
+        friends_id: newList,
       };
 
       const result = await newGroupServices(cookies.user.data._id, newGroup);
@@ -95,20 +88,13 @@ const NewFriendGroup = () => {
             friendsList.map((f) => {
               console.log(friendsList);
               return (
-                <div
-                  className="fg__container__selected__item"
-                  onClick={() => removeUser(f)}
-                >
+                <div className="fg__container__selected__item" onClick={() => removeUser(f)}>
                   {f.nickname}
                 </div>
               );
             })}
         </div>
-        <IconBtn
-          onClick={createGroup}
-          className="fg__container__btn"
-          icon={FaUserFriends}
-        >
+        <IconBtn onClick={createGroup} className="fg__container__btn" icon={FaUserFriends}>
           Create Group
         </IconBtn>
       </div>

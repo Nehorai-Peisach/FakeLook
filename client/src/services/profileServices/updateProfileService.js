@@ -1,8 +1,12 @@
 import httpReq from 'services/httpReq';
+import Cookies from 'universal-cookie';
 
-export default async (id, user, setUser) => {
+export default async (id) => {
+  const cookies = new Cookies();
+  const user = cookies.get('user');
+
   const data = { user_id: id };
-  const result = await httpReq('friends/getprofile', data);
+  const result = await httpReq('friends/getprofile', data, 'updateProfileService');
 
   const userCookie = {
     data: {
@@ -15,6 +19,8 @@ export default async (id, user, setUser) => {
     accessToken: user.accessToken,
   };
 
-  setUser('user', userCookie);
+  await cookies.set('user', userCookie);
+  // window.location.reload(false);
+
   return result.data;
 };

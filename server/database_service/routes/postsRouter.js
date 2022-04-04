@@ -5,7 +5,6 @@ const User = require('../models/User');
 const Comment = require('../models/Comment');
 
 router.route('/new-post').post(async (req, res) => {
-  console.log(req.body);
   const newPost = new Post({
     image_id: req.body.image_id,
     location: req.body.location,
@@ -20,10 +19,10 @@ router.route('/new-post').post(async (req, res) => {
     const postsId = [...user.posts_id, req.body.image_id];
     await User.findByIdAndUpdate(req.body.user_id, { posts_id: postsId });
     newPost.save();
-    res.send({ msg: true });
+    res.send(true);
   } catch (error) {
     logger.error(error);
-    res.sendStatus(400).send({ msg: false });
+    res.sendStatus(400).send(false);
   }
 });
 
@@ -62,19 +61,20 @@ router.route('/get-posts').get((req, res) => {
 });
 
 router.route('/like').post(async (req, res) => {
-  const user_id = req.body.user_id;
-  const post_id = req.body.post_id;
+  const userId = req.body.user_id;
+  const postId = req.body.post_id;
+
   let isLiked;
-  const post = await Post.findById(post_id);
-  if (post.users_like.includes(user_id)) {
-    const index = post.users_like.indexOf(user_id);
+  const post = await Post.findById(postId);
+  if (post.users_like.includes(userId)) {
+    const index = post.users_like.indexOf(userId);
     post.users_like.splice(index, 1);
     isLiked = false;
   } else {
-    post.users_like.push(user_id);
+    post.users_like.push(userId);
     isLiked = true;
   }
-  await Post.findByIdAndUpdate(post_id, { users_like: post.users_like });
+  await Post.findByIdAndUpdate(postId, { users_like: post.users_like });
   res.send(isLiked);
 });
 
@@ -111,7 +111,6 @@ router.route('/getComments').post(async (req, res) => {
       const id = post.comments[i];
       const comment = await Comment.findById(id);
       const user = await User.findById(comment.user_id);
-      console.log(comment, user);
       commentsData.push({
         comment: comment,
         nickname: user.nickname,
@@ -119,7 +118,6 @@ router.route('/getComments').post(async (req, res) => {
       });
     }
   }
-  console.log(commentsData);
   res.send(commentsData);
 });
 
@@ -131,14 +129,12 @@ router.route('/getPostsByUserId').post(async (req, res) => {
 
 router.route('/removePostById').post(async (req, res) => {
   const userId = req.body.user_id;
-  const postId = req.body.post_id;
+  const imageId = req.body.image_id;
 
   const user = await User.findById(userId);
-  console.log(user);
-
-  const posts = user.posts_id.filter((x) => x !== postId);
+  const posts = user.posts_id.filter((x) => x !== imageId);
   await User.findByIdAndUpdate(userId, { posts_id: posts });
-  await Post.findOneAndRemove({ image_id: postId });
+  await Post.findOneAndRemove({ image_id: imageId });
   res.send(true);
 });
 

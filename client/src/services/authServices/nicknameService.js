@@ -5,6 +5,6 @@ export default async (userId, nickname) => {
     user_id: userId,
     nickname: nickname,
   };
-  const result = await httpReq('auth/nickname', {data});
+  const result = await httpReq('auth/nickname', data);
   return result.data;
 };

@@ -10,7 +10,6 @@ import {
 } from 'react-icons/ai';
 import addFriendService from 'services/profileServices/addFriendService';
 import removeFriendService from 'services/profileServices/removeFriendService';
-import updateProfileService from 'services/profileServices/updateProfileService';
 import { storage } from 'firebases';
 import getPostsByUserId from 'services/postServices/getPostsByUserId';
 import FullPost from '../FullPost';
@@ -32,12 +31,10 @@ const Profile = (props) => {
 
   const addFriend = async () => {
     await addFriendService(cookies.user.data._id, props.input._id);
-    await updateProfileService(cookies.user.data._id, setCookies);
     setIndex(2);
   };
   const removeFriend = async () => {
     await removeFriendService(cookies.user.data._id, props.input._id);
-    await updateProfileService(cookies.user.data._id, setCookies);
     setIndex(1);
   };
 
@@ -146,7 +143,6 @@ const Profile = (props) => {
   const blockUser = async () => {
     console.log(props.input._id);
     const result = await blockService(cookies.user.data._id, props.input._id);
-    await updateProfileService(cookies.user.data._id, setCookies);
     if (result) {
       setBtnDisplay('none');
       props.openClosePopup[1]();
@@ -156,7 +152,6 @@ const Profile = (props) => {
 
   const unblockUser = async () => {
     const result = await unblockService(cookies.user.data._id, props.input._id);
-    await updateProfileService(cookies.user.data._id, setCookies);
     if (result) {
       setBtnDisplay('block');
       setBlockState('not blocked');
@@ -205,7 +200,7 @@ const Profile = (props) => {
                       key={'deleteIcon ' + i}
                       icon={AiOutlineDelete}
                       className="profile__galery__post__delete_icon"
-                      onClick={() => deletePostHandler(x.image_id)}
+                      onClick={() => deletePostHandler(x)}
                     />
                   )}
                 </div>

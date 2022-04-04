@@ -1,15 +1,9 @@
 import httpReq from 'services/httpReq';
+import updateProfileService from './updateProfileService';
 
-export default async (newUser, user, setUser) => {
-  const tmpUser = user;
-  const result = httpReq('friends/editProfile', newUser);
+export default async (newUser) => {
+  const result = httpReq('friends/editProfile', newUser, 'editProfileService');
+  await updateProfileService(newUser._id);
 
-  tmpUser.name = result.data.name;
-  tmpUser.image_url = result.data.image_url;
-  tmpUser.nickname = result.data.nickname;
-  tmpUser.bio = result.data.bio;
-  tmpUser.email = result.data.email;
-
-  setUser('user', { data: tmpUser });
   return result.data;
 };

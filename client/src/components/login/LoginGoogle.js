@@ -5,8 +5,12 @@ import { googleSignUpService } from 'services/authServices/signUpService';
 
 const LoginGoogle = (props) => {
   const connectGoogle = async (response) => {
-    // console.log(response.profileObj);
-    const isRegistered = await googleSignUpService(response.profileObj.name, response.profileObj.email, response.profileObj.googleId);
+    console.log(response.profileObj);
+    const isRegistered = await googleSignUpService(
+      response.profileObj.name,
+      response.profileObj.email,
+      response.profileObj.googleId
+    );
     if (isRegistered) {
       const isLogin = await googleSignInService(response.profileObj.googleId);
       if (isLogin) window.location.href = '/app';
